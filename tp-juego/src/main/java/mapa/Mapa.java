@@ -17,12 +17,15 @@ public class Mapa {
 	
 	
 	private Posicion posInicialJugador;
-	
+	private Posicion puertaPos;
+	private Cosa puerta;
 	
 	public Mapa(int [][] disenio, Map<Posicion,Cosa> cosas, Map<Posicion, Enemigo> enemies, Posicion posInicialJugador) {
 		for (int i = 0; i < disenio.length; i++) {
 			for(int j = 0; j < disenio[0].length; j++) {
 				matPiso[i][j] = new PisoHandler().getPisoByPosition(disenio[i][j]);
+				if(disenio[i][j] == PisoHandler.PUERTA)
+					puertaPos = new Posicion(i,j);
 			}
 		}
 		this.cosas = cosas;
@@ -38,7 +41,7 @@ public class Mapa {
 	public boolean puedoPasar(int x, int y) { // x=Columnas, y=filas
 		if(x < matPiso.length && x >= 0 && y >= 0 && y < matPiso[0].length) {
 			//System.out.println(new Posicion(x,y).compareTo(new Posicion(2,2)));
-			return matPiso[y][x].isCollisionable() == false && cosas.get(new Posicion(x,y)) == null && enemies.get(new Posicion(x,y)) == null;
+			return matPiso[y][x].isCollisionable() == false && (cosas.get(new Posicion(x,y)) == null || cosas.get(new Posicion(x,y)).esRecogible) && enemies.get(new Posicion(x,y)) == null;
 		}
 		return false;
 	}
@@ -57,5 +60,18 @@ public class Mapa {
 		
 	}
 	
+	public Cosa getByPosition(Posicion p) {
+		return cosas.get(p);
+	}
+	
+	public void removeCosa(Posicion p) {
+		cosas.remove(p);
+	}
+	
+	public void mostrarCosas() {
+		for(Posicion p : cosas.keySet()) {
+			System.out.println("Hay una cosa en : " + p);
+		}
+	}
 
 }

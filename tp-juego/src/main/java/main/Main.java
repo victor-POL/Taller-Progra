@@ -2,6 +2,7 @@ package main;
 
 
 import entidad.Jugador;
+import entidad.JugadorNivel1;
 import niveles.Nivel1;
 
 public class Main {
@@ -9,16 +10,11 @@ public class Main {
 		
 		Nivel1 level = new Nivel1();
 		Jugador player = level.getPlayer();
+		JugadorNivel1 jn1 = null;
+		level.add(jn1);
 		
-		for(int i = 0; i < 6; i++) {
-			player.moverAbajo();
-		}
-		for(int i = 0; i < 4; i++) {
-			player.moverDerecha();
-		}
+		level.run();
 		
-		
-		System.out.println(player.getPos());
 		
 
 	}

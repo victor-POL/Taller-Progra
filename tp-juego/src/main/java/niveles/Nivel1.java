@@ -3,10 +3,10 @@ package niveles;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
+import entidad.JugadorNivel1;
 import mapa.Mapa;
 import utiles.Posicion;
 
@@ -16,7 +16,7 @@ public class Nivel1 {
 	private Map<Posicion, Enemigo> enemies = new HashMap<Posicion, Enemigo>();
 
 	private int [][]disenio = {
-			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1},
 			{1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,2,2,2,2,2,2,1},
@@ -36,6 +36,8 @@ public class Nivel1 {
 	};
 
 	Jugador player;
+	
+	JugadorNivel1 jn1;
 
 	
 	public Nivel1(Jugador player) {
@@ -46,7 +48,7 @@ public class Nivel1 {
 		//crear Lista de objetos
 		map = new Mapa(disenio,cosas,enemies,new Posicion(1,1));
 		this.player = new Jugador(map);
-		cosas.put(new Posicion(2, 2), new Cosa(player.getPaso(), new Posicion(2,2), map));
+		cosas.put(new Posicion(2, 2), new Cosa(player.getPaso(), new Posicion(2,2), map, true, false));
 		cosas.put(new Posicion(2, 3), new Cosa(player.getPaso(), new Posicion(2,3), map));
 		enemies.put(new Posicion(3,4), new Enemigo(player.getPaso(), new Posicion(3,4), map));
 	}
@@ -60,8 +62,18 @@ public class Nivel1 {
 		return this.map;
 	}
 
-	public void displayLevel() {
-		map.displayMap();
+	public void mostrarCosas() {
+		map.mostrarCosas();
+	}
+	
+	public void add(JugadorNivel1 jn1) {
+		this.jn1 = jn1;
+	}
+	
+	public void run() {
+		System.out.println("Posicion inicial del jugador : " + player.getPos());
+		jn1 = new JugadorNivel1(player);
+		System.out.println("Posicion final del jugador : " + player.getPos());
 	}
 	
 }
