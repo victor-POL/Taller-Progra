@@ -1,47 +1,61 @@
 package mapa;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import entidad.ObjetosMovibles;
+import entidad.Cosa;
+import entidad.Enemigo;
 import piso.Piso;
 import piso.PisoHandler;
+import utiles.Posicion;
 
 public class Mapa {
-	Piso[][] matPiso = new Piso[16][16];
+	private Piso[][] matPiso = new Piso[16][16];
 	
-	List<ObjetosMovibles> obj = new ArrayList<ObjetosMovibles>();
-	
-	public double xInicialJugador = 0;
-	public double yInicialJugador = 0;
+	private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
+	private Map<Posicion, Enemigo> enemies = new HashMap<Posicion, Enemigo>();
 	
 	
-	public Mapa(int [][] disenio, List<ObjetosMovibles> lista) {
+	private Posicion posInicialJugador;
+	
+	
+	public Mapa(int [][] disenio, Map<Posicion,Cosa> cosas, Map<Posicion, Enemigo> enemies, Posicion posInicialJugador) {
 		for (int i = 0; i < disenio.length; i++) {
 			for(int j = 0; j < disenio[0].length; j++) {
 				matPiso[i][j] = new PisoHandler().getPisoByPosition(disenio[i][j]);
 			}
 		}
-		obj = lista;
+		this.cosas = cosas;
+		this.enemies = enemies;
+		this.posInicialJugador = posInicialJugador;
 	}
 	
 	// x = 10; y = 15;
 	//moverDerecha();
 	//matPiso[11][15].collision == false;
 	
-	public void mostrarPisoCollisions() {
-		for (Piso[] p : matPiso) {
-			for(Piso pi : p) {
-				System.out.print(pi.collision);
-			}
-			System.out.println();
-		}
-	}
 	
 	public boolean puedoPasar(int x, int y) { // x=Columnas, y=filas
-		if(x < matPiso.length && x >= 0 && y >= 0 && y < matPiso[0].length)
-			return matPiso[y][x].collision;
-		return true;
+		if(x < matPiso.length && x >= 0 && y >= 0 && y < matPiso[0].length) {
+			//System.out.println(new Posicion(x,y).compareTo(new Posicion(2,2)));
+			return matPiso[y][x].isCollisionable() == false && cosas.get(new Posicion(x,y)) == null && enemies.get(new Posicion(x,y)) == null;
+		}
+		return false;
 	}
 	
+	public Posicion getPosInicialJugador() {
+		return posInicialJugador;
+	}
+
+	public void displayMap(){ //leave space between each number
+		for (int i = 0; i < matPiso.length; i++) {
+			for(int j = 0; j < matPiso[0].length; j++) {
+				System.out.printf("%8s",matPiso[i][j].getSprite());
+			}
+			System.out.println("\n");
+		}
+		
+	}
+	
+
 }
