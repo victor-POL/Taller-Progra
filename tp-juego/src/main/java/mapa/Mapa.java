@@ -21,7 +21,7 @@ public class Mapa {
 	private Posicion cofrePos;
 	private Cosa puerta = null;
 	private Cosa cofre = null;
-	
+
 	private boolean puertaHabilitada = false;
 	private int itemsObjetivo;
 
@@ -104,12 +104,12 @@ public class Mapa {
 			System.out.println("Hay una cosa en : " + p);
 		}
 	}
-	
+
 	public void mostrarEnemigos() {
 		for (Posicion p : enemies.keySet()) {
 			System.out.println("Hay un enemigo en : " + p);
 		}
-		if(enemies.isEmpty()) {
+		if (enemies.isEmpty()) {
 			System.out.println("No hay enemigos!");
 		}
 	}
@@ -118,35 +118,38 @@ public class Mapa {
 		cofre = new Cosa(this.cofrePos, this, true, false);
 		cosas.put(cofrePos, cofre);
 
-		matPiso[(int) cofrePos.getY()][(int) cofrePos.getX()] = new PisoHandler().getPisoByPosition(PisoHandler.COFRE_ABIERTO);
+		matPiso[(int) cofrePos.getY()][(int) cofrePos.getX()] = new PisoHandler()
+				.getPisoByPosition(PisoHandler.COFRE_ABIERTO);
 
 	}
+
 	public boolean getPuertaHabilitada() {
 		return this.puertaHabilitada;
 	}
-	
 
 	public void habilitarPuerta() {
-		matPiso[(int) puertaPos.getY()][(int) puertaPos.getX()] = new PisoHandler().getPisoByPosition(PisoHandler.PUERTA_ABIERTA);
+		matPiso[(int) puertaPos.getY()][(int) puertaPos.getX()] = new PisoHandler()
+				.getPisoByPosition(PisoHandler.PUERTA_ABIERTA);
 		puerta = new Cosa(puertaPos, this, true, false);
 		puertaHabilitada = true;
 	}
-	
-	public Map<Posicion, Cosa> getCosas( ) {
+
+	public Map<Posicion, Cosa> getCosas() {
 		return this.cosas;
 	}
-	
+
 	public Enemigo getEnemyByPosition(Posicion p) {
 		return enemies.get(p);
 	}
-	
+
 	public int getLimite() {
-	    return this.limite;
+		return this.limite;
 	}
+
 	public Cosa getPuerta() {
 		return this.puerta;
 	}
-	
+
 	public boolean sacarEnemigo(Enemigo e) {
 		if (enemies.containsValue(e)) {
 			enemies.remove(e.getPos());

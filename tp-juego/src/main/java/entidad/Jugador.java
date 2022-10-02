@@ -32,9 +32,9 @@ public class Jugador extends Entidad {
 
 			inventario.add(c);
 			map.removeCosa(pos.getPos());
-			
+
 			cantBalas++;
-			
+
 			if (inventario.size() == map.getItemsObjetivo()) {
 				map.habilitarCofre();
 			} else if (inventario.size() > map.getItemsObjetivo() && !map.getPuertaHabilitada()) {
@@ -51,7 +51,7 @@ public class Jugador extends Entidad {
 
 		if (super.moverDerecha()) {
 			res = chequeo_items_y_progreso(c);
-			
+
 		} else {
 
 			c = map.getByPosition(this.pos.posDerecha());
@@ -62,15 +62,13 @@ public class Jugador extends Entidad {
 				this.map.removeCosa(c.getPos());
 				res = c.moverDerecha();
 				this.map.actualizarCosa(c);
-				
 
 				super.moverDerecha();
 			} else
 				res = false;
 
 		}
-		
-		
+
 		orientacionActual = Constantes.DER;
 		return res;
 	}
@@ -94,7 +92,6 @@ public class Jugador extends Entidad {
 				this.map.removeCosa(c.getPos());
 				res = c.moverIzquierda();
 				this.map.actualizarCosa(c);
-				
 
 				super.moverIzquierda();
 			} else
@@ -124,7 +121,6 @@ public class Jugador extends Entidad {
 				this.map.removeCosa(c.getPos());
 				res = c.moverArriba();
 				this.map.actualizarCosa(c);
-				
 
 				super.moverArriba();
 			} else
@@ -152,7 +148,6 @@ public class Jugador extends Entidad {
 				this.map.removeCosa(c.getPos());
 				res = c.moverAbajo();
 				this.map.actualizarCosa(c);
-				
 
 				super.moverAbajo();
 			} else
@@ -163,16 +158,15 @@ public class Jugador extends Entidad {
 		return res;
 	}
 
-	
 	public boolean disparar() {
 		if (cantBalas > 0) {
 			Bala b = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, map);
 			cantBalas--;
-			while(b.mover()) {
+			while (b.mover()) {
 
 				Cosa c = map.getByPosition(b.getPos());
 				Enemigo e = map.getEnemyByPosition(b.getPos());
-				
+
 				if (c != null && !c.isRecogible()) {
 					break;
 				}
@@ -181,13 +175,12 @@ public class Jugador extends Entidad {
 					break;
 				}
 			}
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
-
 
 //	public void mostrarInventario() {
 //		if (inventario.isEmpty())
@@ -201,10 +194,8 @@ public class Jugador extends Entidad {
 		return this.map;
 	}
 
-	public int getItemsInventario( ) {
+	public int getItemsInventario() {
 		return inventario.size();
 	}
 
 }
-
-

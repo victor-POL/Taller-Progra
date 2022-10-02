@@ -6,56 +6,57 @@ import java.util.Map;
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
-import jugadores.JugadorNivel1;
+import jugadores.JugadorNivel2;
 import mapa.Mapa;
 import utiles.Posicion;
 
-public class Nivel1 {
+public class Nivel2 {
 	private Mapa map;
 	private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
 	private Map<Posicion, Enemigo> enemies = new HashMap<Posicion, Enemigo>();
 
-	private int[][] disenio = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 3 },
-			{ 1, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1 },
-			{ 1, 5, 0, 5, 0, 4, 0, 0, 0, 0, 0, 0, 1 }, { 1, 5, 0, 5, 0, 4, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 5, 0, 5, 0, 4, 0, 0, 0, 0, 0, 0, 1 }, { 1, 5, 0, 5, 0, 4, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, };
+	private int[][] disenio = { { 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1 }, { 1, 4, 4, 4, 4, 4, 4, 0, 4, 4, 5, 5, 1 },
+			{ 1, 4, 5, 5, 4, 0, 0, 0, 4, 4, 5, 5, 1 }, { 1, 0, 5, 5, 4, 4, 4, 0, 4, 4, 4, 5, 1 },
+			{ 1, 0, 0, 5, 5, 4, 4, 0, 4, 4, 4, 5, 1 }, { 1, 0, 0, 0, 0, 4, 4, 0, 4, 4, 5, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 7, 0, 4, 0, 0, 1 }, { 1, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 5, 5, 5, 5, 0, 0, 0, 5, 5, 0, 0, 1 }, { 1, 5, 5, 5, 5, 0, 0, 0, 5, 5, 5, 0, 1 },
+			{ 1, 4, 5, 5, 4, 6, 0, 0, 0, 5, 5, 0, 1 }, { 1, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 1 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+
+	};
 
 	Jugador player;
 
-	JugadorNivel1 jn1 = null;
+	JugadorNivel2 jn2 = null;
 
-	public Nivel1(Jugador player) {
-		new Nivel1();
+	public Nivel2(Jugador player) {
+		new Nivel2();
 		this.player = player;
 	}
 
-	public Nivel1() {
+	public Nivel2() {
 		// Inicializo el mapa con el disenio y luego agrego los objetos
-		Posicion pos_inicial_jugador = new Posicion(2, 2);
+		Posicion pos_inicial_jugador = new Posicion(1, 5);
 		map = new Mapa(disenio, cosas, enemies, pos_inicial_jugador, 2);
 
 		this.player = new Jugador(map);
 
 		// Corazones
-		Cosa corazon_1 = new Cosa(new Posicion(2, 11), map, true, false);
-		Cosa corazon_2 = new Cosa(new Posicion(6, 11), map, true, false);
+		Cosa corazon_1 = new Cosa(new Posicion(5, 2), map, true, false);
+		Cosa corazon_2 = new Cosa(new Posicion(11, 5), map, true, false);
 
 		cosas.put(corazon_1.getPos(), corazon_1);
 		cosas.put(corazon_2.getPos(), corazon_2);
 
-		// Cajas
-		Cosa caja_1 = new Cosa(1, new Posicion(2, 7), map, false, true);
+		// cajas
+		Cosa caja_1 = new Cosa(new Posicion(6, 8), map, false, true);
 
 		cosas.put(caja_1.getPos(), caja_1);
 
 		// Enemigos
-		Enemigo enemigo_1 = new Enemigo(0, new Posicion(5, 2), map);
+		Enemigo enemigo_1 = new Enemigo(0, new Posicion(7, 6), map);
 
 		enemies.put(enemigo_1.getPos(), enemigo_1);
-
 	}
 
 	public void setPlayer(Jugador player) {
@@ -74,12 +75,12 @@ public class Nivel1 {
 		map.mostrarCosas();
 	}
 
-	public void add(JugadorNivel1 jn1) {
-		this.jn1 = jn1;
+	public void add(JugadorNivel2 jn2) {
+		this.jn2 = jn2;
 	}
 
 	public void run() {
-		jn1 = new JugadorNivel1(player);
+		jn2 = new JugadorNivel2(player);
 		if (this.player.getPos().equals(map.getPosPuerta()))
 			System.out.println("Ganaste! Esa era una solucion valida!");
 
