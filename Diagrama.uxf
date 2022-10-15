@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>11</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>924</x>
+      <y>110</y>
+      <w>231</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>Entidad
+--
+# PASO: double
+# pos: Posicion
+# map: Mapa
+--
++ moverDerecha(): boolean
++ moverIzquierda(): boolean
++ moverAbajo(): boolean
++ moverArriba(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>990</x>
+      <y>374</y>
+      <w>319</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>Jugador
+--
+- cantBalas: int = 0
+- orientacionActual: int = Constantes.DER
+- inventario: List&lt;Cosa&gt;
+--
+- chequeo_items_y_progreso(Cosa): boolean
++ disparar(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>638</x>
+      <y>374</y>
+      <w>77</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Enemigo
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>264</y>
+      <w>396</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>340.0;10.0;340.0;40.0;10.0;40.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>748</x>
+      <y>374</y>
+      <w>176</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>Cosa
+--
+- esRecogible: boolean
+- esEmpujable: boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>825</x>
+      <y>264</y>
+      <w>231</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>190.0;10.0;190.0;40.0;10.0;40.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>341</y>
+      <w>308</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>Mapa
+--
+- matPiso: Piso[13][13]
+- limite: int = 13
+
+- enemigos: HashMap&lt;Posicion, Enemigo&gt;
+- cosas: HashMap&lt;Posicion, Cosa&gt;
+
+- posInicialJugador: Posicion
+- puertaPos: Posicion
+- cofrePos: Posicion
+
+- puerta: Cosa
+- cofre: Cosa
+
+- puertaHabilitada: boolean = false
+- itemsObjetivo: int
+--
++ puedoPasar(int, int): boolean
++ getByPosition(Posicion): Cosa
++ removeCosa(Poisicion): void
++ actualizarCosa(Cosa): void
++ habilitarCofre(): void
++ habilitarPuerta(): void
++ getEnemyByPosition(Posicion): Enemigo
++ sacarEnemigo(Enemigo): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>176</x>
+      <y>110</y>
+      <w>165</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>Piso
+--
+- sprite: String
+- collisionable: boolean
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>341</y>
+      <w>220</w>
+      <h>231</h>
+    </coordinates>
+    <panel_attributes>PisoHandler
+--
+- pisos: Piso[]
+_- CAMINO: int = 0_
+_- PARED: int = 1_
+_- AGUA: int = 2_
+_- PUERTA_CERRADA: int = 3_
+_- ROCA: int = 4_
+_- ARBOL: int = 5_
+_- COFRE_CERRADO: int = 6_
+_- COFRE_ABIERTO: int = 7_
+_- PUERTA_ABIERTA: int = 8_
+--
++ getPisoByPosition(int): Piso</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>539</x>
+      <y>110</y>
+      <w>132</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Constanstes
+--
+_+ DER: int = 0_
+_+ IZQ: int = 1_
+_+ ABAJO: int = 2_
+_+ ARRIBA: int = 3_
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>22</x>
+      <y>627</y>
+      <w>187</w>
+      <h>143</h>
+    </coordinates>
+    <panel_attributes>Posicion
+--
+- x: double
+- y: double
+--
++ posDerecha(): Posicion
++ posIzquierda(): Posicion
++ posArriba(): Posicion
++ posAbajo(): Posicion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1353</x>
+      <y>374</y>
+      <w>143</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Bala
+--
+- direccion: int
+--
++ mover(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1023</x>
+      <y>264</y>
+      <w>418</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;360.0;40.0;360.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>99</x>
+      <y>187</y>
+      <w>176</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+9</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;50.0;140.0;50.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>242</x>
+      <y>187</y>
+      <w>198</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+1..169</panel_attributes>
+    <additional_attributes>160.0;140.0;160.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1023</x>
+      <y>264</y>
+      <w>154</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0;120.0;40.0;120.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>913</x>
+      <y>429</y>
+      <w>99</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+0...n</panel_attributes>
+    <additional_attributes>70.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>825</x>
+      <y>451</y>
+      <w>187</w>
+      <h>55</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0;150.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>561</x>
+      <y>385</y>
+      <w>99</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+0...n</panel_attributes>
+    <additional_attributes>10.0;20.0;70.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>561</x>
+      <y>451</y>
+      <w>231</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+1...n</panel_attributes>
+    <additional_attributes>10.0;50.0;190.0;50.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>561</x>
+      <y>429</y>
+      <w>132</w>
+      <h>363</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;100.0;310.0;10.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>561</x>
+      <y>451</y>
+      <w>264</w>
+      <h>275</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>220.0;10.0;220.0;230.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>198</x>
+      <y>649</y>
+      <w>88</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+</diagram>
