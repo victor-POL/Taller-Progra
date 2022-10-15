@@ -5,17 +5,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import entidad.Jugador;
-import niveles.Nivel2;
+import niveles.Nivel;
 import utiles.Posicion;
 
 public class MovimientosTestEnNivel2 {
 	
-	Nivel2 level;
+	Nivel level;
 	Jugador player;
 	
 	@Before
 	public void crearNivel( ) {
-		level = new Nivel2();
+		level = new Nivel("nivel_2");
 		player = level.getPlayer();
 	}
 	

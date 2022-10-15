@@ -7,10 +7,14 @@ import utiles.Constantes;
 public class Bala extends Entidad {
 	private int direccion;
 
+	// Constructores
+	
 	public Bala(Posicion pos, int direccion, Mapa map) {
 		super(1, pos, map);
 		this.direccion = direccion;
 	}
+	
+	// Movimiento
 
 	public boolean mover() {
 		switch (direccion) {

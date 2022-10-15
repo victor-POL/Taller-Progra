@@ -3,10 +3,14 @@ package utiles;
 public class Posicion implements Comparable<Posicion> {
 	private double x, y;
 
+	// Constructores
+	
 	public Posicion(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
+	
+	// Metodos
 
 	public Posicion posDerecha() {
 		return new Posicion(this.x + 1, this.y);
@@ -24,26 +28,7 @@ public class Posicion implements Comparable<Posicion> {
 		return new Posicion(this.x, this.y + 1);
 	}
 
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public void setPos(double x, double y) {
-		this.x = x;
-		this.y = y;
-	}
+	// Extras
 
 	@Override
 	public int hashCode() {
@@ -73,20 +58,6 @@ public class Posicion implements Comparable<Posicion> {
 		return true;
 	}
 
-	public void setPos(Posicion pos) {
-		this.x = pos.getX();
-		this.y = pos.getY();
-	}
-
-	public Posicion getPos() {
-		return new Posicion(x, y);
-	}
-
-	@Override
-	public String toString() {
-		return "Posicion [x=" + x + ", y=" + y + "]";
-	}
-
 	public int compareTo(Posicion o) {
 		if (Double.doubleToLongBits(this.x) == Double.doubleToLongBits(o.x)) {
 			if (Double.doubleToLongBits(this.y) == Double.doubleToLongBits(o.y)) {
@@ -103,4 +74,37 @@ public class Posicion implements Comparable<Posicion> {
 		}
 	}
 
+	// Getters
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public Posicion getPos() {
+		return new Posicion(x, y);
+	}
+
+	// Setters
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public void setPos(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public void setPos(Posicion pos) {
+		this.x = pos.getX();
+		this.y = pos.getY();
+	}
 }

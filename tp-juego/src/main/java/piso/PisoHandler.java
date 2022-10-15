@@ -13,6 +13,8 @@ public class PisoHandler {
 	public static final int COFRE_ABIERTO = 7;
 	public static final int PUERTA_ABIERTA = 8;
 
+	// Constructores
+	
 	public PisoHandler() {
 		pisos = new Piso[9];
 		pisos[0] = new Piso("camino", false);// camino
@@ -25,6 +27,8 @@ public class PisoHandler {
 		pisos[7] = new Piso("cofre abierto", false);// cofre abierto
 		pisos[8] = new Piso("puerta abierta", false);// cofre abierto
 	}
+	
+	// Metodos
 
 	public Piso getPisoByPosition(int n) {
 		if (pisos.length < n)

@@ -14,16 +14,18 @@ public class Mapa {
 	private int limite = matPiso.length;
 
 	private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
-	private Map<Posicion, Enemigo> enemies = new HashMap<Posicion, Enemigo>();
+	private Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
 
 	private Posicion posInicialJugador;
 	private Posicion puertaPos;
 	private Posicion cofrePos;
-	private Cosa puerta = null;
+	private Cosa puerta;
 	private Cosa cofre = null;
 
 	private boolean puertaHabilitada = false;
 	private int itemsObjetivo;
+	
+	// Constructores
 
 	public Mapa(int[][] disenio, Map<Posicion, Cosa> cosas, Map<Posicion, Enemigo> enemies, Posicion posInicialJugador,
 			int itemsObjetivo) {
@@ -40,52 +42,36 @@ public class Mapa {
 			}
 		}
 		this.cosas = cosas;
-		this.enemies = enemies;
+		this.enemigos = enemies;
 		this.posInicialJugador = posInicialJugador;
 		this.itemsObjetivo = itemsObjetivo;
 
 		this.puerta = new Cosa(this.puertaPos, this, true, false);
 	}
 
-	// x = 10; y = 15;
-	// moverDerecha();
-	// matPiso[11][15].collision == false;
+	// Consultas
 
 	public boolean puedoPasar(int x, int y) { // x=Columnas, y=filas
-		if (x <= matPiso.length && x >= 0 && y >= 0 && y <= matPiso[0].length) {
+		if (x < matPiso.length && x >= 0 && y >= 0 && y < matPiso[0].length) {
 			// System.out.println(new Posicion(x,y).compareTo(new Posicion(2,2)));
-			return matPiso[y][x].isCollisionable() == false
-					&& (cosas.get(new Posicion(x, y)) == null || cosas.get(new Posicion(x, y)).isRecogible())
-					&& enemies.get(new Posicion(x, y)) == null;
+			return matPiso[y][x].esColisionable() == false
+					&& (cosas.get(new Posicion(x, y)) == null || cosas.get(new Posicion(x, y)).esRecogible())
+					&& enemigos.get(new Posicion(x, y)) == null;
 		}
 		return false;
 	}
 
-	public Posicion getPosInicialJugador() {
-		return posInicialJugador;
-	}
-
-	public void displayMap() { // leave space between each number
-		for (int i = 0; i < matPiso.length; i++) {
-			for (int j = 0; j < matPiso[0].length; j++) {
-				System.out.printf("%8s", matPiso[i][j].getSprite());
-			}
-			System.out.println("\n");
-		}
-
-	}
-
-	public Posicion getPosPuerta() {
-		return puertaPos;
-	}
+	// Getters by position
 
 	public Cosa getByPosition(Posicion p) {
 		return cosas.get(p);
 	}
 
-	public int getItemsObjetivo() {
-		return this.itemsObjetivo;
+	public Enemigo getEnemyByPosition(Posicion p) {
+		return enemigos.get(p);
 	}
+
+	// Modificar mapa
 
 	public void removeCosa(Posicion p) {
 		cosas.remove(p);
@@ -95,24 +81,15 @@ public class Mapa {
 		this.cosas.put(c.getPos(), c);
 	}
 
-//	public void actualizarCosa(Cosa cosaVieja, Cosa nuevo) {
-//		this.cosas.put(cosaVieja.getPos(), nuevo);
-//	}
-
-	public void mostrarCosas() {
-		for (Posicion p : cosas.keySet()) {
-			System.out.println("Hay una cosa en : " + p);
+	public boolean sacarEnemigo(Enemigo e) {
+		if (enemigos.containsValue(e)) {
+			enemigos.remove(e.getPos());
+			return true;
 		}
+		return false;
 	}
 
-	public void mostrarEnemigos() {
-		for (Posicion p : enemies.keySet()) {
-			System.out.println("Hay un enemigo en : " + p);
-		}
-		if (enemies.isEmpty()) {
-			System.out.println("No hay enemigos!");
-		}
-	}
+	// Habilitaciones
 
 	public void habilitarCofre() {
 		cofre = new Cosa(this.cofrePos, this, true, false);
@@ -123,10 +100,6 @@ public class Mapa {
 
 	}
 
-	public boolean getPuertaHabilitada() {
-		return this.puertaHabilitada;
-	}
-
 	public void habilitarPuerta() {
 		matPiso[(int) puertaPos.getY()][(int) puertaPos.getX()] = new PisoHandler()
 				.getPisoByPosition(PisoHandler.PUERTA_ABIERTA);
@@ -134,27 +107,41 @@ public class Mapa {
 		puertaHabilitada = true;
 	}
 
-	public Map<Posicion, Cosa> getCosas() {
-		return this.cosas;
-	}
-
-	public Enemigo getEnemyByPosition(Posicion p) {
-		return enemies.get(p);
-	}
+	// Getters
 
 	public int getLimite() {
 		return this.limite;
 	}
 
-	public Cosa getPuerta() {
-		return this.puerta;
+	public int getItemsObjetivo() {
+		return this.itemsObjetivo;
 	}
 
-	public boolean sacarEnemigo(Enemigo e) {
-		if (enemies.containsValue(e)) {
-			enemies.remove(e.getPos());
-			return true;
+	public Posicion getPosPuerta() {
+		return this.puertaPos;
+	}
+
+	public Posicion getPosInicialJugador() {
+		return this.posInicialJugador;
+	}
+
+	public boolean getPuertaHabilitada() {
+		return this.puertaHabilitada;
+	}
+
+	public Map<Posicion, Cosa> getCosas() {
+		return this.cosas;
+	}
+
+	// Utiles
+
+	public void displayMap() { // leave space between each number
+		for (int i = 0; i < matPiso.length; i++) {
+			for (int j = 0; j < matPiso[0].length; j++) {
+				System.out.printf("%8s", matPiso[i][j].getSprite());
+			}
+			System.out.println("\n");
 		}
-		return false;
+
 	}
 }

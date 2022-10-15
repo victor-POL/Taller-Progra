@@ -8,24 +8,18 @@ import utiles.Constantes;
 import utiles.Posicion;
 
 public class Jugador extends Entidad {
-//	private int vidas;
-//	private int puntaje;
 	private int cantBalas = 0;
 	private int orientacionActual = utiles.Constantes.DER;
 
 	private List<Cosa> inventario = new ArrayList<Cosa>();
 
-	public Jugador() {
-		super();
-	}
+	// Constructores
 
 	public Jugador(Mapa map) {
 		super(0.5, map.getPosInicialJugador(), map);
 	}
 
-	public double getPaso() {
-		return this.PASO;
-	}
+	// Metodos
 
 	private boolean chequeo_items_y_progreso(Cosa c) {
 		if ((c = map.getByPosition(pos.getPos())) != null) {
@@ -43,6 +37,32 @@ public class Jugador extends Entidad {
 		}
 		return true;
 	}
+	
+	public boolean disparar() {
+		if (cantBalas > 0) {
+			Bala b = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, map);
+			cantBalas--;
+			while (b.mover()) {
+
+				Cosa c = map.getByPosition(b.getPos());
+				Enemigo e = map.getEnemyByPosition(b.getPos());
+
+				if (c != null && !c.esRecogible()) {
+					break;
+				}
+				if (e != null) {
+					map.sacarEnemigo(e);
+					break;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	// Movimientos
 
 	@Override
 	public boolean moverDerecha() {
@@ -156,46 +176,6 @@ public class Jugador extends Entidad {
 
 		orientacionActual = Constantes.ABAJO;
 		return res;
-	}
-
-	public boolean disparar() {
-		if (cantBalas > 0) {
-			Bala b = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, map);
-			cantBalas--;
-			while (b.mover()) {
-
-				Cosa c = map.getByPosition(b.getPos());
-				Enemigo e = map.getEnemyByPosition(b.getPos());
-
-				if (c != null && !c.isRecogible()) {
-					break;
-				}
-				if (e != null) {
-					map.sacarEnemigo(e);
-					break;
-				}
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-//	public void mostrarInventario() {
-//		if (inventario.isEmpty())
-//			System.out.println("El inventario esta vacio");
-//		for (Cosa c : inventario) {
-//			System.out.println("Habia algo en : " + c.getPos());
-//		}
-//	}
-
-	public Mapa getMap() {
-		return this.map;
-	}
-
-	public int getItemsInventario() {
-		return inventario.size();
 	}
 
 }

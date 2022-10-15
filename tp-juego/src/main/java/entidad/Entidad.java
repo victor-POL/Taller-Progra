@@ -9,6 +9,8 @@ public class Entidad implements Constantes {
 	protected Posicion pos;
 	protected Mapa map;
 
+	// Constructores
+	
 	public Entidad() {
 		PASO = 1;
 	}
@@ -18,6 +20,8 @@ public class Entidad implements Constantes {
 		this.pos = pos;
 		this.map = map;
 	}
+	
+	// Movimientos
 
 	public boolean moverDerecha() {
 		if (map.puedoPasar((int) (pos.getX() + 1), (int) pos.getY())) {
@@ -53,7 +57,17 @@ public class Entidad implements Constantes {
 		return false;
 	}
 
+	// Getters
+	
 	public Posicion getPos() {
 		return pos;
+	}
+	
+	public double getPaso() {
+		return this.PASO;
+	}
+	
+	public Mapa getMap() {
+		return this.map;
 	}
 }

@@ -7,11 +7,7 @@ public class Cosa extends Entidad {
 	private final boolean esRecogible;
 	private final boolean esEmpujable;
 
-	public Cosa(double paso, Posicion pos, Mapa map) {
-		super(paso, pos, map);
-		esRecogible = false;
-		esEmpujable = false;
-	}
+	// Constructores
 
 	public Cosa(Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable) {
 		super(0, pos, map);
@@ -24,14 +20,14 @@ public class Cosa extends Entidad {
 		this.esRecogible = esRecogible;
 		this.esEmpujable = esEmpujable;
 	}
+	
+	// Consultas
 
-	public boolean isRecogible() {
+	public boolean esRecogible() {
 		return esRecogible;
 	}
-
-	public boolean isEmpujable() {
-		return esEmpujable;
-	}
+	
+	// Movimientos
 
 	@Override
 	public boolean moverDerecha() {

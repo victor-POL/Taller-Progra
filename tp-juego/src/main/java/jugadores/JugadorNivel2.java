@@ -2,54 +2,55 @@ package jugadores;
 
 import entidad.Jugador;
 
-public class JugadorNivel2 extends Jugador {
-	public JugadorNivel2(Jugador player) {
-		super(player.getMap());
+public class JugadorNivel2 implements Instrucciones {
+	public JugadorNivel2() {
+	}
 
+	public void ejecutarInstrucciones(Jugador player) {
 		for (int i = 0; i < 6; i++)
-			this.moverDerecha();
+			player.moverDerecha();
 
 		for (int i = 0; i < 4; i++)
-			this.moverAbajo();
+			player.moverAbajo();
 
 		for (int i = 0; i < 14; i++)
-			this.moverDerecha();
+			player.moverDerecha();
 
-		this.moverArriba();
-		this.moverArriba();
-		this.moverArriba();
-		this.moverArriba();
+		player.moverArriba();
+		player.moverArriba();
+		player.moverArriba();
+		player.moverArriba();
+		
 
 		for (int i = 0; i < 4; i++)
-			this.moverAbajo();
+			player.moverAbajo();
 
 		for (int i = 0; i < 8; i++)
-			this.moverIzquierda();
+			player.moverIzquierda();
 
-		this.moverArriba();
-		this.disparar();
+		player.moverArriba();
+		player.disparar();
 
 		for (int i = 0; i < 10; i++) {
-			this.moverArriba();
+			player.moverArriba();
 		}
 
 		for (int i = 0; i < 4; i++)
-			this.moverIzquierda();
+			player.moverIzquierda();
 
 		for (int i = 0; i < 4; i++)
-			this.moverDerecha();
+			player.moverDerecha();
 
 		for (int i = 0; i < 16; i++)
-			this.moverAbajo();
+			player.moverAbajo();
 
 		for (int i = 0; i < 4; i++)
-			this.moverIzquierda();
+			player.moverIzquierda();
 
 		for (int i = 0; i < 4; i++)
-			this.moverDerecha();
+			player.moverDerecha();
 
 		for (int i = 0; i < 20; i++)
-			this.moverArriba();
-
+			player.moverArriba();
 	}
 }

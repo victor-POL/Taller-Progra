@@ -6,7 +6,6 @@ import java.util.Map;
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
-import jugadores.JugadorNivel1;
 import mapa.Mapa;
 import utiles.Posicion;
 
@@ -26,8 +25,6 @@ public class NivelDeBala {
 	};
 
 	Jugador player;
-
-	JugadorNivel1 jn1;
 
 	public NivelDeBala(Jugador player) {
 		new NivelDeBala();
@@ -76,30 +73,12 @@ public class NivelDeBala {
 		enemies.put(enemigo_10.getPos(), enemigo_10);
 	}
 
-	public void setPlayer(Jugador player) {
-		this.player = player;
-	}
-
 	public Jugador getPlayer() {
 		return player;
 	}
 
 	public Mapa getMapa() {
 		return this.map;
-	}
-
-	public void mostrarCosas() {
-		map.mostrarCosas();
-	}
-
-	public void add(JugadorNivel1 jn1) {
-		this.jn1 = jn1;
-	}
-
-	public void run() {
-		System.out.println("Posicion inicial del jugador : " + player.getPos());
-		jn1 = new JugadorNivel1(player);
-		System.out.println("Posicion final del jugador : " + player.getPos());
 	}
 
 }

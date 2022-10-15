@@ -2,28 +2,22 @@ package piso;
 
 public class Piso {
 	private String sprite;
-	private boolean collisionable;
+	private boolean esColisionable;
 
-	public Piso() {
-		sprite = "pasto";
-		collisionable = false;
-	}
+	// Constructores
 
-	public Piso(String sprite) {
+	public Piso(String sprite, boolean colisionable) {
 		this.sprite = sprite;
-		collisionable = false;
+		this.esColisionable = colisionable;
 	}
 
-	public Piso(String sprite, boolean collisionable) {
-		this.sprite = sprite;
-		this.collisionable = collisionable;
-	}
-
+	// Getters
+	
 	public String getSprite() {
 		return sprite;
 	}
 
-	public boolean isCollisionable() {
-		return collisionable;
+	public boolean esColisionable() {
+		return esColisionable;
 	}
 }

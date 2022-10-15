@@ -6,7 +6,6 @@ import java.util.Map;
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
-import jugadores.JugadorNivel1;
 import mapa.Mapa;
 import utiles.Posicion;
 
@@ -15,25 +14,15 @@ public class NivelDeCajasAbajo {
 	private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
 	private Map<Posicion, Enemigo> enemies = new HashMap<Posicion, Enemigo>();
 
-	private int [][]disenio = {
-            {1,1,1,1,1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,6,4,0,5,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,3,1,1,1},
-    };
-	
-	Jugador player;
+	private int[][] disenio = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 0, 6, 4, 0, 5, 0, 0, 0, 0, 1 }, { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1 }, };
 
-	JugadorNivel1 jn1;
+	Jugador player;
 
 	public NivelDeCajasAbajo(Jugador player) {
 		new NivelDeCajasAbajo();
@@ -71,30 +60,12 @@ public class NivelDeCajasAbajo {
 		cosas.put(caja_8.getPos(), caja_8);
 	}
 
-	public void setPlayer(Jugador player) {
-		this.player = player;
-	}
-
 	public Jugador getPlayer() {
 		return player;
 	}
 
 	public Mapa getMapa() {
 		return this.map;
-	}
-
-	public void mostrarCosas() {
-		map.mostrarCosas();
-	}
-
-	public void add(JugadorNivel1 jn1) {
-		this.jn1 = jn1;
-	}
-
-	public void run() {
-		System.out.println("Posicion inicial del jugador : " + player.getPos());
-		jn1 = new JugadorNivel1(player);
-		System.out.println("Posicion final del jugador : " + player.getPos());
 	}
 
 }
