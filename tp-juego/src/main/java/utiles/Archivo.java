@@ -48,7 +48,7 @@ public class Archivo {
 				x = scanner.nextInt();
 				y = scanner.nextInt();
 
-				Cosa corazon = new Cosa(new Posicion(x, y), map, true, false);
+				Cosa corazon = new Cosa(new Posicion(x, y), map, true, false, "corazon");
 
 				cosas.put(corazon.getPos(), corazon);
 			}
@@ -59,7 +59,7 @@ public class Archivo {
 				x = scanner.nextInt();
 				y = scanner.nextInt();
 
-				Cosa caja = new Cosa(1, new Posicion(x, y), map, false, true);
+				Cosa caja = new Cosa(1, new Posicion(x, y), map, false, true, "caja");
 
 				cosas.put(caja.getPos(), caja);
 			}

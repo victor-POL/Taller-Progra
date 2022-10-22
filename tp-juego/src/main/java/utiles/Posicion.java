@@ -107,4 +107,8 @@ public class Posicion implements Comparable<Posicion> {
 		this.x = pos.getX();
 		this.y = pos.getY();
 	}
+	@Override
+	public String toString() {
+	    return "[X = " + this.x + ", Y = " + this.y + "]";
+	}
 }

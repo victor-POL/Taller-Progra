@@ -1,5 +1,6 @@
 package niveles;
 
+import animation.Control;
 import entidad.Jugador;
 import jugadores.Instrucciones;
 import mapa.Mapa;
@@ -8,6 +9,7 @@ import utiles.Archivo;
 public class Nivel {
 	private Mapa map;
 	Jugador player;
+	Control c;
 	Instrucciones instrucciones = null;
 
 	// Constructores
@@ -15,7 +17,8 @@ public class Nivel {
 	public Nivel(String nombreNivel) {
 		Archivo disenioNivel = new Archivo(nombreNivel);
 		map = disenioNivel.cargarMapa();
-		this.player = new Jugador(map);
+		c = new Control();
+		this.player = new Jugador(c, map);
 	}
 
 	// Metodos
@@ -41,5 +44,8 @@ public class Nivel {
 
 	public Mapa getMapa() {
 		return this.map;
+	}
+	public Control getControl() {
+	    return this.c;
 	}
 }

@@ -5,6 +5,10 @@ import java.util.Map;
 
 import entidad.Cosa;
 import entidad.Enemigo;
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import piso.Piso;
 import piso.PisoHandler;
 import utiles.Posicion;
@@ -12,6 +16,10 @@ import utiles.Posicion;
 public class Mapa {
 	private Piso[][] matPiso = new Piso[13][13];
 	private int limite = matPiso.length;
+
+	private final int width = 16;
+	private final int height = 16;
+	private Canvas canvas;
 
 	private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
 	private Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
@@ -31,6 +39,7 @@ public class Mapa {
 			int itemsObjetivo) {
 
 		PisoHandler pisoHandler = new PisoHandler();
+		canvas = new Canvas(limite * width, limite*height);
 
 		for (int i = 0; i < disenio.length; i++) {
 			for (int j = 0; j < disenio[0].length; j++) {
@@ -45,8 +54,9 @@ public class Mapa {
 		this.enemigos = enemies;
 		this.posInicialJugador = posInicialJugador;
 		this.itemsObjetivo = itemsObjetivo;
+		this.drawMap();
 
-		this.puerta = new Cosa(this.puertaPos, this, true, false);
+		this.puerta = new Cosa(this.puertaPos, this, true, false, "puerta");
 	}
 
 	// Consultas
@@ -92,7 +102,7 @@ public class Mapa {
 	// Habilitaciones
 
 	public void habilitarCofre() {
-		cofre = new Cosa(this.cofrePos, this, true, false);
+		cofre = new Cosa(this.cofrePos, this, true, false, "cofre abierto");
 		cosas.put(cofrePos, cofre);
 
 		matPiso[(int) cofrePos.getY()][(int) cofrePos.getX()] = new PisoHandler()
@@ -103,28 +113,29 @@ public class Mapa {
 	public void habilitarPuerta() {
 		matPiso[(int) puertaPos.getY()][(int) puertaPos.getX()] = new PisoHandler()
 				.getPisoByPosition(PisoHandler.PUERTA_ABIERTA);
-		puerta = new Cosa(puertaPos, this, true, false);
+		puerta = new Cosa(puertaPos, this, true, false, "puerta abierta");
+		cosas.put(puertaPos, puerta);
 		puertaHabilitada = true;
 	}
-
+	
 	// Getters
-
+	
 	public int getLimite() {
 		return this.limite;
 	}
-
+	
 	public int getItemsObjetivo() {
 		return this.itemsObjetivo;
 	}
-
+	
 	public Posicion getPosPuerta() {
 		return this.puertaPos;
 	}
-
+	
 	public Posicion getPosInicialJugador() {
 		return this.posInicialJugador;
 	}
-
+	
 	public boolean getPuertaHabilitada() {
 		return this.puertaHabilitada;
 	}
@@ -132,16 +143,46 @@ public class Mapa {
 	public Map<Posicion, Cosa> getCosas() {
 		return this.cosas;
 	}
-
+	
+	public Map<Posicion, Enemigo> getEnemigos() {
+        return this.enemigos;
+    }
+	
+	public Node getRender() {
+		return canvas;
+	}
 	// Utiles
 
-	public void displayMap() { // leave space between each number
-		for (int i = 0; i < matPiso.length; i++) {
-			for (int j = 0; j < matPiso[0].length; j++) {
-				System.out.printf("%8s", matPiso[i][j].getSprite());
-			}
-			System.out.println("\n");
-		}
+	// public void displayMap() { // leave space between each number
+	// 	for (int i = 0; i < matPiso.length; i++) {
+	// 		for (int j = 0; j < matPiso[0].length; j++) {
+	// 			System.out.printf("%8s", matPiso[i][j].getSprite());
+	// 		}
+	// 		System.out.println("\n");
+	// 	}
 
+	// }
+
+	// Grficos
+	private void drawMap() {
+        GraphicsContext context = canvas.getGraphicsContext2D();
+        
+        for(int i = 0; i < limite; i++) {
+            for(int j = 0; j < limite; j++) {
+                context.drawImage(matPiso[j][i].getImage(), i*16, j*16);
+            }
+        }
+        
+    }
+
+	public void update(double deltaTime){
+		drawMap();
 	}
+
+
+//	public void redraw() {
+//		for (int y = 0; y < limite; y++) {
+//			drawInCanvas((int) (Math.random() * 8), (int) (Math.random() * 5), limite, y, matPiso[y][limite -1].getImage());
+//		}
+//	}
 }

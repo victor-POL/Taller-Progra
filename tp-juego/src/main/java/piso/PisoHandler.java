@@ -17,15 +17,15 @@ public class PisoHandler {
 	
 	public PisoHandler() {
 		pisos = new Piso[9];
-		pisos[0] = new Piso("camino", false);// camino
-		pisos[1] = new Piso("pared", true);// pared
-		pisos[2] = new Piso("agua", true);// agua
-		pisos[3] = new Piso("puerta", true);// puerta cerrada
-		pisos[4] = new Piso("roca", true);// roca
-		pisos[5] = new Piso("arbol", true);// arbol
-		pisos[6] = new Piso("cofre cerrado", true);// cofre cerrado
-		pisos[7] = new Piso("cofre abierto", false);// cofre abierto
-		pisos[8] = new Piso("puerta abierta", false);// cofre abierto
+		pisos[0] = new Piso("file:src/main/resources/piso/imagenes/camino.png", false);// camino
+		pisos[1] = new Piso("file:src/main/resources/piso/imagenes/pared.png", true);// pared
+		pisos[2] = new Piso("file:src/main/resources/piso/imagenes/agua.png", true);// agua
+		pisos[3] = new Piso("file:src/main/resources/piso/imagenes/puertaCerrada.png", true);// puerta cerrada
+		pisos[4] = new Piso("file:src/main/resources/piso/imagenes/roca.png", true);// roca
+		pisos[5] = new Piso("file:src/main/resources/piso/imagenes/arbol.png", true);// arbol
+		pisos[6] = new Piso("file:src/main/resources/piso/imagenes/cofre.png", true);// cofre cerrado
+		pisos[7] = new Piso("file:src/main/resources/piso/imagenes/cofreAbierto.png", false);// cofre abierto
+		pisos[8] = new Piso("file:src/main/resources/piso/imagenes/puertaAbierta.png", false);// cofre abierto
 	}
 	
 	// Metodos
