@@ -8,7 +8,6 @@ import entidad.Enemigo;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import piso.Piso;
 import piso.PisoHandler;
 import utiles.Posicion;

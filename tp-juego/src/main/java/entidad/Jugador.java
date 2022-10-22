@@ -92,6 +92,8 @@ public class Jugador extends Entidad {
 	    render.setY(y * height);
 	}
 	
+	//transiciones JavaFX
+	
 	private void createTransitions() {
 		translateTransitionDown = new TranslateTransition(animationSpeed, render);
 		translateTransitionDown.setFromY(0);

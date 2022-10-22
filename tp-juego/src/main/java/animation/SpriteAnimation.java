@@ -9,7 +9,6 @@ import javafx.util.Duration;
 public class SpriteAnimation extends Transition {
 	private final ImageView imageView;
 	private int count;
-	private int rows;
 	private final int columns;
 	private final int offsetX;
 	private final int offsetY;
@@ -25,7 +24,6 @@ public class SpriteAnimation extends Transition {
 			int offsetY, int spaceBetween, int width, int height) {
 		this.imageView = imageView;
 		this.count = count;
-		this.rows = rows;
 		this.columns = columns;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
