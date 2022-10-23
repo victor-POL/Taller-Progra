@@ -15,16 +15,16 @@ public class Bala extends Entidad {
         this.direccion = direccion;
         switch (direccion) {
             case Constantes.ARRIBA:
-                this.setImage("file:src/main/resources/cosas/balaArriba.png");
+                this.setImage("file:src/main/resources/cosas/balas/bala_arriba.png");
                 break;
             case Constantes.ABAJO:
-                this.setImage("file:src/main/resources/cosas/balaAbajo.png");
+                this.setImage("file:src/main/resources/cosas/balas/bala_abajo.png");
                 break;
             case Constantes.DER:
-                this.setImage("file:src/main/resources/cosas/balaDerecha.png");
+                this.setImage("file:src/main/resources/cosas/balas/bala_derecha.png");
                 break;
             case Constantes.IZQ:
-                this.setImage("file:src/main/resources/cosas/balaIzquierda.png");
+                this.setImage("file:src/main/resources/cosas/balas/bala_izquierda.png");
                 break;
         }
     }

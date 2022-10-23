@@ -20,15 +20,15 @@ public class PisoHandler {
 
     public PisoHandler() {
         pisos = new ArrayList<>();
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/camino.png", false));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/pared.png", true));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/agua.png", true));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/puertaCerrada.png", true));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/roca.png", true));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/arbol.png", true));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/cofre.png", true));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/cofreAbierto.png", false));
-        pisos.add(new Piso("file:src/main/resources/piso/imagenes/puertaAbierta.png", false));
+        pisos.add(new Piso("file:src/main/resources/piso/camino.png", false));
+        pisos.add(new Piso("file:src/main/resources/piso/pared.png", true));
+        pisos.add(new Piso("file:src/main/resources/piso/agua.png", true));
+        pisos.add(new Piso("file:src/main/resources/piso/puertas/puerta_cerrada.png", true));
+        pisos.add(new Piso("file:src/main/resources/piso/roca.png", true));
+        pisos.add(new Piso("file:src/main/resources/piso/arbol.png", true));
+        pisos.add(new Piso("file:src/main/resources/piso/cofres/cofre_cerrado.png", true));
+        pisos.add(new Piso("file:src/main/resources/piso/cofres/cofre_abierto.png", false));
+        pisos.add(new Piso("file:src/main/resources/piso/puertas/puerta_abierta.png", false));
     }
 
     // Metodos

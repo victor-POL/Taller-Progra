@@ -118,7 +118,7 @@ public class Mapa {
 
         matPiso[(int) cofrePos.getY()][(int) cofrePos.getX()] = new PisoHandler()
                 .getPisoByPosition(PisoHandler.COFRE_ABIERTO);
-        
+        cosas.put(cofrePos, new Cosa(this.cofrePos, this, true, false, "llave"));
         cambie = true;
 
     }

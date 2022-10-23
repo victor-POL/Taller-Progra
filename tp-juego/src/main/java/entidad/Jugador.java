@@ -51,7 +51,7 @@ public class Jugador extends Entidad {
         super(0.5, map.getPosInicialJugador(), map);
 
         this.control = c;
-        Image spriteImages = new Image("file:src/main/resources/jugador/lolo.png");
+        Image spriteImages = new Image("file:src/main/resources/jugador/personaje.png");
         render = new ImageView(spriteImages);
 
         render.setX(map.getPosInicialJugador().getX());

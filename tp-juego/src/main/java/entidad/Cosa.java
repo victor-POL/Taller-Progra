@@ -83,27 +83,32 @@ public class Cosa extends Entidad {
 
     public void setRender() {
         switch (queSoy) {
-            case "corazon":
-                this.render = new ImageView(new Image("file:src/main/resources/piso/imagenes/corazon.png"));
+            case "municion":
+                this.render = new ImageView(new Image("file:src/main/resources/cosas/municion.png"));
                 break;
 
-            case "caja":
-                this.render = new ImageView(new Image("file:src/main/resources/cosas/caja.png"));
+            case "obstaculo empujable":
+                this.render = new ImageView(new Image("file:src/main/resources/cosas/obstaculos/obstaculo_empujable.png"));
                 break;
+                
             case "cofre abierto":
-                this.render = new ImageView(new Image("file:src/main/resources/piso/imagenes/cofre abierto.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/piso/cofres/cofre_abierto.png"));
                 break;
 
             case "puerta abierta":
-                this.render = new ImageView(new Image("file:src/main/resources/piso/imagenes/puerta abierta.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/piso/puertas/puerta_abierta.png"));
                 break;
 
             case "recogido":
-                this.render = new ImageView(new Image("file:src/main/resources/piso/imagenes/empty.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/piso/empty.png"));
+                break;
+            
+            case "llave":
+                this.render = new ImageView(new Image("file:src/main/resources/cosas/llave.png"));
                 break;
 
             default:
-                this.render = new ImageView(new Image("file:src/main/resources/piso/imagenes/agua.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/piso/agua.png"));
 
                 break;
         }
