@@ -42,7 +42,7 @@ public class Mapa {
 
     // Constructores
 
-    public Mapa(int[][] disenio, Map<Posicion, Cosa> cosas, Map<Posicion, Enemigo> enemies, Posicion posInicialJugador,
+    public Mapa(double[][] disenio, Map<Posicion, Cosa> cosas, Map<Posicion, Enemigo> enemies, Posicion posInicialJugador,
             int itemsObjetivo) {
 
         PisoHandler pisoHandler = new PisoHandler();

@@ -30,13 +30,13 @@ public class Archivo {
 			Posicion pos_inicial_jugador = new Posicion(x, y);
 
 			int itemsObjetivo = scanner.nextInt();
-			int[][] disenio = new int[13][13];
+			double[][] disenio = new double[13][13];
 			Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
 			Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
 
 			for (int i = 0; i < 13; i++) {
 				for (int j = 0; j < 13; j++) {
-					disenio[i][j] = scanner.nextInt();
+					disenio[i][j] = scanner.nextDouble();
 				}
 			}
 			
