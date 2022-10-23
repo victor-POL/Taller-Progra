@@ -2,6 +2,7 @@ package entidad;
 
 import animation.Control;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mapa.Mapa;
 import utiles.Constantes;
@@ -79,6 +80,19 @@ public class Entidad implements Constantes {
     public Node getRender() {
         return render;
     }
+
+    // Setters
+
+    public void setImage(ImageView image) {
+        this.render = image;
+    }
+
+    public void setImage(String path) {
+        Image i = new Image(path);
+        this.render = new ImageView(i);
+    }
+
+
 
     public void setPos(Posicion pos) {
         this.pos = pos;

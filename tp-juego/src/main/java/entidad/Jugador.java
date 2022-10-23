@@ -200,28 +200,30 @@ public class Jugador extends Entidad {
         return true;
     }
 
-    public boolean disparar() {
+    public Bala disparar() {
         if (cantBalas > 0) {
             Bala b = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, map);
+            map.addBala(b);
             cantBalas--;
-            while (b.mover()) {
+            // cantBalas--;
+            // while (b.mover()) {
 
-                Cosa c = map.getByPosition(b.getPos());
-                Enemigo e = map.getEnemyByPosition(b.getPos());
+            //     Cosa c = map.getByPosition(b.getPos());
+            //     Enemigo e = map.getEnemyByPosition(b.getPos());
 
-                if (c != null && !c.esRecogible()) {
-                    break;
-                }
-                if (e != null) {
-                    e.setMuerto();
-                    break;
-                }
-            }
+            //     if (c != null && !c.esRecogible()) {
+            //         break;
+            //     }
+            //     if (e != null) {
+            //         e.setMuerto();
+            //         break;
+            //     }
+            // }
 
-            return true;
+            return b;
         }
 
-        return false;
+        return null;
     }
 
     // Movimientos

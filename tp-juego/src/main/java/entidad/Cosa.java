@@ -120,7 +120,7 @@ public class Cosa extends Entidad {
                 return;
             }
         }
-
+        
         this.render.setX(pos.getX() * TILE);
         this.render.setY(pos.getY() * TILE);
 

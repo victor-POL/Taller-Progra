@@ -1,10 +1,12 @@
 package main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import animation.Control;
 import animation.Direction;
+import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
@@ -20,6 +22,8 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -59,6 +63,14 @@ public class Main extends Application {
         control = nivel.getControl();
 
         root.getChildren().add(mapa.getRender());
+
+        ImageView playerRender = (ImageView)jugador.getRender();
+
+        playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
+        playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
+
+
+
         root.getChildren().add(jugador.getRender());
 
         for (Posicion p : mapa.getCosas().keySet()) {
@@ -138,7 +150,15 @@ public class Main extends Application {
 //                        mapa.redraw();
 //                        break;
                     case X:
-                        jugador.disparar();
+                        Bala b;
+                        if((b = jugador.disparar()) != null) {
+                            AudioClip audio = new AudioClip(getClass().getResource("/sonido/laser1.wav").toString());
+                            audio.play();
+                            ImageView iv = (ImageView) b.getRender();
+                            iv.setX(b.getPos().getX() * TILE);
+                            iv.setY(b.getPos().getY() * TILE);
+                            root.getChildren().add(b.getRender());
+                        }
                         break;
                     default:
                         break;
@@ -210,10 +230,27 @@ public class Main extends Application {
             start(stage);
 
         }
-
+        
+        //update mapa, tiles que cambiaron, etc
+        mapa.update(deltaTime);
         List<Cosa> cosasASacar = new ArrayList<>();
         List<Enemigo> enemigosASacar = new ArrayList<>();
+        List<Bala> balasASacar = new ArrayList<>();
 
+        //update balas
+        for (Bala b :  mapa.getBalas()) {
+            if (!b.update(deltaTime)) {
+                balasASacar.add(b);
+            }
+        }
+
+        for(Bala b : balasASacar){
+            mapa.getBalas().remove(b);
+            root.getChildren().remove(b.getRender());
+        }
+
+
+        //update enemigos
         for (Posicion p : mapa.getEnemigos().keySet()) {
             Enemigo e = mapa.getEnemigos().get(p);
             e.update(deltaTime);
@@ -225,8 +262,12 @@ public class Main extends Application {
             mapa.getEnemigos().remove(e.getPos());
             root.getChildren().remove(e.getRender());
         }
+        
+        //update cosas
         for (Posicion p : mapa.getCosas().keySet()) {
             Cosa c = mapa.getCosas().get(p);
+            if(!root.getChildren().contains(c.getRender()))
+                root.getChildren().add(c.getRender());
             c.update(deltaTime);
             if (c.fueRecogido) {
                 cosasASacar.add(c);
@@ -239,8 +280,15 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        AudioClip a = new AudioClip("file:src/main/resources/musica/musicaDeFondo.mp3");
-        a.play();
+        ///AudioClip a = new AudioClip("file:src/main/resources/sonido/musica/musicaDeFondo.mp3");]
+        //a.setCycleCount(AudioClip.INDEFINITE);
+        //set intermediate volume
+        //a.setVolume(0.5);
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setVolume(0.1);
+        mediaPlayer.play();
+
         launch(args);
     }
 }

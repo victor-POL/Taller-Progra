@@ -1,8 +1,11 @@
 package mapa;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
 import javafx.scene.Node;
@@ -24,6 +27,7 @@ public class Mapa {
 
     private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
     private Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
+    private List<Bala> balas = new ArrayList<Bala>();
 
     private Posicion posInicialJugador;
     private Posicion puertaPos;
@@ -31,7 +35,9 @@ public class Mapa {
     private Cosa puerta;
     private Cosa cofre = null;
 
+
     private boolean puertaHabilitada = false;
+    private boolean cambie = false;
     private int itemsObjetivo;
 
     // Constructores
@@ -100,6 +106,10 @@ public class Mapa {
         return false;
     }
 
+    public void addBala(Bala b) {
+        balas.add(b);
+    }
+
     // Habilitaciones
 
     public void habilitarCofre() {
@@ -108,6 +118,8 @@ public class Mapa {
 
         matPiso[(int) cofrePos.getY()][(int) cofrePos.getX()] = new PisoHandler()
                 .getPisoByPosition(PisoHandler.COFRE_ABIERTO);
+        
+        cambie = true;
 
     }
 
@@ -117,6 +129,7 @@ public class Mapa {
         puerta = new Cosa(puertaPos, this, true, false, "puerta abierta");
         cosas.put(puertaPos, puerta);
         puertaHabilitada = true;
+        cambie = true;
     }
 
     // Getters
@@ -149,6 +162,10 @@ public class Mapa {
         return this.enemigos;
     }
 
+    public List<Bala> getBalas() {
+        return this.balas;
+    }
+
     public Node getRender() {
         return canvas;
     }
@@ -177,7 +194,12 @@ public class Mapa {
     }
 
     public void update(double deltaTime) {
-        drawMap();
+        if(cambie){
+            drawMap();
+            cambie = false;
+        }
+        
+
     }
 
 //	public void redraw() {
