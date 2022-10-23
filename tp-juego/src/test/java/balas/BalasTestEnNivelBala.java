@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import entidad.Jugador;
 import niveles.NivelDeBala;
-import piso.Piso;
-import piso.PisoHandler;
 import utiles.Posicion;
 
 public class BalasTestEnNivelBala {
@@ -116,10 +114,6 @@ public class BalasTestEnNivelBala {
 		playerBala.moverDerecha();
 
 		Posicion pos = new Posicion(10, 2);
-
-		Piso piso = new PisoHandler().getPisoByPosition(7);
-
-		Assert.assertTrue(piso.getSprite() == "cofre abierto");
 
 		Assert.assertTrue(levelBala.getMapa().getEnemyByPosition(pos) != null);
 

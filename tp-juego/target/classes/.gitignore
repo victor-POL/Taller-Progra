@@ -1,8 +1,9 @@
 /META-INF/
 /niveles/
-/entidad/
-/utiles/
-/animation/
-/mapa/
 /piso/
+/entidad/
+/animation/
+/jugadores/
 /main/
+/mapa/
+/utiles/

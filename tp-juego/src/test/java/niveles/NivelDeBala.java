@@ -39,11 +39,11 @@ public class NivelDeBala {
 		this.player = new Jugador(map);
 
 		// Corazones
-		Cosa corazon_1 = new Cosa(player.getPaso(), new Posicion(3, 2), map, true, false);
-		Cosa corazon_2 = new Cosa(player.getPaso(), new Posicion(4, 5), map, true, false);
+		Cosa corazon_1 = new Cosa(0, new Posicion(3, 2), map, true, false, "corazon");
+		Cosa corazon_2 = new Cosa(0, new Posicion(4, 5), map, true, false, "corazon");
 
 		// Caja
-		Cosa caja = new Cosa(1, new Posicion(9, 5), map, false, true);
+		Cosa caja = new Cosa(1, new Posicion(9, 5), map, false, true, "caja");
 
 		cosas.put(corazon_1.getPos(), corazon_1);
 		cosas.put(corazon_2.getPos(), corazon_2);

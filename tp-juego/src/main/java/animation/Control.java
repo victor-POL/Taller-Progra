@@ -8,39 +8,39 @@ public class Control {
 
     public void setDirection(Direction direction) {
         switch (direction) {
-        case DOWN:
-            directionDown = true;
-            break;
-        case LEFT:
-            directionLeft = true;
-            break;
-        case RIGHT:
-            directionRight = true;
-            break;
-        case UP:
-            directionUp = true;
-            break;
-        default:
-            break;
+            case DOWN:
+                directionDown = true;
+                break;
+            case LEFT:
+                directionLeft = true;
+                break;
+            case RIGHT:
+                directionRight = true;
+                break;
+            case UP:
+                directionUp = true;
+                break;
+            default:
+                break;
         }
     }
 
     public void releaseDirection(Direction direction) {
         switch (direction) {
-        case DOWN:
-            directionDown = false;
-            break;
-        case LEFT:
-            directionLeft = false;
-            break;
-        case RIGHT:
-            directionRight = false;
-            break;
-        case UP:
-            directionUp = false;
-            break;
-        default:
-            break;
+            case DOWN:
+                directionDown = false;
+                break;
+            case LEFT:
+                directionLeft = false;
+                break;
+            case RIGHT:
+                directionRight = false;
+                break;
+            case UP:
+                directionUp = false;
+                break;
+            default:
+                break;
         }
     }
 

@@ -28,9 +28,10 @@ import niveles.Nivel;
 import utiles.Posicion;
 
 public class Main extends Application {
+    private static final int TILE = 32;
     private static final double NANOS_IN_SECOND_D = 1_000_000_000.0;
-    private static final int TILE_WIDTH = 16;
-    private static final int TILE_HEIGHT = 16;
+    private static final int TILE_WIDTH = 32;
+    private static final int TILE_HEIGHT = 32;
     private static final int X_TILES = 13;
     private static final int Y_TILES = 13;
     long previousNanoFrame;
@@ -39,8 +40,8 @@ public class Main extends Application {
     Mapa mapa;
     Scene currentScene;
     Stage stage;
-	Group root;
-	String level = "nivel_1";
+    Group root;
+    String level = "nivel_1";
 
     Control control;
 
@@ -54,43 +55,41 @@ public class Main extends Application {
         mapa = nivel.getMapa();
         jugador = nivel.getPlayer();
         System.out.println(jugador.getPos());
-        
-        
+
         control = nivel.getControl();
 
         root.getChildren().add(mapa.getRender());
         root.getChildren().add(jugador.getRender());
-        
-        for(Posicion p : mapa.getCosas().keySet()) {
+
+        for (Posicion p : mapa.getCosas().keySet()) {
             Cosa c = mapa.getCosas().get(p);
-            ImageView iv = (ImageView)c.getRender();  
-            iv.setX(p.getX() * 16);
-            iv.setY(p.getY() * 16);
+            ImageView iv = (ImageView) c.getRender();
+            iv.setX(p.getX() * TILE);
+            iv.setY(p.getY() * TILE);
             root.getChildren().add(c.getRender());
         }
 
-        for(Posicion p : mapa.getEnemigos().keySet()) {
+        for (Posicion p : mapa.getEnemigos().keySet()) {
             Enemigo c = mapa.getEnemigos().get(p);
-            ImageView iv = (ImageView)c.getRender();  
-            iv.setX(p.getX() * 16);
-            iv.setY(p.getY() * 16);
+            ImageView iv = (ImageView) c.getRender();
+            iv.setX(p.getX() * TILE);
+            iv.setY(p.getY() * TILE);
             root.getChildren().add(c.getRender());
         }
-        
-        
+
         addUpdateEachFrameTimer();
 
-         Scale scale = new Scale(1, 1);
-         scale.setPivotX(0);
-         scale.setPivotY(0);
-         root.getTransforms().setAll(scale);
+        Scale scale = new Scale(1, 1);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        root.getTransforms().setAll(scale);
 
         ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
             double scaleX = currentScene.getWidth() / (X_TILES * TILE_WIDTH);
             double scaleY = currentScene.getHeight() / (Y_TILES * TILE_HEIGHT);
 
-             scale.setX(scaleX);
-             scale.setY(scaleY);
+            scale.setX(scaleX);
+            scale.setY(scaleY);
         };
         currentScene.widthProperty().addListener(stageSizeListener);
         currentScene.heightProperty().addListener(stageSizeListener);
@@ -98,14 +97,14 @@ public class Main extends Application {
         stage.setMinHeight(Y_TILES * TILE_HEIGHT);
         // set the window size to 900x900
         stage.setResizable(true);
-        // stage.setWidth(900);
-        // stage.setHeight(900);
+         stage.setWidth(900);
+         stage.setHeight(900);
 
         stage.setScene(currentScene);
         stage.setTitle("Testigos de Java");
 
         stage.setScene(currentScene);
-		stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         stage.show();
         addInputEvents();
     }
@@ -197,56 +196,51 @@ public class Main extends Application {
         gameTimer.start();
     }
 
-    protected void update(double deltaTime)  {
-        if(jugador.update(deltaTime)){
-			root.getChildren().clear();
-			if(level == "nivel_1") {
-				level = "nivel_2";
-			}
-			else {
-				//show game over on screen
-				root.getChildren().add(new Text(100, 100, "Game Over"));
-				System.exit(0);
+    protected void update(double deltaTime) {
+        if (jugador.update(deltaTime)) {
+            root.getChildren().clear();
+            if (level == "nivel_1") {
+                level = "nivel_2";
+            } else {
+                // show game over on screen
+                root.getChildren().add(new Text(100, 100, "Game Over"));
+                System.exit(0);
 
-			}
-			start(stage);
-			
-		}
-		
+            }
+            start(stage);
 
-		List<Cosa> cosasASacar = new ArrayList<>();
-		List<Enemigo> enemigosASacar = new ArrayList<>(); 
+        }
 
-		for(Posicion p : mapa.getEnemigos().keySet()) {
-			Enemigo e = mapa.getEnemigos().get(p);
-			e.update(deltaTime);
-			if(e.Muerto()){
-				enemigosASacar.add(e);
-			}
-		}
-		for(Enemigo e : enemigosASacar){
-			mapa.getEnemigos().remove(e.getPos());
-			root.getChildren().remove(e.getRender());
-		}
-		for(Posicion p : mapa.getCosas().keySet()) {
-			Cosa c = mapa.getCosas().get(p);
-			c.update(deltaTime);
-			if(c.fueRecogido){
-				cosasASacar.add(c);
-			}
-		}
-		for(Cosa c : cosasASacar){
-			mapa.getCosas().remove(c.getPos());
-			root.getChildren().remove(c.getRender());
-		}
-	}
+        List<Cosa> cosasASacar = new ArrayList<>();
+        List<Enemigo> enemigosASacar = new ArrayList<>();
 
-	public static void main(String[] args) {
-	    AudioClip a = new AudioClip("file:src/main/resources/musica/musicaDeFondo.mp3");
-	    a.play();
-		launch(args);
-	}
+        for (Posicion p : mapa.getEnemigos().keySet()) {
+            Enemigo e = mapa.getEnemigos().get(p);
+            e.update(deltaTime);
+            if (e.Muerto()) {
+                enemigosASacar.add(e);
+            }
+        }
+        for (Enemigo e : enemigosASacar) {
+            mapa.getEnemigos().remove(e.getPos());
+            root.getChildren().remove(e.getRender());
+        }
+        for (Posicion p : mapa.getCosas().keySet()) {
+            Cosa c = mapa.getCosas().get(p);
+            c.update(deltaTime);
+            if (c.fueRecogido) {
+                cosasASacar.add(c);
+            }
+        }
+        for (Cosa c : cosasASacar) {
+            mapa.getCosas().remove(c.getPos());
+            root.getChildren().remove(c.getRender());
+        }
+    }
+
+    public static void main(String[] args) {
+        AudioClip a = new AudioClip("file:src/main/resources/musica/musicaDeFondo.mp3");
+        a.play();
+        launch(args);
+    }
 }
-
-
-

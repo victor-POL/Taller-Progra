@@ -7,45 +7,46 @@ import mapa.Mapa;
 import utiles.Archivo;
 
 public class Nivel {
-	private Mapa map;
-	Jugador player;
-	Control c;
-	Instrucciones instrucciones = null;
+    private Mapa map;
+    Jugador player;
+    Control c;
+    Instrucciones instrucciones = null;
 
-	// Constructores
+    // Constructores
 
-	public Nivel(String nombreNivel) {
-		Archivo disenioNivel = new Archivo(nombreNivel);
-		map = disenioNivel.cargarMapa();
-		c = new Control();
-		this.player = new Jugador(c, map);
-	}
+    public Nivel(String nombreNivel) {
+        Archivo disenioNivel = new Archivo(nombreNivel);
+        map = disenioNivel.cargarMapa();
+        c = new Control();
+        this.player = new Jugador(c, map);
+    }
 
-	// Metodos
-	
-	public void add(Instrucciones jugador) {
-		instrucciones = jugador;
-	}
+    // Metodos
 
-	public void run() {
-		instrucciones.ejecutarInstrucciones(player);
-		if (this.player.getPos().equals(map.getPosPuerta()))
-			System.out.println("Ganaste! Esa era una solucion valida!");
+    public void add(Instrucciones jugador) {
+        instrucciones = jugador;
+    }
 
-		else
-			System.out.println("Perdiste :c, Esa no era una solucion valida..");
-	}
+    public void run() {
+        instrucciones.ejecutarInstrucciones(player);
+        if (this.player.getPos().equals(map.getPosPuerta()))
+            System.out.println("Ganaste! Esa era una solucion valida!");
 
-	// Getters
+        else
+            System.out.println("Perdiste :c, Esa no era una solucion valida..");
+    }
 
-	public Jugador getPlayer() {
-		return player;
-	}
+    // Getters
 
-	public Mapa getMapa() {
-		return this.map;
-	}
-	public Control getControl() {
-	    return this.c;
-	}
+    public Jugador getPlayer() {
+        return player;
+    }
+
+    public Mapa getMapa() {
+        return this.map;
+    }
+
+    public Control getControl() {
+        return this.c;
+    }
 }

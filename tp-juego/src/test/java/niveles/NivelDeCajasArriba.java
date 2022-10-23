@@ -37,17 +37,17 @@ public class NivelDeCajasArriba {
 		this.player = new Jugador(map);
 
 		// Corazones recogible empujables
-		Cosa corazon = new Cosa(new Posicion(3, 2), map, true, false);
+		Cosa corazon = new Cosa(new Posicion(3, 2), map, true, false, "corazon");
 
 		// Cajas
-		Cosa caja_1 = new Cosa(1, new Posicion(3, 4), map, false, true);
-		Cosa caja_2 = new Cosa(1, new Posicion(4, 4), map, false, true);
-		Cosa caja_3 = new Cosa(1, new Posicion(5, 4), map, false, true);
-		Cosa caja_4 = new Cosa(1, new Posicion(6, 4), map, false, true);
-		Cosa caja_5 = new Cosa(1, new Posicion(7, 4), map, false, true);
-		Cosa caja_6 = new Cosa(1, new Posicion(8, 4), map, false, true);
-		Cosa caja_7 = new Cosa(1, new Posicion(8, 2), map, false, true);
-		Cosa caja_8 = new Cosa(1, new Posicion(9, 4), map, false, true);
+		Cosa caja_1 = new Cosa(1, new Posicion(3, 4), map, false, true, "caja");
+		Cosa caja_2 = new Cosa(1, new Posicion(4, 4), map, false, true, "caja");
+		Cosa caja_3 = new Cosa(1, new Posicion(5, 4), map, false, true, "caja");
+		Cosa caja_4 = new Cosa(1, new Posicion(6, 4), map, false, true, "caja");
+		Cosa caja_5 = new Cosa(1, new Posicion(7, 4), map, false, true, "caja");
+		Cosa caja_6 = new Cosa(1, new Posicion(8, 4), map, false, true, "caja");
+		Cosa caja_7 = new Cosa(1, new Posicion(8, 2), map, false, true, "caja");
+		Cosa caja_8 = new Cosa(1, new Posicion(9, 4), map, false, true, "caja");
 
 		cosas.put(corazon.getPos(), corazon);
 		cosas.put(caja_1.getPos(), caja_1);
