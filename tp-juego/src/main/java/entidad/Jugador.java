@@ -182,12 +182,10 @@ public class Jugador extends Entidad {
 
             map.getByPosition(pos.getPos()).setRecogido();
             inventario.add(c);
-            System.out.println(c);
             if (c.queSoy == "puerta abierta") {
                 progreso = true;
             }
             // map.removeCosa(pos.getPos());
-            System.out.println("Recogiste un item");
 
             cantBalas++;
 

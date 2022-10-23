@@ -30,7 +30,8 @@ public class Entidad implements Constantes {
     // Movimientos
 
     public boolean moverDerecha() {
-        if (map.puedoPasar((int) (pos.getX() + 1), (int) pos.getY())) {
+        if (map.puedoPasar((int) (pos.getX() + 1), (int) Math.ceil( pos.getY())) &&
+                map.puedoPasar((int) (pos.getX() + 1), (int) Math.floor(pos.getY()))) {
             pos.setX(pos.getX() + STEP_SIZE);
             return true;
         }
@@ -40,7 +41,8 @@ public class Entidad implements Constantes {
 
     public boolean moverIzquierda() {
 
-        if (map.puedoPasar((int) Math.round(pos.getX() - 1), (int) pos.getY())) {
+        if (map.puedoPasar((int) Math.round(pos.getX() - 1), (int)Math.ceil( pos.getY())) &&
+                map.puedoPasar((int) Math.round(pos.getX() - 1), (int)Math.floor(pos.getY()))) {
             pos.setX(pos.getX() - STEP_SIZE);
             return true;
         }
@@ -48,7 +50,8 @@ public class Entidad implements Constantes {
     }
 
     public boolean moverAbajo() {
-        if (map.puedoPasar((int) (pos.getX()), (int) (pos.getY() + 1))) {
+        if (map.puedoPasar((int) (Math.ceil(pos.getX())), (int) (pos.getY() + 1)) &&
+                map.puedoPasar((int) (Math.floor(pos.getX())), (int) (pos.getY() + 1))) {
             pos.setY(pos.getY() + STEP_SIZE);
             return true;
         }
@@ -56,7 +59,8 @@ public class Entidad implements Constantes {
     }
 
     public boolean moverArriba() {
-        if (map.puedoPasar((int) (pos.getX()), (int) Math.round(pos.getY() - 1))) {
+        if (map.puedoPasar((int) (Math.ceil(pos.getX())), (int) Math.round(pos.getY() - 1)) &&
+                map.puedoPasar((int) (Math.floor(pos.getX())), (int) Math.round(pos.getY() - 1))) {
             pos.setY(pos.getY() - STEP_SIZE);
             return true;
         }

@@ -58,7 +58,6 @@ public class Main extends Application {
         Nivel nivel = new Nivel(level);
         mapa = nivel.getMapa();
         jugador = nivel.getPlayer();
-        System.out.println(jugador.getPos());
 
         control = nivel.getControl();
 
