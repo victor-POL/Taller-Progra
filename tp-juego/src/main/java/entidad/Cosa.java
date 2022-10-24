@@ -41,8 +41,8 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverDerecha() {
-        if (map.puedoPasar((int) (pos.getX() + 1), (int) pos.getY())
-                && map.getByPosition(new Posicion(pos.getX() + 1, (int) pos.getY())) == null) {
+        if (map.puedoPasar((int) (pos.getX() + this.STEP_SIZE), (int) pos.getY())
+                && map.getByPosition(new Posicion(pos.getX() + this.STEP_SIZE, (int) pos.getY())) == null) {
             pos.setX(pos.getX() + STEP_SIZE);
             return true;
         }
@@ -51,8 +51,8 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverIzquierda() {
-        if (map.puedoPasar((int) Math.round(pos.getX() - 1), (int) pos.getY())
-                && map.getByPosition(new Posicion((int) Math.round(pos.getX() - 1), (int) pos.getY())) == null) {
+        if (map.puedoPasar((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())
+                && map.getByPosition(new Posicion((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())) == null) {
             pos.setX(pos.getX() - STEP_SIZE);
             return true;
         }
@@ -61,8 +61,8 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverArriba() {
-        if (map.puedoPasar((int) (pos.getX()), (int) Math.round(pos.getY() - 1))
-                && map.getByPosition(new Posicion((int) (pos.getX()), (int) Math.round(pos.getY() - 1))) == null) {
+        if (map.puedoPasar((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))
+                && map.getByPosition(new Posicion((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))) == null) {
             pos.setY(pos.getY() - STEP_SIZE);
             return true;
         }
@@ -71,8 +71,8 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverAbajo() {
-        if (map.puedoPasar((int) (pos.getX()), (int) (pos.getY() + 1))
-                && map.getByPosition(new Posicion((int) (pos.getX()), (int) (pos.getY() + 1))) == null) {
+        if (map.puedoPasar((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))
+                && map.getByPosition(new Posicion((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))) == null) {
             pos.setY(pos.getY() + STEP_SIZE);
             return true;
         }

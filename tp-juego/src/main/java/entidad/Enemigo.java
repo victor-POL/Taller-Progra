@@ -9,7 +9,7 @@ import utiles.Posicion;
 public class Enemigo extends Entidad {
 
     private boolean estaMuerto = false;
-    private int count = 0;
+    private double count = 0;
 
     // Constructores
 
@@ -31,13 +31,13 @@ public class Enemigo extends Entidad {
     }
 
     public Bala update(double deltaTime) {
-        if(count == 60){
+        if(count > 0.5){
             Bala b = disparar(Constantes.ABAJO);
             map.addBala(b);
             count = 0;
             return b;
         }else
-            count++;
+            count+=deltaTime;
         return null;
     }
 

@@ -40,6 +40,7 @@ public class Main extends Application {
     private static final int Y_TILES = 13;
     int counter = 0;
     long previousNanoFrame;
+    boolean setear = false;
 
     Jugador jugador;
     Mapa mapa;
@@ -64,11 +65,10 @@ public class Main extends Application {
 
         root.getChildren().add(mapa.getRender());
 
-        ImageView playerRender = (ImageView)jugador.getRender();
+        ImageView playerRender = (ImageView) jugador.getRender();
 
         playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
         playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
-
 
         root.getChildren().add(jugador.getRender());
 
@@ -108,14 +108,19 @@ public class Main extends Application {
         stage.setMinHeight(Y_TILES * TILE_HEIGHT);
         // set the window size to 900x900
         stage.setResizable(true);
-         stage.setWidth(900);
-         stage.setHeight(900);
+        if(!setear)
+        {
+            stage.setWidth(900);
+            stage.setHeight(900);
+            setear = true;
+        }
+        
 
         stage.setScene(currentScene);
         stage.setTitle("Testigos de Java");
 
         stage.setScene(currentScene);
-//        stage.setFullScreen(true);
+        stage.setFullScreen(true);
         stage.show();
         addInputEvents();
     }
@@ -145,12 +150,12 @@ public class Main extends Application {
                         control.setDirection(Direction.DOWN);
                         jugador.step();
                         break;
-//                    case M:
-//                        mapa.redraw();
-//                        break;
+                    case R:
+                        jugador.setDead(true);
+                        break;
                     case X:
                         Bala b;
-                        if((b = jugador.disparar()) != null) {
+                        if ((b = jugador.disparar()) != null) {
                             AudioClip audio = new AudioClip(getClass().getResource("/sonido/laser1.wav").toString());
                             audio.play();
                             ImageView iv = (ImageView) b.getRender();
@@ -208,8 +213,8 @@ public class Main extends Application {
             @Override
             public void handle(long currentNano) {
                 // Update tick
-                //update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
-                if(!update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D))
+                // update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
+                if (!update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D))
                     this.stop();
                 previousNanoFrame = currentNano;
             }
@@ -218,10 +223,10 @@ public class Main extends Application {
     }
 
     protected boolean update(double deltaTime) {
-        if(jugador.isDead()){
+        if (jugador.isDead()) {
             root.getChildren().clear();
             start(stage);
-            return false; //to stop the timer
+            return false; // to stop the timer
 
         }
         if (jugador.update(deltaTime)) {
@@ -237,31 +242,30 @@ public class Main extends Application {
             start(stage);
             return false; // to stop the timer
         }
-        
-        //update mapa, tiles que cambiaron, etc
+
+        // update mapa, tiles que cambiaron, etc
         mapa.update(deltaTime);
         List<Cosa> cosasASacar = new ArrayList<>();
         List<Enemigo> enemigosASacar = new ArrayList<>();
         List<Bala> balasASacar = new ArrayList<>();
 
-        //update balas
-        for (Bala b :  mapa.getBalas()) {
+        // update balas
+        for (Bala b : mapa.getBalas()) {
             if (!b.update(deltaTime)) {
                 balasASacar.add(b);
             }
         }
 
-        for(Bala b : balasASacar){
+        for (Bala b : balasASacar) {
             mapa.getBalas().remove(b);
             root.getChildren().remove(b.getRender());
         }
 
-
-        //update enemigos
+        // update enemigos
         for (Posicion p : mapa.getEnemigos().keySet()) {
             Enemigo e = mapa.getEnemigos().get(p);
             Bala b = e.update(deltaTime);
-            if(b != null){
+            if (b != null) {
                 ImageView iv = (ImageView) b.getRender();
                 iv.setX(b.getPos().getX() * TILE);
                 iv.setY(b.getPos().getY() * TILE);
@@ -275,11 +279,11 @@ public class Main extends Application {
             mapa.getEnemigos().remove(e.getPos());
             root.getChildren().remove(e.getRender());
         }
-        
-        //update cosas
+
+        // update cosas
         for (Posicion p : mapa.getCosas().keySet()) {
             Cosa c = mapa.getCosas().get(p);
-            if(!root.getChildren().contains(c.getRender()))
+            if (!root.getChildren().contains(c.getRender()))
                 root.getChildren().add(c.getRender());
             c.update(deltaTime);
             if (c.fueRecogido) {
@@ -291,17 +295,17 @@ public class Main extends Application {
             root.getChildren().remove(c.getRender());
         }
 
-        System.out.println(counter);
-        counter++;
         return true;
     }
 
     public static void main(String[] args) {
-        ///AudioClip a = new AudioClip("file:src/main/resources/sonido/musica/musicaDeFondo.mp3");]
-        //a.setCycleCount(AudioClip.INDEFINITE);
-        //set intermediate volume
-        //a.setVolume(0.5);
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
+        /// AudioClip a = new
+        /// AudioClip("file:src/main/resources/sonido/musica/musicaDeFondo.mp3");]
+        // a.setCycleCount(AudioClip.INDEFINITE);
+        // set intermediate volume
+        // a.setVolume(0.5);
+        MediaPlayer mediaPlayer = new MediaPlayer(
+                new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setVolume(0.1);
         mediaPlayer.play();

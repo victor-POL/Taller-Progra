@@ -6,8 +6,8 @@ import utiles.Constantes;
 
 public class Bala extends Entidad {
     private int direccion;
-    private int counter = 0;
-    private int speed = 2;
+    private double counter = 0;
+    //private int speed = 2;
     // Constructores
 
     public Bala(Posicion pos, int direccion, Mapa map) {
@@ -83,13 +83,13 @@ public class Bala extends Entidad {
     }
 
     public boolean update(double deltaTime) {
-        if (counter >= speed) {
+        if (counter >= 0.04) {
             this.render.setX(pos.getX() * 32);
             this.render.setY(pos.getY() * 32);
             counter = 0;
             return this.mover();
         } else
-            counter++;
+            counter+= deltaTime;
         return true;
 
     }
