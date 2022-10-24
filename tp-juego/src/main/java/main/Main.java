@@ -69,7 +69,6 @@ public class Main extends Application {
         playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
 
 
-
         root.getChildren().add(jugador.getRender());
 
         for (Posicion p : mapa.getCosas().keySet()) {

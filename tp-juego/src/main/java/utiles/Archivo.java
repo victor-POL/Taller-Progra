@@ -36,7 +36,7 @@ public class Archivo {
 
 			for (int i = 0; i < 13; i++) {
 				for (int j = 0; j < 13; j++) {
-					disenio[i][j] = scanner.nextDouble();
+					disenio[i][j] = Double.valueOf(scanner.next());
 				}
 			}
 			
