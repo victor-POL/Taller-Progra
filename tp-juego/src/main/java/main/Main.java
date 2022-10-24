@@ -38,6 +38,7 @@ public class Main extends Application {
     private static final int TILE_HEIGHT = 32;
     private static final int X_TILES = 13;
     private static final int Y_TILES = 13;
+    int counter = 0;
     long previousNanoFrame;
 
     Jugador jugador;
@@ -207,14 +208,22 @@ public class Main extends Application {
             @Override
             public void handle(long currentNano) {
                 // Update tick
-                update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
+                //update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
+                if(!update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D))
+                    this.stop();
                 previousNanoFrame = currentNano;
             }
         };
         gameTimer.start();
     }
 
-    protected void update(double deltaTime) {
+    protected boolean update(double deltaTime) {
+        if(jugador.isDead()){
+            root.getChildren().clear();
+            start(stage);
+            return false; //to stop the timer
+
+        }
         if (jugador.update(deltaTime)) {
             root.getChildren().clear();
             if (level == "nivel_1") {
@@ -226,7 +235,7 @@ public class Main extends Application {
 
             }
             start(stage);
-
+            return false; // to stop the timer
         }
         
         //update mapa, tiles que cambiaron, etc
@@ -251,7 +260,13 @@ public class Main extends Application {
         //update enemigos
         for (Posicion p : mapa.getEnemigos().keySet()) {
             Enemigo e = mapa.getEnemigos().get(p);
-            e.update(deltaTime);
+            Bala b = e.update(deltaTime);
+            if(b != null){
+                ImageView iv = (ImageView) b.getRender();
+                iv.setX(b.getPos().getX() * TILE);
+                iv.setY(b.getPos().getY() * TILE);
+                root.getChildren().add(b.getRender());
+            }
             if (e.Muerto()) {
                 enemigosASacar.add(e);
             }
@@ -275,6 +290,10 @@ public class Main extends Application {
             mapa.getCosas().remove(c.getPos());
             root.getChildren().remove(c.getRender());
         }
+
+        System.out.println(counter);
+        counter++;
+        return true;
     }
 
     public static void main(String[] args) {

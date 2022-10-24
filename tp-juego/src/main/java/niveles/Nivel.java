@@ -8,8 +8,8 @@ import utiles.Archivo;
 
 public class Nivel {
     private Mapa map;
-    Jugador player;
-    Control c;
+    private Jugador player;
+    private Control c;
     Instrucciones instrucciones = null;
 
     // Constructores
@@ -19,6 +19,7 @@ public class Nivel {
         map = disenioNivel.cargarMapa();
         c = new Control();
         this.player = new Jugador(c, map);
+        map.setPlayer(player);
     }
 
     // Metodos

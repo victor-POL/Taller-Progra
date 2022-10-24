@@ -8,6 +8,7 @@ import java.util.Map;
 import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
+import entidad.Jugador;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -28,8 +29,9 @@ public class Mapa {
     private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
     private Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
     private List<Bala> balas = new ArrayList<Bala>();
+    private Jugador player;
 
-    private Posicion posInicialJugador;
+    private Posicion posJugador;
     private Posicion puertaPos;
     private Posicion cofrePos;
     private Cosa puerta;
@@ -59,7 +61,7 @@ public class Mapa {
         }
         this.cosas = cosas;
         this.enemigos = enemies;
-        this.posInicialJugador = posInicialJugador;
+        this.posJugador = posInicialJugador;
         this.itemsObjetivo = itemsObjetivo;
         this.drawMap();
 
@@ -110,6 +112,15 @@ public class Mapa {
         balas.add(b);
     }
 
+    public void setPos(Posicion p){
+        posJugador = p;
+    }
+
+    public void setPlayer(Jugador j) {
+        player = j;
+    }
+
+
     // Habilitaciones
 
     public void habilitarCofre() {
@@ -147,7 +158,11 @@ public class Mapa {
     }
 
     public Posicion getPosInicialJugador() {
-        return this.posInicialJugador;
+        return this.posJugador;
+    }
+
+    public Posicion getPosJugador(){
+        return this.posJugador;
     }
 
     public boolean getPuertaHabilitada() {
@@ -168,6 +183,10 @@ public class Mapa {
 
     public Node getRender() {
         return canvas;
+    }
+
+    public Jugador getPlayer() {
+        return this.player;
     }
     // Utiles
 

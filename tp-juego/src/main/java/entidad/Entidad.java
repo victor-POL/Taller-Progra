@@ -96,9 +96,8 @@ public class Entidad implements Constantes {
         this.render = new ImageView(i);
     }
 
-
-
     public void setPos(Posicion pos) {
         this.pos = pos;
     }
+
 }

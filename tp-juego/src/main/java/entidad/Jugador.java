@@ -203,21 +203,6 @@ public class Jugador extends Entidad {
             Bala b = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, map);
             map.addBala(b);
             cantBalas--;
-            // cantBalas--;
-            // while (b.mover()) {
-
-            //     Cosa c = map.getByPosition(b.getPos());
-            //     Enemigo e = map.getEnemyByPosition(b.getPos());
-
-            //     if (c != null && !c.esRecogible()) {
-            //         break;
-            //     }
-            //     if (e != null) {
-            //         e.setMuerto();
-            //         break;
-            //     }
-            // }
-
             return b;
         }
 
@@ -252,6 +237,7 @@ public class Jugador extends Entidad {
         }
 
         orientacionActual = Constantes.DER;
+        map.setPos(pos);
         return res;
     }
 
@@ -282,6 +268,7 @@ public class Jugador extends Entidad {
         }
 
         orientacionActual = Constantes.IZQ;
+        map.setPos(pos);
         return res;
     }
 
@@ -311,6 +298,7 @@ public class Jugador extends Entidad {
         }
 
         orientacionActual = Constantes.ARRIBA;
+        map.setPos(pos);
         return res;
     }
 
@@ -337,7 +325,16 @@ public class Jugador extends Entidad {
         }
 
         orientacionActual = Constantes.ABAJO;
+        map.setPos(pos);
         return res;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 
     public List<Cosa> getInventario() {

@@ -3,11 +3,13 @@ package entidad;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mapa.Mapa;
+import utiles.Constantes;
 import utiles.Posicion;
 
 public class Enemigo extends Entidad {
 
     private boolean estaMuerto = false;
+    private int count = 0;
 
     // Constructores
 
@@ -23,9 +25,20 @@ public class Enemigo extends Entidad {
     public boolean Muerto() {
         return this.estaMuerto;
     }
+    
+    public Bala disparar(int direccion) {
+        return new Bala(new Posicion(pos.getX() ,pos.getY() + 0.5),direccion, map);
+    }
 
-    public void update(double deltaTime) {
-
+    public Bala update(double deltaTime) {
+        if(count == 60){
+            Bala b = disparar(Constantes.ABAJO);
+            map.addBala(b);
+            count = 0;
+            return b;
+        }else
+            count++;
+        return null;
     }
 
 }
