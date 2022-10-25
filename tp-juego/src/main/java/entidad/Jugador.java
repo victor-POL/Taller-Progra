@@ -345,4 +345,11 @@ public class Jugador extends Entidad {
         return this.progreso;
     }
 
+    public void setOrientacion(int orientacion) {
+        this.orientacionActual = orientacion;
+    }
+    
+    public void setCantBalas(int cant) {
+        this.cantBalas = cant;
+    }
 }

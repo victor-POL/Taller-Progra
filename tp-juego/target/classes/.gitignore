@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-=======
-/niveles/
-/piso/
 /main/
 /utiles/
->>>>>>> facu
-/animation/
-/entidad/
-/mapa/
-<<<<<<< HEAD
+/META-INF/
 /niveles/
 /piso/
-/utiles/
-=======
->>>>>>> facu
-/META-INF/
-/jugadores/
+/entidad/
