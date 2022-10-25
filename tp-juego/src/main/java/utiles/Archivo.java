@@ -68,8 +68,10 @@ public class Archivo {
 			for (int i = 0; i < cantEnemigos; i++) {
 				x = scanner.nextInt();
 				y = scanner.nextInt();
+				int orientacion = scanner.nextInt();
+				
 
-				Enemigo enemigo = new Enemigo(0, new Posicion(x, y), map);
+				Enemigo enemigo = new Enemigo(0, new Posicion(x, y), map, orientacion);
 
 				enemigos.put(enemigo.getPos(), enemigo);
 			}

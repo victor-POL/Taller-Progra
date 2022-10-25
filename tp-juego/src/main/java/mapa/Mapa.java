@@ -89,6 +89,10 @@ public class Mapa {
     public Enemigo getEnemyByPosition(Posicion p) {
         return enemigos.get(p);
     }
+    
+    public Piso getPisoByPosition(int x, int y) {
+        return this.matPiso[x][y];
+    }
 
     // Modificar mapa
 

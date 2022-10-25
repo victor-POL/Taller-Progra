@@ -15,6 +15,7 @@ public class PisoHandler {
     public static final int COFRE_CERRADO = 6;
     public static final int COFRE_ABIERTO = 7;
     public static final int PUERTA_ABIERTA = 8;
+    private String[] nombres = {"camino", "borde", "obstaculo", "roca"};
 
     // Constructores
 
@@ -22,28 +23,28 @@ public class PisoHandler {
         pisos = new HashMap<>();
         
         // Pasto
-        pisos.put(0.0, new Piso("file:src/main/resources/piso/camino.png", false));
-        pisos.put(0.1, new Piso("file:src/main/resources/piso/camino_1.png", false));
-        pisos.put(0.2, new Piso("file:src/main/resources/piso/camino_2.png", false));
+        pisos.put(0.0, new Piso("file:src/main/resources/piso/camino.png", false, nombres[0]));
+        pisos.put(0.1, new Piso("file:src/main/resources/piso/camino_1.png", false,nombres[0]));
+        pisos.put(0.2, new Piso("file:src/main/resources/piso/camino_2.png", false,nombres[0]));
         
         
         // Pared
-        pisos.put(1.0, new Piso("file:src/main/resources/piso/pared_0.png", true));
-        pisos.put(1.1, new Piso("file:src/main/resources/piso/pared_1.png", true));
-        pisos.put(1.2, new Piso("file:src/main/resources/piso/pared_2.png", true));
-        pisos.put(1.3, new Piso("file:src/main/resources/piso/pared_3.png", true));
-        pisos.put(1.4, new Piso("file:src/main/resources/piso/pared_4.png", true));
-        pisos.put(1.5, new Piso("file:src/main/resources/piso/pared_5.png", true));
-        pisos.put(1.6, new Piso("file:src/main/resources/piso/pared_6.png", true));
-        pisos.put(1.7, new Piso("file:src/main/resources/piso/pared_7.png", true));
+        pisos.put(1.0, new Piso("file:src/main/resources/piso/pared_0.png", true, nombres[1]));
+        pisos.put(1.1, new Piso("file:src/main/resources/piso/pared_1.png", true,nombres[1]));
+        pisos.put(1.2, new Piso("file:src/main/resources/piso/pared_2.png", true,nombres[1]));
+        pisos.put(1.3, new Piso("file:src/main/resources/piso/pared_3.png", true,nombres[1]));
+        pisos.put(1.4, new Piso("file:src/main/resources/piso/pared_4.png", true,nombres[1]));
+        pisos.put(1.5, new Piso("file:src/main/resources/piso/pared_5.png", true,nombres[1]));
+        pisos.put(1.6, new Piso("file:src/main/resources/piso/pared_6.png", true,nombres[1]));
+        pisos.put(1.7, new Piso("file:src/main/resources/piso/pared_7.png", true,nombres[1]));
         
-        pisos.put(2.0, new Piso("file:src/main/resources/piso/agua.png", true));
-        pisos.put(3.0, new Piso("file:src/main/resources/piso/puertas/puerta_cerrada.png", true));
-        pisos.put(4.0, new Piso("file:src/main/resources/piso/roca.png", true));
-        pisos.put(5.0, new Piso("file:src/main/resources/piso/arbol.png", true));
-        pisos.put(6.0, new Piso("file:src/main/resources/piso/cofres/cofre_cerrado.png", true));
-        pisos.put(7.0, new Piso("file:src/main/resources/piso/cofres/cofre_abierto.png", false));
-        pisos.put(8.0, new Piso("file:src/main/resources/piso/puertas/puerta_abierta.png", false));
+        pisos.put(2.0, new Piso("file:src/main/resources/piso/agua.png", true, nombres[0]));
+        pisos.put(3.0, new Piso("file:src/main/resources/piso/puertas/puerta_cerrada.png", true,nombres[2]));
+        pisos.put(8.0, new Piso("file:src/main/resources/piso/puertas/puerta_abierta.png", false,nombres[2]));
+        pisos.put(4.0, new Piso("file:src/main/resources/piso/roca.png", true,nombres[3]));
+        pisos.put(5.0, new Piso("file:src/main/resources/piso/arbol.png", true,nombres[2]));
+        pisos.put(6.0, new Piso("file:src/main/resources/piso/cofres/cofre_cerrado.png", true, nombres[2]));
+        pisos.put(7.0, new Piso("file:src/main/resources/piso/cofres/cofre_abierto.png", false, nombres[2]));
     }
 
     // Metodos
@@ -51,4 +52,6 @@ public class PisoHandler {
     public Piso getPisoByPosition(double n) {
         return pisos.get(n);
     }
+
+
 }
