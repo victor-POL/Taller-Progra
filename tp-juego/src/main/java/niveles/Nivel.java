@@ -9,16 +9,17 @@ import utiles.Archivo;
 public class Nivel {
     private Mapa map;
     private Jugador player;
-    private Control c;
+    private Control control;
     Instrucciones instrucciones = null;
 
     // Constructores
 
     public Nivel(String nombreNivel) {
         Archivo disenioNivel = new Archivo(nombreNivel);
+        
         map = disenioNivel.cargarMapa();
-        c = new Control();
-        this.player = new Jugador(c, map);
+        control = new Control();
+        this.player = new Jugador(control, map);
         map.setPlayer(player);
     }
 
@@ -30,6 +31,7 @@ public class Nivel {
 
     public void run() {
         instrucciones.ejecutarInstrucciones(player);
+        
         if (this.player.getPos().equals(map.getPosPuerta()))
             System.out.println("Ganaste! Esa era una solucion valida!");
 
@@ -48,6 +50,6 @@ public class Nivel {
     }
 
     public Control getControl() {
-        return this.c;
+        return this.control;
     }
 }

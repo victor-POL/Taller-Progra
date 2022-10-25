@@ -17,19 +17,17 @@ import utiles.Constantes;
 import utiles.Posicion;
 
 public class Jugador extends Entidad {
-    private final int TILE = 32;
+    private final int TILE_SIZE = 32;
     private int cantBalas = 0;
     private int orientacionActual = utiles.Constantes.DER;
-    public boolean progreso = false;
-
+    public boolean completoNivel = false;
     private List<Cosa> inventario = new ArrayList<Cosa>();
 
-    private final int width = TILE;
-    private final int height = TILE;
+    private final int width = TILE_SIZE;
+    private final int height = TILE_SIZE;
     private final Duration animationSpeed = Duration.millis(100);
     private int imageSpacing = 0;
-    private boolean moving = false;
-    private boolean dead = false;
+    private boolean estaMoviendose = false;
 
     private TranslateTransition translateTransitionWait;
     private TranslateTransition translateTransitionDown;
@@ -51,7 +49,7 @@ public class Jugador extends Entidad {
         super(0.5, map.getPosInicialJugador(), map);
 
         this.control = c;
-        Image spriteImages = new Image("file:src/main/resources/jugador/personaje.png");
+        Image spriteImages = new Image("file:src/main/resources/sprites/jugadores/carpincho.png");
         render = new ImageView(spriteImages);
 
         render.setX(map.getPosInicialJugador().getX());
@@ -68,7 +66,159 @@ public class Jugador extends Entidad {
         super(0.5, map.getPosInicialJugador(), map);
     }
 
+    // Movimientos
+
+    @Override
+    public boolean moverDerecha() {
+        Cosa item = null;
+        boolean res = false;
+
+        if (super.moverDerecha()) {
+            res = chequeo_items_y_progreso(item);
+
+        } else {
+            item = mapa.getByPosition(this.pos.posDerecha());
+
+            if (item != null) {
+
+                this.mapa.removeCosa(item.getPos());
+                res = item.moverDerecha();
+                this.mapa.actualizarCosa(item);
+
+                super.moverDerecha();
+            } else
+                res = false;
+        }
+
+        orientacionActual = Constantes.DER;
+        mapa.setPos(pos);
+
+        return res;
+    }
+
+    @Override
+    public boolean moverIzquierda() {
+
+        Cosa item = null;
+        boolean res = false;
+
+        if (super.moverIzquierda()) {
+            res = chequeo_items_y_progreso(item);
+
+        } else {
+            item = mapa.getByPosition(this.pos.posIzquierda());
+
+            if (item != null) {
+
+                this.mapa.removeCosa(item.getPos());
+                res = item.moverIzquierda();
+                this.mapa.actualizarCosa(item);
+
+                super.moverIzquierda();
+            } else
+                res = false;
+        }
+
+        orientacionActual = Constantes.IZQ;
+        mapa.setPos(pos);
+
+        return res;
+    }
+
+    @Override
+    public boolean moverArriba() {
+        Cosa item = null;
+        boolean res = false;
+
+        if (super.moverArriba()) {
+            res = chequeo_items_y_progreso(item);
+
+        } else {
+
+            item = mapa.getByPosition(this.pos.posArriba());
+
+            // 1 - Hay algo en esa casilla?
+            if (item != null) {
+
+                this.mapa.removeCosa(item.getPos());
+                res = item.moverArriba();
+                this.mapa.actualizarCosa(item);
+
+                super.moverArriba();
+            } else
+                res = false;
+        }
+
+        orientacionActual = Constantes.ARRIBA;
+        mapa.setPos(pos);
+
+        return res;
+    }
+
+    @Override
+    public boolean moverAbajo() {
+        Cosa item = null;
+        boolean res = false;
+
+        if (super.moverAbajo()) {
+            res = chequeo_items_y_progreso(item);
+        } else {
+
+            item = mapa.getByPosition(this.pos.posAbajo());
+
+            // 1 - Hay algo en esa casilla?
+            if (item != null) {
+                this.mapa.removeCosa(item.getPos());
+                res = item.moverAbajo();
+                this.mapa.actualizarCosa(item);
+
+                super.moverAbajo();
+            } else
+                res = false;
+        }
+
+        orientacionActual = Constantes.ABAJO;
+        mapa.setPos(pos);
+
+        return res;
+    }
+
     // Metodos
+
+    private boolean chequeo_items_y_progreso(Cosa item) {
+        if ((item = mapa.getByPosition(pos.getPos())) != null) {
+
+            mapa.getByPosition(pos.getPos()).setRecogido();
+            inventario.add(item);
+
+            if (item.queSoy == "item_pasar_de_nivel") {
+                completoNivel = true;
+            }
+
+            cantBalas++;
+
+            if (inventario.size() == mapa.getItemsObjetivo()) {
+                mapa.habilitarItemParaPasarNivel();
+            } else if (inventario.size() > mapa.getItemsObjetivo() && !mapa.getPuertaHabilitada()) {
+                mapa.habilitarPasarNivel();
+            }
+        }
+        return true;
+    }
+
+    public Bala disparar() {
+        if (cantBalas > 0) {
+            Bala bala = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, mapa);
+            mapa.addBala(bala);
+            cantBalas--;
+
+            return bala;
+        }
+
+        return null;
+    }
+
+    // JavaFX
 
     public void createEvent() {
         stepEvent = new EventHandler<ActionEvent>() {
@@ -78,7 +228,7 @@ public class Jugador extends Entidad {
                 setY(getPos().getY());
                 render.setTranslateX(0);
                 render.setTranslateY(0);
-                moving = false;
+                estaMoviendose = false;
                 if (control.getDirection() != Direction.NONE) {
                     step();
                 }
@@ -86,17 +236,7 @@ public class Jugador extends Entidad {
         };
     }
 
-    private void setX(double x) {
-        pos.setX(x);
-        render.setX(x * width);
-    }
-
-    private void setY(double y) {
-        pos.setY(y);
-        render.setY(y * height);
-    }
-
-    // transiciones JavaFX
+    // Transiciones JavaFX
 
     private void createTransitions() {
         translateTransitionDown = new TranslateTransition(animationSpeed, render);
@@ -136,8 +276,8 @@ public class Jugador extends Entidad {
     }
 
     public void step() {
-        if (!dead && !moving) {
-            moving = true;
+        if (!estaMuerto && !estaMoviendose) {
+            estaMoviendose = true;
             switch (control.getDirection()) {
                 case DOWN:
                     if (this.moverAbajo()) {
@@ -177,179 +317,38 @@ public class Jugador extends Entidad {
         }
     }
 
-    private boolean chequeo_items_y_progreso(Cosa c) {
-        if ((c = map.getByPosition(pos.getPos())) != null) {
-
-            map.getByPosition(pos.getPos()).setRecogido();
-            inventario.add(c);
-            if (c.queSoy == "puerta abierta") {
-                progreso = true;
-            }
-            // map.removeCosa(pos.getPos());
-
-            cantBalas++;
-
-            if (inventario.size() == map.getItemsObjetivo()) {
-                map.habilitarCofre();
-            } else if (inventario.size() > map.getItemsObjetivo() && !map.getPuertaHabilitada()) {
-                map.habilitarPuerta();
-            }
-        }
-        return true;
-    }
-
-    public Bala disparar() {
-        if (cantBalas > 0) {
-            Bala b = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), orientacionActual, map);
-            map.addBala(b);
-            cantBalas--;
-            return b;
-        }
-
-        return null;
-    }
-
-    // Movimientos
-
-    @Override
-    public boolean moverDerecha() {
-        Cosa c = null;
-        boolean res = false;
-
-        if (super.moverDerecha()) {
-            res = chequeo_items_y_progreso(c);
-
-        } else {
-
-            c = map.getByPosition(this.pos.posDerecha());
-
-            // 1 - Hay algo en esa casilla?
-            if (c != null) {
-
-                this.map.removeCosa(c.getPos());
-                res = c.moverDerecha();
-                this.map.actualizarCosa(c);
-
-                super.moverDerecha();
-            } else
-                res = false;
-
-        }
-
-        orientacionActual = Constantes.DER;
-        map.setPos(pos);
-        return res;
-    }
-
-    @Override
-    public boolean moverIzquierda() {
-
-        Cosa c = null;
-        boolean res = false;
-
-        if (super.moverIzquierda()) {
-            res = chequeo_items_y_progreso(c);
-
-        } else {
-
-            c = map.getByPosition(this.pos.posIzquierda());
-
-            // 1 - Hay algo en esa casilla?
-            if (c != null) {
-
-                this.map.removeCosa(c.getPos());
-                res = c.moverIzquierda();
-                this.map.actualizarCosa(c);
-
-                super.moverIzquierda();
-            } else
-                res = false;
-
-        }
-
-        orientacionActual = Constantes.IZQ;
-        map.setPos(pos);
-        return res;
-    }
-
-    @Override
-    public boolean moverArriba() {
-        Cosa c = null;
-        boolean res = false;
-
-        if (super.moverArriba()) {
-            res = chequeo_items_y_progreso(c);
-
-        } else {
-
-            c = map.getByPosition(this.pos.posArriba());
-
-            // 1 - Hay algo en esa casilla?
-            if (c != null) {
-
-                this.map.removeCosa(c.getPos());
-                res = c.moverArriba();
-                this.map.actualizarCosa(c);
-
-                super.moverArriba();
-            } else
-                res = false;
-
-        }
-
-        orientacionActual = Constantes.ARRIBA;
-        map.setPos(pos);
-        return res;
-    }
-
-    @Override
-    public boolean moverAbajo() {
-        Cosa c = null;
-        boolean res = false;
-
-        if (super.moverAbajo()) {
-            res = chequeo_items_y_progreso(c);
-        } else {
-
-            c = map.getByPosition(this.pos.posAbajo());
-
-            // 1 - Hay algo en esa casilla?
-            if (c != null) {
-                this.map.removeCosa(c.getPos());
-                res = c.moverAbajo();
-                this.map.actualizarCosa(c);
-
-                super.moverAbajo();
-            } else
-                res = false;
-        }
-
-        orientacionActual = Constantes.ABAJO;
-        map.setPos(pos);
-        return res;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
-    }
-
-    public boolean isDead() {
-        return dead;
-    }
-
-    public List<Cosa> getInventario() {
-        return inventario;
-    }
-
     public boolean update(double deltaTime) {
-        return this.progreso;
+        return this.completoNivel;
+    }
+
+    // Setters
+
+    private void setX(double x) {
+        pos.setX(x);
+        render.setX(x * width);
+    }
+
+    private void setY(double y) {
+        pos.setY(y);
+        render.setY(y * height);
+    }
+
+    public void setDead(boolean estaMuerto) {
+        this.estaMuerto = estaMuerto;
     }
 
     public void setOrientacion(int orientacion) {
         this.orientacionActual = orientacion;
     }
-    
+
     public void setCantBalas(int cant) {
         this.cantBalas = cant;
     }
+
+    // Getters
+
+    public List<Cosa> getInventario() {
+        return inventario;
+    }
+
 }

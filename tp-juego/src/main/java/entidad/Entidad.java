@@ -11,28 +11,27 @@ import utiles.Posicion;
 public class Entidad implements Constantes {
     protected final double STEP_SIZE;
     protected Posicion pos;
-    protected Mapa map;
+    protected Mapa mapa;
+    protected boolean estaMuerto = false;
+
     protected ImageView render;
     protected Control control;
 
     // Constructores
 
-    public Entidad() {
-        STEP_SIZE = 1;
-    }
-
-    public Entidad(double paso, Posicion pos, Mapa map) {
+    public Entidad(double paso, Posicion pos, Mapa mapa) {
         STEP_SIZE = paso;
         this.pos = pos;
-        this.map = map;
+        this.mapa = mapa;
     }
 
     // Movimientos
 
     public boolean moverDerecha() {
-        if (map.puedoPasar((int) (pos.getX() + 1), (int) Math.ceil( pos.getY())) &&
-                map.puedoPasar((int) (pos.getX() + 1), (int) Math.floor(pos.getY()))) {
+        if (mapa.puedoPasar((int) (pos.getX() + 1), (int) Math.ceil(pos.getY())) &&
+                mapa.puedoPasar((int) (pos.getX() + 1), (int) Math.floor(pos.getY()))) {
             pos.setX(pos.getX() + STEP_SIZE);
+
             return true;
         }
 
@@ -41,29 +40,34 @@ public class Entidad implements Constantes {
 
     public boolean moverIzquierda() {
 
-        if (map.puedoPasar((int) Math.round(pos.getX() - 1), (int)Math.ceil( pos.getY())) &&
-                map.puedoPasar((int) Math.round(pos.getX() - 1), (int)Math.floor(pos.getY()))) {
+        if (mapa.puedoPasar((int) Math.round(pos.getX() - 1), (int) Math.ceil(pos.getY())) &&
+                mapa.puedoPasar((int) Math.round(pos.getX() - 1), (int) Math.floor(pos.getY()))) {
             pos.setX(pos.getX() - STEP_SIZE);
+
             return true;
         }
+
         return false;
     }
 
     public boolean moverAbajo() {
-        if (map.puedoPasar((int) (Math.ceil(pos.getX())), (int) (pos.getY() + 1)) &&
-                map.puedoPasar((int) (Math.floor(pos.getX())), (int) (pos.getY() + 1))) {
+        if (mapa.puedoPasar((int) (Math.ceil(pos.getX())), (int) (pos.getY() + 1)) &&
+                mapa.puedoPasar((int) (Math.floor(pos.getX())), (int) (pos.getY() + 1))) {
             pos.setY(pos.getY() + STEP_SIZE);
+
             return true;
         }
         return false;
     }
 
     public boolean moverArriba() {
-        if (map.puedoPasar((int) (Math.ceil(pos.getX())), (int) Math.round(pos.getY() - 1)) &&
-                map.puedoPasar((int) (Math.floor(pos.getX())), (int) Math.round(pos.getY() - 1))) {
+        if (mapa.puedoPasar((int) (Math.ceil(pos.getX())), (int) Math.round(pos.getY() - 1)) &&
+                mapa.puedoPasar((int) (Math.floor(pos.getX())), (int) Math.round(pos.getY() - 1))) {
             pos.setY(pos.getY() - STEP_SIZE);
+
             return true;
         }
+
         return false;
     }
 
@@ -73,16 +77,12 @@ public class Entidad implements Constantes {
         return pos;
     }
 
-    public double getPaso() {
-        return this.STEP_SIZE;
-    }
-
-    public Mapa getMap() {
-        return this.map;
-    }
-
     public Node getRender() {
         return render;
+    }
+
+    public boolean estaMuerto() {
+        return this.estaMuerto;
     }
 
     // Setters

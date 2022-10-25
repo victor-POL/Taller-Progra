@@ -10,8 +10,8 @@ public class BalaEnemigo extends Bala {
     }
     
     @Override
-    protected boolean atravieso(Posicion p) {
-        String quePisoEs = map.getPisoByPosition((int)p.getY(), (int)p.getX()).getQueSoy();
+    protected boolean puedeAtravesar(Posicion p) {
+        String quePisoEs = mapa.getPisoByPosition((int)p.getY(), (int)p.getX()).getTipoDePiso();
 
         switch(quePisoEs){
             case "roca":

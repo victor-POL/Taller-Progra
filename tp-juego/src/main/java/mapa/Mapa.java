@@ -17,34 +17,36 @@ import piso.PisoHandler;
 import utiles.Posicion;
 
 public class Mapa {
-    private final int TILE = 32;
+    private final int TILE_SIZE = 32;
     
-    private Piso[][] matPiso = new Piso[13][13];
-    private int limite = matPiso.length;
+    private double orientacionPuerta;
 
-    private final int width = TILE;
-    private final int height = TILE;
-    private Canvas canvas;
+    private Piso[][] pisos = new Piso[13][13];
+    private int limite = pisos.length;
 
     private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
     private Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
     private List<Bala> balas = new ArrayList<Bala>();
+
     private Jugador player;
 
     private Posicion posJugador;
-    private Posicion puertaPos;
-    private Posicion cofrePos;
-    private Cosa puerta;
-    private Cosa cofre = null;
+    private Posicion posPasarDeNivel;
+    private Posicion posItemHabilitaPasarNivel;
+    private Cosa itemPasarDeNivel;
 
-
-    private boolean puertaHabilitada = false;
+    private boolean pasarNivelHabilitado = false;
     private boolean cambie = false;
-    private int itemsObjetivo;
+    private int cantItemsCompletarNivel;
+
+    private final int width = TILE_SIZE;
+    private final int height = TILE_SIZE;
+    private Canvas canvas;
 
     // Constructores
 
-    public Mapa(double[][] disenio, Map<Posicion, Cosa> cosas, Map<Posicion, Enemigo> enemies, Posicion posInicialJugador,
+    public Mapa(double[][] disenio, Map<Posicion, Cosa> cosas, Map<Posicion, Enemigo> enemies,
+            Posicion posInicialJugador,
             int itemsObjetivo) {
 
         PisoHandler pisoHandler = new PisoHandler();
@@ -52,31 +54,36 @@ public class Mapa {
 
         for (int i = 0; i < disenio.length; i++) {
             for (int j = 0; j < disenio[0].length; j++) {
-                matPiso[i][j] = pisoHandler.getPisoByPosition(disenio[i][j]);
-                if (disenio[i][j] == PisoHandler.PUERTA_CERRADA)
-                    puertaPos = new Posicion(j, i);
-                if (disenio[i][j] == PisoHandler.COFRE_CERRADO)
-                    cofrePos = new Posicion(j, i);
+                pisos[i][j] = pisoHandler.getPisoByPosition(disenio[i][j]);
+
+                if ((int)disenio[i][j] == PisoHandler.POSICION_PASAR_NIVEL) {
+                    orientacionPuerta = disenio[i][j] - (int)disenio[i][j];
+                    posPasarDeNivel = new Posicion(j, i);
+                }
+                    
+
+                if ((int)disenio[i][j] == PisoHandler.POSICION_ITEM_HABILITAR_PASO_NIVEL)
+                    posItemHabilitaPasarNivel = new Posicion(j, i);
             }
         }
         this.cosas = cosas;
         this.enemigos = enemies;
         this.posJugador = posInicialJugador;
-        this.itemsObjetivo = itemsObjetivo;
+        this.cantItemsCompletarNivel = itemsObjetivo;
         this.drawMap();
 
-        this.puerta = new Cosa(this.puertaPos, this, true, false, "puerta");
+//        this.itemPasarDeNivel = new Cosa(0, this.posPasarDeNivel, this, true, false, "puerta");
     }
 
     // Consultas
 
     public boolean puedoPasar(int x, int y) { // x=Columnas, y=filas
-        if (x < matPiso.length && x >= 0 && y >= 0 && y < matPiso[0].length) {
-            // System.out.println(new Posicion(x,y).compareTo(new Posicion(2,2)));
-            return matPiso[y][x].esColisionable() == false
+        if (x < pisos.length && x >= 0 && y >= 0 && y < pisos[0].length) {
+            return pisos[y][x].esColisionable() == false
                     && (cosas.get(new Posicion(x, y)) == null || cosas.get(new Posicion(x, y)).esRecogible())
                     && enemigos.get(new Posicion(x, y)) == null;
         }
+
         return false;
     }
 
@@ -89,9 +96,9 @@ public class Mapa {
     public Enemigo getEnemyByPosition(Posicion p) {
         return enemigos.get(p);
     }
-    
+
     public Piso getPisoByPosition(int x, int y) {
-        return this.matPiso[x][y];
+        return this.pisos[x][y];
     }
 
     // Modificar mapa
@@ -116,34 +123,22 @@ public class Mapa {
         balas.add(b);
     }
 
-    public void setPos(Posicion p){
-        posJugador = p;
-    }
-
-    public void setPlayer(Jugador j) {
-        player = j;
-    }
-
-
     // Habilitaciones
 
-    public void habilitarCofre() {
-        cofre = new Cosa(this.cofrePos, this, true, false, "cofre abierto");
-        cosas.put(cofrePos, cofre);
-
-        matPiso[(int) cofrePos.getY()][(int) cofrePos.getX()] = new PisoHandler()
-                .getPisoByPosition(PisoHandler.COFRE_ABIERTO);
-        cosas.put(cofrePos, new Cosa(this.cofrePos, this, true, false, "llave"));
+    public void habilitarItemParaPasarNivel() {
+        pisos[(int) posItemHabilitaPasarNivel.getY()][(int) posItemHabilitaPasarNivel.getX()] = new PisoHandler()
+                .getPisoByPosition(6.1);
+        cosas.put(posItemHabilitaPasarNivel, new Cosa(0, this.posItemHabilitaPasarNivel, this, true, false, "llave"));
         cambie = true;
 
     }
 
-    public void habilitarPuerta() {
-        matPiso[(int) puertaPos.getY()][(int) puertaPos.getX()] = new PisoHandler()
-                .getPisoByPosition(PisoHandler.PUERTA_ABIERTA);
-        puerta = new Cosa(puertaPos, this, true, false, "puerta abierta");
-        cosas.put(puertaPos, puerta);
-        puertaHabilitada = true;
+    public void habilitarPasarNivel() {
+        pisos[(int) posPasarDeNivel.getY()][(int) posPasarDeNivel.getX()] = new PisoHandler()
+                .getPisoByPosition(3 + orientacionPuerta);
+        itemPasarDeNivel = new Cosa(0, posPasarDeNivel, this, true, false, "item_pasar_de_nivel");
+        cosas.put(posPasarDeNivel, itemPasarDeNivel);
+        pasarNivelHabilitado = true;
         cambie = true;
     }
 
@@ -154,23 +149,23 @@ public class Mapa {
     }
 
     public int getItemsObjetivo() {
-        return this.itemsObjetivo;
+        return this.cantItemsCompletarNivel;
     }
 
     public Posicion getPosPuerta() {
-        return this.puertaPos;
+        return this.posPasarDeNivel;
     }
 
     public Posicion getPosInicialJugador() {
         return this.posJugador;
     }
 
-    public Posicion getPosJugador(){
+    public Posicion getPosJugador() {
         return this.posJugador;
     }
 
     public boolean getPuertaHabilitada() {
-        return this.puertaHabilitada;
+        return this.pasarNivelHabilitado;
     }
 
     public Map<Posicion, Cosa> getCosas() {
@@ -192,42 +187,34 @@ public class Mapa {
     public Jugador getPlayer() {
         return this.player;
     }
-    // Utiles
 
-    // public void displayMap() { // leave space between each number
-    // for (int i = 0; i < matPiso.length; i++) {
-    // for (int j = 0; j < matPiso[0].length; j++) {
-    // System.out.printf("%8s", matPiso[i][j].getSprite());
-    // }
-    // System.out.println("\n");
-    // }
+    // Setters
 
-    // }
+    public void setPos(Posicion p) {
+        posJugador = p;
+    }
 
-    // Grficos
+    public void setPlayer(Jugador j) {
+        player = j;
+    }
+
+    // JavaFX
     private void drawMap() {
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         for (int i = 0; i < limite; i++) {
             for (int j = 0; j < limite; j++) {
-                context.drawImage(matPiso[j][i].getImage(), i * TILE, j * TILE);
+                context.drawImage(pisos[j][i].getImage(), i * TILE_SIZE, j * TILE_SIZE);
             }
         }
 
     }
 
     public void update(double deltaTime) {
-        if(cambie){
+        if (cambie) {
             drawMap();
             cambie = false;
         }
-        
 
     }
-
-//	public void redraw() {
-//		for (int y = 0; y < limite; y++) {
-//			drawInCanvas((int) (Math.random() * 8), (int) (Math.random() * 5), limite, y, matPiso[y][limite -1].getImage());
-//		}
-//	}
 }

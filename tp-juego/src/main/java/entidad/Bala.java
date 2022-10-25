@@ -7,24 +7,25 @@ import utiles.Constantes;
 public class Bala extends Entidad {
     private int direccion;
     private double counter = 0;
-    //private int speed = 2;
+
     // Constructores
 
     public Bala(Posicion pos, int direccion, Mapa map) {
         super(0.5, pos, map);
         this.direccion = direccion;
+
         switch (direccion) {
             case Constantes.ARRIBA:
-                this.setImage("file:src/main/resources/cosas/balas/bala_arriba.png");
+                this.setImage("file:src/main/resources/sprites/balas/bala_arriba.png");
                 break;
             case Constantes.ABAJO:
-                this.setImage("file:src/main/resources/cosas/balas/bala_abajo.png");
+                this.setImage("file:src/main/resources/sprites/balas/bala_abajo.png");
                 break;
             case Constantes.DER:
-                this.setImage("file:src/main/resources/cosas/balas/bala_derecha.png");
+                this.setImage("file:src/main/resources/sprites/balas/bala_derecha.png");
                 break;
             case Constantes.IZQ:
-                this.setImage("file:src/main/resources/cosas/balas/bala_izquierda.png");
+                this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
                 break;
         }
     }
@@ -35,25 +36,28 @@ public class Bala extends Entidad {
         boolean puedoMover = false;
         switch (direccion) {
             case Constantes.ARRIBA:
-                if (this.pos.getY() - 0.5 != 0 && atravieso(new Posicion(pos.getX(), Math.ceil(pos.getY())) )){
+                if (this.pos.getY() - 0.5 != 0 && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
                     this.pos.setPos(this.pos.getX(), this.pos.getY() - 0.5);
                     puedoMover = true;
                 }
                 break;
             case Constantes.ABAJO:
-                if (this.pos.getY() + 0.5 != map.getLimite() - 0.5 && atravieso(new Posicion(pos.getX(), Math.ceil(pos.getY())))){
+                if (this.pos.getY() + 0.5 != mapa.getLimite() - 0.5
+                        && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
                     this.pos.setPos(this.pos.getX(), this.pos.getY() + 0.5);
                     puedoMover = true;
                 }
                 break;
             case Constantes.IZQ:
-                if (this.pos.getX() - 0.5 != 0 && atravieso(new Posicion(Math.ceil(pos.getX() - 0.5), pos.getY()))) { 
+                if (this.pos.getX() - 0.5 != 0
+                        && puedeAtravesar(new Posicion(Math.ceil(pos.getX() - 0.5), pos.getY()))) {
                     this.pos.setPos(this.pos.getX() - 0.5, this.pos.getY());
                     puedoMover = true;
                 }
                 break;
             case Constantes.DER:
-                if (this.pos.getX() + 0.5 != map.getLimite() - 0.5 && atravieso(new Posicion(Math.ceil(pos.getX()), pos.getY()))) {
+                if (this.pos.getX() + 0.5 != mapa.getLimite() - 0.5
+                        && puedeAtravesar(new Posicion(Math.ceil(pos.getX()), pos.getY()))) {
                     this.pos.setPos(this.pos.getX() + 0.5, this.pos.getY());
                     puedoMover = true;
                 }
@@ -61,11 +65,11 @@ public class Bala extends Entidad {
         }
 
         if (puedoMover) {
-            Cosa c = map.getByPosition(getPos());
-            Enemigo e = map.getEnemyByPosition(getPos());
-            Jugador p = map.getPlayer();
+            Cosa c = mapa.getByPosition(getPos());
+            Enemigo e = mapa.getEnemyByPosition(getPos());
+            Jugador p = mapa.getPlayer();
 
-            if(p.getPos().equals(this.pos)){
+            if (p.getPos().equals(this.pos)) {
                 p.setDead(true);
                 return false;
             }
@@ -74,7 +78,7 @@ public class Bala extends Entidad {
                 return false;
 
             if (e != null) {
-                e.setMuerto();
+                e.setEstaMuerto();
                 return false;
             }
         }
@@ -82,10 +86,12 @@ public class Bala extends Entidad {
         return puedoMover;
     }
 
-    protected boolean atravieso(Posicion p){
-        String quePisoEs = map.getPisoByPosition((int)p.getY(), (int)p.getX()).getQueSoy();
+    // Metodos
 
-        switch(quePisoEs){
+    protected boolean puedeAtravesar(Posicion p) {
+        String quePisoEs = mapa.getPisoByPosition((int) p.getY(), (int) p.getX()).getTipoDePiso();
+
+        switch (quePisoEs) {
             case "camino":
                 return true;
             default:
@@ -93,14 +99,16 @@ public class Bala extends Entidad {
         }
     }
 
+    // JavaFX
+
     public boolean update(double deltaTime) {
-        if (counter >= 0.04)     {
+        if (counter >= 0.04) {
             this.render.setX(pos.getX() * 32);
             this.render.setY(pos.getY() * 32);
             counter = 0;
             return this.mover();
         } else
-            counter+= deltaTime;
+            counter += deltaTime;
         return true;
 
     }

@@ -47,9 +47,9 @@ public class Archivo {
 				x = scanner.nextInt();
 				y = scanner.nextInt();
 
-				Cosa corazon = new Cosa(new Posicion(x, y), map, true, false, "municion");
+				Cosa itemAgarrable = new Cosa(0, new Posicion(x, y), map, true, false, "municion");
 
-				cosas.put(corazon.getPos(), corazon);
+				cosas.put(itemAgarrable.getPos(), itemAgarrable);
 			}
 
 			int cantCajas = scanner.nextInt();
@@ -58,9 +58,9 @@ public class Archivo {
 				x = scanner.nextInt();
 				y = scanner.nextInt();
 
-				Cosa caja = new Cosa(1, new Posicion(x, y), map, false, true, "obstaculo empujable");
+				Cosa obstaculoEmpujable = new Cosa(1, new Posicion(x, y), map, false, true, "obstaculo empujable");
 
-				cosas.put(caja.getPos(), caja);
+				cosas.put(obstaculoEmpujable.getPos(), obstaculoEmpujable);
 			}
 
 			int cantEnemigos = scanner.nextInt();

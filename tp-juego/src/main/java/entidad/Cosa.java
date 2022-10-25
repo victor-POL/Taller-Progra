@@ -6,22 +6,14 @@ import javafx.scene.image.ImageView;
 import mapa.Mapa;
 
 public class Cosa extends Entidad {
-    private final int TILE = 32;
+    private final int TILE_SIZE = 32;
     private final boolean esRecogible;
     private final boolean esEmpujable;
     public boolean fueRecogido = false;
     private boolean cambie = false;
-    public String queSoy = "";
+    public String queSoy;
 
     // Constructores
-
-    public Cosa(Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable, String queSoy) {
-        super(0, pos, map);
-        this.esRecogible = esRecogible;
-        this.esEmpujable = esEmpujable;
-        this.queSoy = queSoy;
-        this.setRender();
-    }
 
     public Cosa(double STEP_SIZE, Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable, String queSoy) {
         super(STEP_SIZE, pos, map);
@@ -31,18 +23,12 @@ public class Cosa extends Entidad {
         this.setRender();
     }
 
-    // Consultas
-
-    public boolean esRecogible() {
-        return esRecogible;
-    }
-
     // Movimientos
 
     @Override
     public boolean moverDerecha() {
-        if (map.puedoPasar((int) (pos.getX() + this.STEP_SIZE), (int) pos.getY())
-                && map.getByPosition(new Posicion(pos.getX() + this.STEP_SIZE, (int) pos.getY())) == null) {
+        if (mapa.puedoPasar((int) (pos.getX() + this.STEP_SIZE), (int) pos.getY())
+                && mapa.getByPosition(new Posicion(pos.getX() + this.STEP_SIZE, (int) pos.getY())) == null) {
             pos.setX(pos.getX() + STEP_SIZE);
             return true;
         }
@@ -51,8 +37,9 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverIzquierda() {
-        if (map.puedoPasar((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())
-                && map.getByPosition(new Posicion((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())) == null) {
+        if (mapa.puedoPasar((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())
+                && mapa.getByPosition(
+                        new Posicion((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())) == null) {
             pos.setX(pos.getX() - STEP_SIZE);
             return true;
         }
@@ -61,8 +48,9 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverArriba() {
-        if (map.puedoPasar((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))
-                && map.getByPosition(new Posicion((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))) == null) {
+        if (mapa.puedoPasar((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))
+                && mapa.getByPosition(
+                        new Posicion((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))) == null) {
             pos.setY(pos.getY() - STEP_SIZE);
             return true;
         }
@@ -71,12 +59,18 @@ public class Cosa extends Entidad {
 
     @Override
     public boolean moverAbajo() {
-        if (map.puedoPasar((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))
-                && map.getByPosition(new Posicion((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))) == null) {
+        if (mapa.puedoPasar((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))
+                && mapa.getByPosition(new Posicion((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))) == null) {
             pos.setY(pos.getY() + STEP_SIZE);
             return true;
         }
         return false;
+    }
+
+    // Getters
+
+    public boolean esRecogible() {
+        return this.esRecogible;
     }
 
     // Setters
@@ -84,27 +78,27 @@ public class Cosa extends Entidad {
     public void setRender() {
         switch (queSoy) {
             case "municion":
-                this.render = new ImageView(new Image("file:src/main/resources/cosas/municion.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/sprites/items/carpincho_muerto.png"));
                 break;
 
             case "obstaculo empujable":
-                this.render = new ImageView(new Image("file:src/main/resources/cosas/obstaculos/obstaculo_empujable.png"));
-                break;
-                
-            case "cofre abierto":
-                this.render = new ImageView(new Image("file:src/main/resources/piso/cofres/cofre_abierto.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/sprites/obstaculos_movibles/piedra.png"));
                 break;
 
-            case "puerta abierta":
+//            case "cofre abierto":
+//                this.render = new ImageView(new Image("file:src/main/resources/piso/cofres/cofre_abierto.png"));
+//                break;
+
+            case "item_pasar_de_nivel":
                 this.render = new ImageView(new Image("file:src/main/resources/piso/puertas/puerta_abierta.png"));
                 break;
 
             case "recogido":
-                this.render = new ImageView(new Image("file:src/main/resources/piso/empty.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/sprites/caminables/empty.png"));
                 break;
-            
+
             case "llave":
-                this.render = new ImageView(new Image("file:src/main/resources/cosas/llave.png"));
+                this.render = new ImageView(new Image("file:src/main/resources/sprites/items/llave.png"));
                 break;
 
             default:
@@ -117,6 +111,8 @@ public class Cosa extends Entidad {
     public void setRecogido() {
         this.fueRecogido = true;
     }
+    
+   // JavaFX
 
     public void update(double deltaTime) {
         if (fueRecogido) {
@@ -125,16 +121,8 @@ public class Cosa extends Entidad {
                 return;
             }
         }
-        
-        this.render.setX(pos.getX() * TILE);
-        this.render.setY(pos.getY() * TILE);
 
-    }
-
-    @Override
-    public String toString() {
-        return "Cosa [esRecogible=" + esRecogible + ", esEmpujable=" + esEmpujable + ", fueRecogido=" + fueRecogido
-                + ", cambie=" + cambie + ", queSoy=" + queSoy + ", STEP_SIZE=" + STEP_SIZE + ", pos=" + pos + ", map="
-                + map + ", render=" + render + "]";
+        this.render.setX(pos.getX() * TILE_SIZE);
+        this.render.setY(pos.getY() * TILE_SIZE);
     }
 }

@@ -47,7 +47,7 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_3";
+    String level = "nivel_1";
 
     Control control;
 
@@ -107,19 +107,17 @@ public class Main extends Application {
         stage.setMinHeight(Y_TILES * TILE_HEIGHT);
         // set the window size to 900x900
         stage.setResizable(true);
-        if(!setear)
-        {
-            stage.setWidth(900);
-            stage.setHeight(900);
+        if (!setear) {
+            stage.setWidth(600);
+            stage.setHeight(600);
             setear = true;
         }
-        
 
         stage.setScene(currentScene);
         stage.setTitle("Testigos de Java");
 
         stage.setScene(currentScene);
-        stage.setFullScreen(true);
+
         stage.show();
         addInputEvents();
     }
@@ -222,7 +220,7 @@ public class Main extends Application {
     }
 
     protected boolean update(double deltaTime) {
-        if (jugador.isDead()) {
+        if (jugador.estaMuerto()) {
             root.getChildren().clear();
             start(stage);
             return false; // to stop the timer
@@ -262,7 +260,7 @@ public class Main extends Application {
                 iv.setY(b.getPos().getY() * TILE);
                 root.getChildren().add(b.getRender());
             }
-            if (e.Muerto()) {
+            if (e.estaMuerto()) {
                 enemigosASacar.add(e);
             }
         }
@@ -314,7 +312,7 @@ public class Main extends Application {
                 break;
         }
     }
-    
+
     public static void main(String[] args) {
         /// AudioClip a = new
         /// AudioClip("file:src/main/resources/sonido/musica/musicaDeFondo.mp3");]

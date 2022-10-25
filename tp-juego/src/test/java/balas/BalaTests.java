@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import animation.Control;
-import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
@@ -26,7 +24,7 @@ public class BalaTests {
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
-            { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
+            { 1.7, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
@@ -37,7 +35,6 @@ public class BalaTests {
     Cosa cosaRecogible;
     Map<Posicion, Cosa> cosas;
     Map<Posicion, Enemigo> enemigos;
-    Control control;
     JFXPanel panel = new JFXPanel();
 
     @Before
@@ -45,17 +42,20 @@ public class BalaTests {
         cosas = new HashMap<Posicion, Cosa>();
         enemigos = new HashMap<Posicion, Enemigo>();
 
-        Posicion posJugador = new Posicion(6, 5);
-        Posicion posCosaNoRecogible = new Posicion(6, 4.5);
-        Posicion posCosaRecogible = new Posicion(6, 4.5);
-        Posicion posEnemy = new Posicion(6, 4.5);
+        Posicion posInicialJugador = new Posicion(2, 3.5);
+        Posicion posCosaNoRecogible = new Posicion(10, 3);
+        Posicion posCosaRecogible = new Posicion(10, 10);
+        Posicion posEnemy = new Posicion(2, 3);
 
-        map = new Mapa(disenioMap, cosas, enemigos, posJugador, 0);
-        enemy = new Enemigo(1, posEnemy, map);
-        cosaNoRecogible = new Cosa(posCosaNoRecogible, map, false, false, "ARBOL");
-        cosaRecogible = new Cosa(posCosaRecogible, map, true, false, "COMIDA");
+        map = new Mapa(disenioMap, cosas, enemigos, posInicialJugador, 0);
+        enemy = new Enemigo(1, posEnemy, map, utiles.Constantes.ABAJO);
+        cosaNoRecogible = new Cosa(0, posCosaNoRecogible, map, false, false, "ARBOL");
+        cosaRecogible = new Cosa(0, posCosaRecogible, map, true, false, "COMIDA");
+        cosas.put(cosaNoRecogible.getPos(), cosaNoRecogible);
+        cosas.put(cosaRecogible.getPos(), cosaRecogible);
         player = new Jugador(map);
         player.setCantBalas(1);
+        enemigos.put(enemy.getPos(), enemy);
 
         map.setPlayer(player);
     }
@@ -63,8 +63,8 @@ public class BalaTests {
     // TODO: MODIFICAR MÉTODO Muerto() POR muerto() CUANDO SE MODIFIQUE SU NOMBRE EN
     // ENEMIGO
     @Test
-    public void mataEnemigoArriba() {
-        enemigos.put(enemy.getPos(), enemy);
+    public void balaSeMueveArriba() {
+        player.setPos(new Posicion(6, 5.5));
 
         player.setOrientacion(utiles.Constantes.ARRIBA);
 
@@ -72,13 +72,12 @@ public class BalaTests {
 
         map.getBalas().get(0).mover();
 
-        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).Muerto());
+        Assert.assertTrue(map.getBalas().get(0).mover());
     }
 
     @Test
-    public void mataEnemigoAbajo() {
-        enemy.setPos(new Posicion(6, 5.5));
-        enemigos.put(enemy.getPos(), enemy);
+    public void balaSeMueveAbajo() {
+        player.setPos(new Posicion(6, 5.5));
 
         player.setOrientacion(utiles.Constantes.ABAJO);
 
@@ -86,25 +85,23 @@ public class BalaTests {
 
         map.getBalas().get(0).mover();
 
-        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).Muerto());
+        Assert.assertTrue(map.getBalas().get(0).mover());
     }
 
     @Test
-    public void mataEnemigoDerecha() {
-        enemy.setPos(new Posicion(6.5, 5));
-        enemigos.put(enemy.getPos(), enemy);
+    public void balaSeMueveDerecha() {
+        player.setPos(new Posicion(6.5, 5));
 
         Assert.assertNotNull(player.disparar());
 
         map.getBalas().get(0).mover();
 
-        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).Muerto());
+        Assert.assertTrue(map.getBalas().get(0).mover());
     }
 
     @Test
-    public void mataEnemigoIzquierda() {
-        enemy.setPos(new Posicion(5.5, 5));
-        enemigos.put(enemy.getPos(), enemy);
+    public void balaSeMueveIzquierda() {
+        player.setPos(new Posicion(6.5, 5));
 
         player.setOrientacion(utiles.Constantes.IZQ);
 
@@ -112,7 +109,55 @@ public class BalaTests {
 
         map.getBalas().get(0).mover();
 
-        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).Muerto());
+        Assert.assertTrue(map.getBalas().get(0).mover());
+    }
+
+    @Test
+    public void mataEnemigoArriba() {
+        player.setOrientacion(utiles.Constantes.ARRIBA);
+
+        Assert.assertNotNull(player.disparar());
+
+        map.getBalas().get(0).mover();
+
+        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).estaMuerto());
+    }
+
+    @Test
+    public void mataEnemigoAbajo() {
+        player.setPos(new Posicion(2, 2.5));
+
+        player.setOrientacion(utiles.Constantes.ABAJO);
+
+        Assert.assertNotNull(player.disparar());
+
+        map.getBalas().get(0).mover();
+
+        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).estaMuerto());
+    }
+
+    @Test
+    public void mataEnemigoDerecha() {
+        player.setPos(new Posicion(1.5, 3));
+
+        Assert.assertNotNull(player.disparar());
+
+        map.getBalas().get(0).mover();
+
+        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).estaMuerto());
+    }
+
+    @Test
+    public void mataEnemigoIzquierda() {
+        player.setPos(new Posicion(2.5, 3));
+
+        player.setOrientacion(utiles.Constantes.IZQ);
+
+        Assert.assertNotNull(player.disparar());
+
+        map.getBalas().get(0).mover();
+
+        Assert.assertTrue(map.getEnemyByPosition(enemy.getPos()).estaMuerto());
     }
 
     @Test
@@ -163,7 +208,7 @@ public class BalaTests {
 
     @Test
     public void balaChocaConCosaNoRecogibleArriba() {
-        cosas.put(cosaNoRecogible.getPos(), cosaNoRecogible);
+        player.setPos(new Posicion(10, 3.5));
 
         player.setOrientacion(utiles.Constantes.ARRIBA);
 
@@ -174,8 +219,7 @@ public class BalaTests {
 
     @Test
     public void balaChocaConCosaNoRecogibleAbajo() {
-        cosaNoRecogible.setPos(new Posicion(6, 5.5));
-        cosas.put(cosaNoRecogible.getPos(), cosaNoRecogible);
+        player.setPos(new Posicion(10, 2.5));
 
         player.setOrientacion(utiles.Constantes.ABAJO);
 
@@ -186,8 +230,7 @@ public class BalaTests {
 
     @Test
     public void balaChocaConCosaNoRecogibleDerecha() {
-        cosaNoRecogible.setPos(new Posicion(6.5, 5));
-        cosas.put(cosaNoRecogible.getPos(), cosaNoRecogible);
+        player.setPos(new Posicion(9.5, 3));
 
         Assert.assertNotNull(player.disparar());
 
@@ -196,8 +239,7 @@ public class BalaTests {
 
     @Test
     public void balaChocaConCosaNoRecogibleIzquierda() {
-        cosaNoRecogible.setPos(new Posicion(5.5, 5));
-        cosas.put(cosaNoRecogible.getPos(), cosaNoRecogible);
+        player.setPos(new Posicion(10.5, 3));
 
         player.setOrientacion(utiles.Constantes.IZQ);
 
@@ -207,8 +249,8 @@ public class BalaTests {
     }
 
     @Test
-    public void balaChocaConCosaRecogibleArriba() {
-        cosas.put(cosaRecogible.getPos(), cosaRecogible);
+    public void balaAtraviesaCosaRecogibleArriba() {
+        player.setPos(new Posicion(10, 10.5));
 
         player.setOrientacion(utiles.Constantes.ARRIBA);
 
@@ -218,9 +260,8 @@ public class BalaTests {
     }
 
     @Test
-    public void balaChocaConCosaRecogibleAbajo() {
-        cosaRecogible.setPos(new Posicion(6, 5.5));
-        cosas.put(cosaRecogible.getPos(), cosaRecogible);
+    public void balaAtraviesaCosaRecogibleAbajo() {
+        player.setPos(new Posicion(10, 9.5));
 
         player.setOrientacion(utiles.Constantes.ABAJO);
 
@@ -230,9 +271,8 @@ public class BalaTests {
     }
 
     @Test
-    public void balaChocaConCosaRecogibleDerecha() {
-        cosaRecogible.setPos(new Posicion(6.5, 5));
-        cosas.put(cosaRecogible.getPos(), cosaRecogible);
+    public void balaAtraviesaCosaRecogibleDerecha() {
+        player.setPos(new Posicion(9.5, 10));
 
         Assert.assertNotNull(player.disparar());
 
@@ -240,9 +280,8 @@ public class BalaTests {
     }
 
     @Test
-    public void balaChocaConCosaRecogibleIzquierda() {
-        cosaRecogible.setPos(new Posicion(5.5, 5));
-        cosas.put(cosaRecogible.getPos(), cosaRecogible);
+    public void balaAtraviesaCosaRecogibleIzquierda() {
+        player.setPos(new Posicion(10.5, 10));
 
         player.setOrientacion(utiles.Constantes.IZQ);
 
@@ -250,62 +289,48 @@ public class BalaTests {
 
         Assert.assertTrue(map.getBalas().get(0).mover());
     }
-    
+
     @Test
-    public void balaMataPlayerArriba() {
-        enemy.setPos(new Posicion(6, 5.5));
-        enemigos.put(enemy.getPos(), enemy);
-        
-        Bala bala = enemy.disparar(utiles.Constantes.ARRIBA);
+    public void balaChocaConPisoDistintoDeCaminoArriba() {
+        player.setPos(new Posicion(6, 8));
 
-        Assert.assertNotNull(bala);
+        player.setOrientacion(utiles.Constantes.ARRIBA);
 
-        //TODO: AGREGAR BALA DEL ENEMIGO AL MAPA CON MÉTODO AddBala()
-        
-        bala.mover();
-        
-        Assert.assertTrue(player.isDead());
+        Assert.assertNotNull(player.disparar());
+
+        Assert.assertFalse(map.getBalas().get(0).mover());
     }
-    
-    @Test
-    public void balaMataPlayerAbajo() {
-        enemy.setPos(new Posicion(6, 4.5));
-        enemigos.put(enemy.getPos(), enemy);
-        
-        Bala bala = enemy.disparar(utiles.Constantes.ABAJO);
 
-        Assert.assertNotNull(bala);
-        
-        bala.mover();
-        
-        Assert.assertTrue(player.isDead());
+    @Test
+    public void balaChocaConPisoDistintoDeCaminoAbajo() {
+        player.setPos(new Posicion(6, 7.5));
+
+        player.setOrientacion(utiles.Constantes.ABAJO);
+
+        Assert.assertNotNull(player.disparar());
+
+        Assert.assertFalse(map.getBalas().get(0).mover());
     }
-    
-    @Test
-    public void balaMataPlayerDerecha() {
-        enemy.setPos(new Posicion(5.5, 5));
-        enemigos.put(enemy.getPos(), enemy);
-        
-        Bala bala = enemy.disparar(utiles.Constantes.DER);
 
-        Assert.assertNotNull(bala);
-        
-        bala.mover();
-        
-        Assert.assertTrue(player.isDead());
+    @Test
+    public void balaChocaConPisoDistintoDeCaminoDerecha() {
+        player.setPos(new Posicion(5.5, 8));
+
+        player.setOrientacion(utiles.Constantes.DER);
+
+        Assert.assertNotNull(player.disparar());
+
+        Assert.assertFalse(map.getBalas().get(0).mover());
     }
-    
-    @Test
-    public void balaMataPlayerIzquierda() {
-        enemy.setPos(new Posicion(6.5, 5));
-        enemigos.put(enemy.getPos(), enemy);
-        
-        Bala bala = enemy.disparar(utiles.Constantes.IZQ);
 
-        Assert.assertNotNull(bala);
-        
-        bala.mover();
-        
-        Assert.assertTrue(player.isDead());
+    @Test
+    public void balaChocaConPisoDistintoDeCaminoIzquierda() {
+        player.setPos(new Posicion(6.5, 8));
+
+        player.setOrientacion(utiles.Constantes.IZQ);
+
+        Assert.assertNotNull(player.disparar());
+
+        Assert.assertFalse(map.getBalas().get(0).mover());
     }
 }

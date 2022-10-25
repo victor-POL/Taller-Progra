@@ -7,54 +7,51 @@ import utiles.Constantes;
 import utiles.Posicion;
 
 public class Enemigo extends Entidad {
-
-    private boolean estaMuerto = false;
     private double count = 0;
-    //private int tiros;
     private int orientacion = 0;
 
     // Constructores
 
     public Enemigo(double paso, Posicion pos, Mapa map, int orientacion) {
         super(paso, pos, map);
-        this.render = new ImageView(new Image("file:src/main/resources/enemigos/enemigo.png"));
+        this.render = new ImageView(new Image("file:src/main/resources/sprites/enemigos/enemigo.png"));
         this.orientacion = orientacion;
-        //this.tiros = orientacion;
     }
 
-    public void setMuerto() {
-        estaMuerto = true;
-    }
+    // Metodos
 
-    public boolean Muerto() {
-        return this.estaMuerto;
-    }
-    
     public BalaEnemigo disparar(int direccion) {
-        switch(direccion) {
+        switch (direccion) {
             case Constantes.ABAJO:
-                return new BalaEnemigo(new Posicion(pos.getX() ,pos.getY() + 0.5),direccion, map);
+                return new BalaEnemigo(new Posicion(pos.getX(), pos.getY() + 0.5), direccion, mapa);
             case Constantes.ARRIBA:
-                return new BalaEnemigo(new Posicion(pos.getX() ,pos.getY() - 0.5),direccion, map);
+                return new BalaEnemigo(new Posicion(pos.getX(), pos.getY() - 0.5), direccion, mapa);
             case Constantes.DER:
-                return new BalaEnemigo(new Posicion(pos.getX() + 0.5 ,pos.getY()),direccion, map);
+                return new BalaEnemigo(new Posicion(pos.getX() + 0.5, pos.getY()), direccion, mapa);
             case Constantes.IZQ:
-                return new BalaEnemigo(new Posicion(pos.getX() - 0.5 ,pos.getY()),direccion, map);
+                return new BalaEnemigo(new Posicion(pos.getX() - 0.5, pos.getY()), direccion, mapa);
         }
         return null;
     }
 
+    // JavaFX
+
     public Bala update(double deltaTime) {
-        if(count > 0.5){
+        if (count > 0.5) {
             BalaEnemigo b = disparar(orientacion);
-            map.addBala(b);
+            mapa.addBala(b);
             count = 0;
-            //tiros++;
-            //orientacion = tiros % Constantes.ORIENTACIONES;
+
             return b;
-        }else
-            count+=deltaTime;
+        } else
+            count += deltaTime;
         return null;
+    }
+
+    // Setters
+
+    public void setEstaMuerto() {
+        this.estaMuerto = true;
     }
 
 }

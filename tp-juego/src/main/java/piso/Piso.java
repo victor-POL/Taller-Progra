@@ -5,14 +5,14 @@ import javafx.scene.image.Image;
 public class Piso {
     private boolean esColisionable;
     private Image imagen;
-    private String queSoy;
+    private String tipoDePiso;
 
     // Constructores
 
-    public Piso(String imagen, boolean colisionable, String queSoy) {
+    public Piso(String imagen, boolean colisionable, String tipoDePiso) {
         this.esColisionable = colisionable;
         this.imagen = new Image(imagen);
-        this.queSoy = queSoy;
+        this.tipoDePiso = tipoDePiso;
     }
 
     // Getters
@@ -25,7 +25,7 @@ public class Piso {
         return esColisionable;
     }
 
-    public String getQueSoy(){
-        return this.queSoy;
+    public String getTipoDePiso(){
+        return this.tipoDePiso;
     }
 }
