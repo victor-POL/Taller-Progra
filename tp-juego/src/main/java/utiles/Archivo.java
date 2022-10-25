@@ -23,7 +23,6 @@ public class Archivo {
 		try {
 			File file = new File("src/main/resources/niveles/" + this.nombre + ".in");
 			scanner = new Scanner(file);
-
 			int x = scanner.nextInt();
 			int y = scanner.nextInt();
 

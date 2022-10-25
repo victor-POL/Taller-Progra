@@ -56,7 +56,6 @@ public class Main extends Application {
         this.stage = stage;
         root = new Group();
         currentScene = new Scene(root);
-
         Nivel nivel = new Nivel(level);
         mapa = nivel.getMapa();
         jugador = nivel.getPlayer();
@@ -227,18 +226,10 @@ public class Main extends Application {
             root.getChildren().clear();
             start(stage);
             return false; // to stop the timer
-
         }
         if (jugador.update(deltaTime)) {
             root.getChildren().clear();
-            if (level == "nivel_1") {
-                level = "nivel_2";
-            } else {
-                // show game over on screen
-                root.getChildren().add(new Text(100, 100, "Game Over"));
-                System.exit(0);
-
-            }
+            this.avanzar_nivel();
             start(stage);
             return false; // to stop the timer
         }
@@ -298,6 +289,32 @@ public class Main extends Application {
         return true;
     }
 
+    private void avanzar_nivel() {
+        switch (level) {
+            case "nivel_1":
+                level = "nivel_2";
+                break;
+            case "nivel_2":
+                level = "nivel_3";
+                break;
+            case "nivel_3":
+                level = "nivel_4";
+                break;
+            case "nivel_4":
+                level = "nivel_5";
+                break;
+            case "nivel_5":
+                level = "nivel_6";
+                break;
+            case "nivel_6":
+                level = "nivel_7";
+            default:
+                root.getChildren().add(new Text(100, 100, "Game Over"));
+                System.exit(0);
+                break;
+        }
+    }
+    
     public static void main(String[] args) {
         /// AudioClip a = new
         /// AudioClip("file:src/main/resources/sonido/musica/musicaDeFondo.mp3");]
