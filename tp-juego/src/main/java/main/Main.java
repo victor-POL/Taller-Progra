@@ -47,7 +47,7 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_1";
+    String level = "nivel_7";
 
     Control control;
 
