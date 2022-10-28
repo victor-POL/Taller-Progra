@@ -23,6 +23,14 @@ public class Nivel {
         map.setPlayer(player);
     }
 
+    public Nivel(String nombreNivel, Jugador player){
+        Archivo disenioNivel = new Archivo(nombreNivel);    
+        map = disenioNivel.cargarMapa();
+        control = new Control();
+        this.player = player;
+        map.setPlayer(player);
+    }
+
     // Metodos
 
     public void add(Instrucciones jugador) {

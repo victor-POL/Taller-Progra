@@ -22,6 +22,7 @@ public class Jugador extends Entidad {
     private int orientacionActual = utiles.Constantes.DER;
     public boolean completoNivel = false;
     private List<Cosa> inventario = new ArrayList<Cosa>();
+    private int vidas = 3;
 
     private final int width = TILE_SIZE;
     private final int height = TILE_SIZE;
@@ -333,6 +334,7 @@ public class Jugador extends Entidad {
 
     public void setDead(boolean estaMuerto) {
         this.estaMuerto = estaMuerto;
+        vidas--;
     }
 
     public void setOrientacion(int orientacion) {
@@ -343,12 +345,29 @@ public class Jugador extends Entidad {
         this.cantBalas = cant;
     }
 
+    public void setVidas(int vidas){
+        this.vidas = vidas;
+    }
+
+    public void setCompletoNivel(boolean completo){
+        this.completoNivel = completo;
+    }
+
+    public void setMapa(Mapa m){
+        this.mapa = m;
+    }
+
     // Getters
 
     public List<Cosa> getInventario() {
         return inventario;
     }
 
+    public int getVidas(){
+        return vidas;
+    }
+
+    // Movimiento automatizado
 
     public void tocarDerecha(){
         control.setDirection(Direction.RIGHT);

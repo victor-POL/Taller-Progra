@@ -3,7 +3,8 @@ package hilos;
 import entidad.Jugador;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.util.Iterator;
+
+import javax.sound.sampled.spi.MixerProvider;
 
 
 
@@ -38,10 +39,17 @@ public class solutionThread extends Thread {
             abajo();
         }
 
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 18; i++){
             arriba();
         }
-
+        derecha();
+        tiro();
+        izquierda();
+        
+        for(int i = 0; i < 10; i++) {
+            abajo();
+        }
+        
         for(int i = 0; i < 8; i++){
             derecha();
         }
@@ -65,9 +73,6 @@ public class solutionThread extends Thread {
         arriba();
         arriba();
 
-        tiro();
-        tiro();
-
         for(int i = 0; i < 8; i++){
             arriba();
         }
@@ -85,47 +90,79 @@ public class solutionThread extends Thread {
 
     public void solucionNivel2() throws InterruptedException {
         
-        for (int i = 0; i < 6; i++) 
+        abajo();
+        abajo();
+
+        for(int i = 0; i < 8; i++)
             derecha();
-        
-        for (int i = 0; i < 4; i++)
+
+        for(int i = 0; i < 4; i++)
             abajo();
         
-        for (int i = 0; i < 14; i++)
+        derecha();
+        derecha();
+
+        for(int i = 0; i < 4; i++)
+            abajo();
+
+        for(int i = 0; i < 4; i++)
             derecha();
+
+        abajo();
+        abajo();
         
-        for (int i = 0; i < 4; i++)
+        for(int i = 0; i < 6; i++)
+            derecha();
+
+        for(int i = 0; i < 12; i++)
             arriba();
-        
-        for (int i = 0; i < 4; i++)
+
+        for(int i = 0; i < 4; i++)
             abajo();
-        
-        for (int i = 0; i < 8; i++)
+
+        for(int i = 0; i < 6; i++)
             izquierda();
-        
+
         arriba();
+        arriba();
+        izquierda();
+
         tiro();
-        
-        for (int i = 0; i < 10; i++)
+
+        izquierda();
+        izquierda();
+
+
+        for(int i = 0; i < 8; i++)
             arriba();
-        
-        for (int i = 0; i < 4; i++)
+
+
+        for(int i = 0; i < 4; i++)
             izquierda();
-        
-        for (int i = 0; i < 4; i++)
+
+        for(int i = 0; i < 4; i++)
             derecha();
-        
-        for (int i = 0; i < 16; i++)
+
+
+        for(int i = 0; i < 10; i++)
             abajo();
-        
-        for (int i = 0; i < 4; i++)
+
+        for(int i = 0; i < 4; i++)
             izquierda();
-        
-        for (int i = 0; i < 4; i++)
-            derecha();
-        
-        for (int i = 0; i < 20; i++)
+
+        for(int i = 0; i < 6; i++)
+            abajo();
+
+        for(int i = 0; i < 8; i++)
             arriba();
+
+        for(int i = 0; i < 4; i++)
+            derecha();
+
+        for(int i = 0; i < 12; i++)
+            arriba();
+
+        
     }
     
     public void solucionNivel3() throws InterruptedException {

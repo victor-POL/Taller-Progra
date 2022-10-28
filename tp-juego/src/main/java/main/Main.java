@@ -2,7 +2,7 @@ package main;
 
 import java.io.File;
 import java.util.Iterator;
-
+import java.util.Scanner;
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
@@ -36,11 +36,12 @@ public class Main extends Application {
     private static final double NANOS_IN_SECOND_D = 1_000_000_000.0;
     private static final int TILE_WIDTH = 32;
     private static final int TILE_HEIGHT = 32;
-    private static final int X_TILES = 13;
+    private static final int X_TILES = 14;
     private static final int Y_TILES = 13;
-    int counter = 0;
+    int vidasAct = 3;
     long previousNanoFrame;
     boolean setear = false;
+    static boolean simu = false;
     AnimationTimer gameTimer;
     solutionThread st;
 
@@ -49,7 +50,7 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_4";
+    String level = "nivel_1";
 
     Control control;
     
@@ -58,10 +59,11 @@ public class Main extends Application {
         this.stage = stage;
         root = new Group();
         currentScene = new Scene(root);
-        Nivel nivel = new Nivel(level);
-        mapa = nivel.getMapa();
+        Nivel nivel;
+        nivel = new Nivel(level);
         jugador = nivel.getPlayer();
-
+        jugador.setVidas(vidasAct);
+        mapa = nivel.getMapa();
         control = nivel.getControl();
         root.getChildren().add(mapa.getRender());
 
@@ -109,8 +111,8 @@ public class Main extends Application {
         // set the window size to 900x900
         stage.setResizable(true);
         if (!setear) {
-            stage.setWidth(600);
-            stage.setHeight(600);
+            stage.setWidth(720);
+            stage.setHeight(720);
             setear = true;
         }
 
@@ -118,12 +120,24 @@ public class Main extends Application {
         stage.setTitle("Testigos de Java");
 
         stage.setScene(currentScene);
-
+        root.getChildren().add(new Text(416, 100, "Vidas\n-----\n"+ vidasAct));
+        root.getChildren().add(new Text(416, 200, "Nivel\n-----\n"+level.substring(level.length() -1)));
         stage.show();
         addInputEvents();
+        onClose();
         // jugador.solucionNivel();
-        st = new solutionThread(jugador, level);
-        st.start();
+        if(simu == true){
+            st = new solutionThread(jugador, level);
+            st.start();
+        }
+    }
+
+    private void onClose(){
+        stage.setOnCloseRequest(event -> {
+            //System.out.println("Stage is closing");
+            if(simu)
+                st.stop();
+        });
     }
 
     private void addInputEvents() {
@@ -224,6 +238,11 @@ public class Main extends Application {
 
     protected void update(double deltaTime) {
         if (jugador.estaMuerto()) {
+            vidasAct--;
+            if(jugador.getVidas() == 0){
+                level = "nivel_1";
+                vidasAct = 3;
+            }
             root.getChildren().clear();
             start(stage);
             gameTimer.stop();
@@ -289,11 +308,26 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        /// AudioClip a = new
-        /// AudioClip("file:src/main/resources/sonido/musica/musicaDeFondo.mp3");]
-        // a.setCycleCount(AudioClip.INDEFINITE);
-        // set intermediate volume
-        // a.setVolume(0.5);
+        Scanner sc = new Scanner(System.in);
+        String option ="";
+        
+        System.out.println("Como quieres jugar? (T : Teclas, S : Simulado)");
+        option = sc.next();
+        option.toLowerCase();
+
+        while(!option.equals("s") && !option.equals("t")){
+            System.out.println("Opcion invalida");
+            System.out.println("Las opciones son ----> T : Teclas, S : Simulado");
+            option = sc.next();
+            option.toLowerCase();
+            System.out.println(option);
+        }
+
+        sc.close();
+        
+        if(option.equals("s"))
+            simu = true;
+
         MediaPlayer mediaPlayer = new MediaPlayer(
                 new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
@@ -301,6 +335,7 @@ public class Main extends Application {
         mediaPlayer.play();
 
         launch(args);
+
 
     }
 
