@@ -49,10 +49,10 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_1";
+    String level = "nivel_4";
 
     Control control;
-
+    
     @Override
     public void start(Stage stage) {
         this.stage = stage;
@@ -63,7 +63,6 @@ public class Main extends Application {
         jugador = nivel.getPlayer();
 
         control = nivel.getControl();
-
         root.getChildren().add(mapa.getRender());
 
         ImageView playerRender = (ImageView) jugador.getRender();

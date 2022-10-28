@@ -3,6 +3,7 @@ package hilos;
 import entidad.Jugador;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 
 
@@ -82,6 +83,299 @@ public class solutionThread extends Thread {
         derecha();
     }
 
+    public void solucionNivel2() throws InterruptedException {
+        
+        for (int i = 0; i < 6; i++) 
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            abajo();
+        
+        for (int i = 0; i < 14; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            abajo();
+        
+        for (int i = 0; i < 8; i++)
+            izquierda();
+        
+        arriba();
+        tiro();
+        
+        for (int i = 0; i < 10; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 4; i++)
+            derecha();
+        
+        for (int i = 0; i < 16; i++)
+            abajo();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 4; i++)
+            derecha();
+        
+        for (int i = 0; i < 20; i++)
+            arriba();
+    }
+    
+    public void solucionNivel3() throws InterruptedException {
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        for (int i = 0; i < 16; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        abajo();
+        
+        arriba();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            abajo();
+        
+        for (int i = 0; i < 14; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            abajo();
+        
+        for (int i = 0; i < 16; i++)
+            derecha();
+        
+        for (int i = 0; i < 8; i++)
+            arriba();
+        
+        for (int i = 0; i < 8; i++)
+            izquierda();
+        
+        for (int i = 0; i < 8; i++)
+            derecha();
+        
+        for (int i = 0; i < 8; i++)
+            abajo();
+        
+        for (int i = 0; i < 16; i++)
+            izquierda();
+        
+        for (int i = 0; i < 8; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 8; i++)
+            abajo();
+        
+        for (int i = 0; i < 16; i++)
+            derecha();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        tiro();
+        
+        for (int i = 0; i < 8; i++)
+            abajo();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+    }
+
+    public void solucionNivel4() throws InterruptedException {
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        for (int i = 0; i < 6; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            izquierda();
+    
+        for (int i = 0; i < 6; i++)
+            abajo();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        tiro();
+        
+        for (int i = 0; i < 6; i++)
+            abajo();
+        
+        for (int i = 0; i < 4; i++)
+            derecha();
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            arriba();
+        
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 4; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+ 
+        for (int i = 0; i < 20; i++)
+            derecha();
+        
+        for (int i = 0; i < 6; i++)
+            abajo();
+        
+        for (int i = 0; i < 3; i++)
+            tiro();
+        
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        
+        abajo();
+        
+        for (int i = 0; i < 3; i++)
+            tiro();
+        
+        for (int i = 0; i < 12; i++)
+            abajo();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        
+        for (int i = 0; i < 10; i++)
+            derecha();
+        
+        for (int i = 0; i < 18; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+    }
+    
+    public void solucionNivel5() throws InterruptedException {
+        
+        
+        
+    }
+    
+    public void solucionNivel6() throws InterruptedException {
+    
+    }
+    
+    public void solucionNivel7() throws InterruptedException {
+        
+    }
+    
     public void abajo() throws InterruptedException {
         jugador.tocarAbajo();
         Thread.sleep(150);
@@ -126,6 +420,24 @@ public class solutionThread extends Thread {
                 case "nivel_1":
                     solucionNivel1();
                     break;
+                case "nivel_2":
+                    solucionNivel2();
+                    break;
+                case "nivel_3":
+                    solucionNivel3();
+                    break;
+                case "nivel_4":
+                    solucionNivel4();
+                    break;
+                case "nivel_5":
+                    solucionNivel5();
+                    break;
+                case "nivel_6":
+                    solucionNivel6();
+                    break;
+                case "nivel_7":
+                    solucionNivel7();
+                    break;  
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -135,54 +447,5 @@ public class solutionThread extends Thread {
 
 
     }
-
-    // this.moverDerecha();
-	// 	this.moverDerecha();
-
-	// 	for (int i = 0; i < 10; i++)
-	// 		this.moverAbajo();
-
-	// 	this.moverIzquierda();
-	// 	this.moverIzquierda();
-
-	// 	for (int i = 0; i < 8; i++)
-	// 		this.moverAbajo();
-
-	// 	for (int i = 0; i < 8; i++)
-	// 		this.moverArriba();
-
-	// 	for (int i = 0; i < 8; i++)
-	// 		this.moverDerecha();
-
-	// 	for (int i = 0; i < 8; i++)
-	// 		this.moverAbajo();
-
-
-	// 	for (int i = 0; i < 10; i++)
-	// 		this.moverDerecha();
-
-
-	// 	for (int i = 0; i < 8; i++)
-	// 		this.moverArriba();
-
-	// 	for (int i = 0; i < 12; i++)
-	// 		this.moverIzquierda();
-
-	// 	this.moverArriba();
-	// 	this.moverArriba();
-
-	// 	this.disparar();
-
-	// 	for (int i = 0; i < 8; i++)
-	// 		this.moverArriba();
-
-	// 	for (int i = 0; i < 12; i++)
-	// 		this.moverDerecha();
-
-	// 	this.moverAbajo();
-	// 	this.moverAbajo();
-
-	// 	this.moverDerecha();
-	// 	this.moverDerecha();
-
+    
 }
