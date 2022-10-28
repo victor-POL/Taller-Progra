@@ -3,7 +3,6 @@ package entidad;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import main.Main;
 import mapa.Mapa;
 import utiles.Constantes;
 import utiles.Posicion;

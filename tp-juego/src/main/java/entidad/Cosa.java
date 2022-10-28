@@ -9,9 +9,7 @@ import mapa.Mapa;
 public class Cosa extends Entidad {
     private final int TILE_SIZE = 32;
     private final boolean esRecogible;
-    private final boolean esEmpujable;
     public boolean fueRecogido = false;
-    private boolean cambie = false;
     public String queSoy;
 
     // Constructores
@@ -19,7 +17,6 @@ public class Cosa extends Entidad {
     public Cosa(double STEP_SIZE, Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable, String queSoy) {
         super(STEP_SIZE, pos, map);
         this.esRecogible = esRecogible;
-        this.esEmpujable = esEmpujable;
         this.queSoy = queSoy;
         this.setRender();
     }

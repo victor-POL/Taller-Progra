@@ -4,6 +4,13 @@ import entidad.Jugador;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
+
+
+
+/**
+ * Usar las funciones derecha, izquierda, arriba, abajo, tiro y esperar(int tiempo)
+ *
+ */
 public class solutionThread extends Thread {
 
     Jugador jugador;
@@ -93,6 +100,10 @@ public class solutionThread extends Thread {
     public void derecha() throws InterruptedException {
         jugador.tocarDerecha();
         Thread.sleep(150);
+    }
+
+    public void esperar(int time) throws InterruptedException {
+        Thread.sleep(time);
     }
 
     public void tiro() throws InterruptedException {
