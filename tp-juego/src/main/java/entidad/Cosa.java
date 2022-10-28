@@ -1,6 +1,7 @@
 package entidad;
 
 import utiles.Posicion;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import mapa.Mapa;
@@ -114,15 +115,18 @@ public class Cosa extends Entidad {
     
    // JavaFX
 
-    public void update(double deltaTime) {
+    public boolean update(double deltaTime, Group root) {
         if (fueRecogido) {
-            if (!cambie) {
-                cambie = true;
-                return;
-            }
+            root.getChildren().remove(getRender());
+            return false;
         }
-
+        
         this.render.setX(pos.getX() * TILE_SIZE);
         this.render.setY(pos.getY() * TILE_SIZE);
+
+        if(!root.getChildren().contains(getRender())) {
+            root.getChildren().add(getRender());
+        }
+        return true;
     }
 }

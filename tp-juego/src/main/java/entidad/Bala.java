@@ -1,5 +1,7 @@
 package entidad;
 
+import javafx.scene.Group;
+import main.Main;
 import mapa.Mapa;
 import utiles.Posicion;
 import utiles.Constantes;
@@ -7,6 +9,7 @@ import utiles.Constantes;
 public class Bala extends Entidad {
     private int direccion;
     private double counter = 0;
+    private Group root;
 
     // Constructores
 
@@ -28,6 +31,30 @@ public class Bala extends Entidad {
                 this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
                 break;
         }
+        render.setX(pos.getX() * Main.TILE);
+        render.setY(pos.getY() * Main.TILE);
+    }
+    public Bala(Posicion pos, int direccion, Mapa map, Group root) {
+        super(0.5, pos, map);
+        this.direccion = direccion;
+
+        switch (direccion) {
+            case Constantes.ARRIBA:
+                this.setImage("file:src/main/resources/sprites/balas/bala_arriba.png");
+                break;
+            case Constantes.ABAJO:
+                this.setImage("file:src/main/resources/sprites/balas/bala_abajo.png");
+                break;
+            case Constantes.DER:
+                this.setImage("file:src/main/resources/sprites/balas/bala_derecha.png");
+                break;
+            case Constantes.IZQ:
+                this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
+                break;
+        }
+        render.setX(pos.getX() * Main.TILE);
+        render.setY(pos.getY() * Main.TILE);
+        this.root = root;
     }
 
     // Movimiento
@@ -101,16 +128,23 @@ public class Bala extends Entidad {
 
     // JavaFX
 
-    public boolean update(double deltaTime) {
+    public void update(double deltaTime, Group root) {
         if (counter >= 0.04) {
             this.render.setX(pos.getX() * 32);
             this.render.setY(pos.getY() * 32);
             counter = 0;
-            return this.mover();
+            if(!this.mover()){
+                mapa.getBalas().remove(this);
+                root.getChildren().remove(getRender());
+            }
         } else
             counter += deltaTime;
-        return true;
 
+    }
+
+
+    public void show(){
+        root.getChildren().add(getRender());
     }
 
 }

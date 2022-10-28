@@ -1,9 +1,8 @@
 package mapa;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import entidad.Bala;
 import entidad.Cosa;
@@ -24,9 +23,9 @@ public class Mapa {
     private Piso[][] pisos = new Piso[13][13];
     private int limite = pisos.length;
 
-    private Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
-    private Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
-    private List<Bala> balas = new ArrayList<Bala>();
+    private Map<Posicion, Cosa> cosas = new ConcurrentHashMap<Posicion, Cosa>();
+    private Map<Posicion, Enemigo> enemigos = new ConcurrentHashMap<Posicion, Enemigo>();
+    private List<Bala> balas = new CopyOnWriteArrayList<Bala>();
 
     private Jugador player;
 

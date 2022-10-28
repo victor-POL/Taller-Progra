@@ -1,8 +1,11 @@
 package main;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import animation.Control;
 import animation.Direction;
@@ -10,6 +13,7 @@ import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.Jugador;
+import hilos.solutionThread;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -32,7 +36,7 @@ import niveles.Nivel;
 import utiles.Posicion;
 
 public class Main extends Application {
-    private static final int TILE = 32;
+    public static final int TILE = 32;
     private static final double NANOS_IN_SECOND_D = 1_000_000_000.0;
     private static final int TILE_WIDTH = 32;
     private static final int TILE_HEIGHT = 32;
@@ -41,13 +45,15 @@ public class Main extends Application {
     int counter = 0;
     long previousNanoFrame;
     boolean setear = false;
+    AnimationTimer gameTimer;
+    solutionThread st;
 
     Jugador jugador;
     Mapa mapa;
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_7";
+    String level = "nivel_1";
 
     Control control;
 
@@ -120,6 +126,9 @@ public class Main extends Application {
 
         stage.show();
         addInputEvents();
+        // jugador.solucionNivel();
+        st = new solutionThread(jugador, level);
+        st.start();
     }
 
     private void addInputEvents() {
@@ -206,85 +215,56 @@ public class Main extends Application {
 
     private void addUpdateEachFrameTimer() {
         previousNanoFrame = System.nanoTime();
-        AnimationTimer gameTimer = new AnimationTimer() {
+        gameTimer = new AnimationTimer() {
             @Override
             public void handle(long currentNano) {
                 // Update tick
                 // update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
-                if (!update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D))
-                    this.stop();
+                update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
                 previousNanoFrame = currentNano;
             }
         };
         gameTimer.start();
     }
 
-    protected boolean update(double deltaTime) {
+    protected void update(double deltaTime) {
         if (jugador.estaMuerto()) {
             root.getChildren().clear();
             start(stage);
-            return false; // to stop the timer
+            gameTimer.stop();
         }
-        if (jugador.update(deltaTime)) {
+        if (jugador.completoNivel) {
             root.getChildren().clear();
             this.avanzar_nivel();
             start(stage);
-            return false; // to stop the timer
+            gameTimer.stop();
         }
 
         // update mapa, tiles que cambiaron, etc
         mapa.update(deltaTime);
-        List<Cosa> cosasASacar = new ArrayList<>();
-        List<Enemigo> enemigosASacar = new ArrayList<>();
-        List<Bala> balasASacar = new ArrayList<>();
 
         // update balas
-        for (Bala b : mapa.getBalas()) {
-            if (!b.update(deltaTime)) {
-                balasASacar.add(b);
-            }
-        }
-
-        for (Bala b : balasASacar) {
-            mapa.getBalas().remove(b);
-            root.getChildren().remove(b.getRender());
+        Iterator<Bala> it = mapa.getBalas().iterator();
+        while (it.hasNext()) {
+            Bala b = it.next();
+            b.update(deltaTime, root);
         }
 
         // update enemigos
-        for (Posicion p : mapa.getEnemigos().keySet()) {
-            Enemigo e = mapa.getEnemigos().get(p);
-            Bala b = e.update(deltaTime);
-            if (b != null) {
-                ImageView iv = (ImageView) b.getRender();
-                iv.setX(b.getPos().getX() * TILE);
-                iv.setY(b.getPos().getY() * TILE);
-                root.getChildren().add(b.getRender());
-            }
-            if (e.estaMuerto()) {
-                enemigosASacar.add(e);
-            }
-        }
-        for (Enemigo e : enemigosASacar) {
-            mapa.getEnemigos().remove(e.getPos());
-            root.getChildren().remove(e.getRender());
+        Iterator<Enemigo> it2 = mapa.getEnemigos().values().iterator();
+        while (it2.hasNext()) {
+            Enemigo e = it2.next();
+            if(!e.update(deltaTime, root))
+                it2.remove();
         }
 
         // update cosas
-        for (Posicion p : mapa.getCosas().keySet()) {
-            Cosa c = mapa.getCosas().get(p);
-            if (!root.getChildren().contains(c.getRender()))
-                root.getChildren().add(c.getRender());
-            c.update(deltaTime);
-            if (c.fueRecogido) {
-                cosasASacar.add(c);
-            }
+        Iterator<Cosa> it3 = mapa.getCosas().values().iterator();
+        while (it3.hasNext()) {
+            Cosa c = it3.next();
+            if(!c.update(deltaTime, root))
+                it3.remove();
         }
-        for (Cosa c : cosasASacar) {
-            mapa.getCosas().remove(c.getPos());
-            root.getChildren().remove(c.getRender());
-        }
-
-        return true;
     }
 
     private void avanzar_nivel() {
@@ -326,5 +306,7 @@ public class Main extends Application {
         mediaPlayer.play();
 
         launch(args);
+
     }
+
 }

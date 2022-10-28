@@ -317,9 +317,7 @@ public class Jugador extends Entidad {
         }
     }
 
-    public boolean update(double deltaTime) {
-        return this.completoNivel;
-    }
+
 
     // Setters
 
@@ -350,5 +348,30 @@ public class Jugador extends Entidad {
     public List<Cosa> getInventario() {
         return inventario;
     }
+
+
+    public void tocarDerecha(){
+        control.setDirection(Direction.RIGHT);
+        this.step();
+        control.releaseDirection(Direction.RIGHT);
+    }
+    public void tocarAbajo(){
+        control.setDirection(Direction.DOWN);
+        this.step();
+        control.releaseDirection(Direction.DOWN);
+    }
+
+    public void tocarIzquierda(){
+        control.setDirection(Direction.LEFT);
+        this.step();
+        control.releaseDirection(Direction.LEFT);
+    }
+
+    public void tocarArriba(){
+        control.setDirection(Direction.UP);
+        this.step();
+        control.releaseDirection(Direction.UP);
+    }
+
 
 }

@@ -1,7 +1,9 @@
 package entidad;
 
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import main.Main;
 import mapa.Mapa;
 import utiles.Constantes;
 import utiles.Posicion;
@@ -36,16 +38,19 @@ public class Enemigo extends Entidad {
 
     // JavaFX
 
-    public Bala update(double deltaTime) {
+    public boolean update(double deltaTime, Group root) {
+        if(estaMuerto){
+            root.getChildren().remove(getRender());
+            return false;
+        }
         if (count > 0.5) {
             BalaEnemigo b = disparar(orientacion);
             mapa.addBala(b);
+            root.getChildren().add(b.getRender());
             count = 0;
-
-            return b;
         } else
             count += deltaTime;
-        return null;
+        return true;
     }
 
     // Setters
