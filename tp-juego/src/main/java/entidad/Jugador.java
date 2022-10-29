@@ -78,7 +78,7 @@ public class Jugador extends Entidad {
             res = chequeo_items_y_progreso(item);
 
         } else {
-            item = mapa.getByPosition(this.pos.posDerecha());
+            item = mapa.getCosaByPosition(this.pos.posDerecha());
 
             if (item != null) {
 
@@ -107,7 +107,7 @@ public class Jugador extends Entidad {
             res = chequeo_items_y_progreso(item);
 
         } else {
-            item = mapa.getByPosition(this.pos.posIzquierda());
+            item = mapa.getCosaByPosition(this.pos.posIzquierda());
 
             if (item != null) {
 
@@ -136,7 +136,7 @@ public class Jugador extends Entidad {
 
         } else {
 
-            item = mapa.getByPosition(this.pos.posArriba());
+            item = mapa.getCosaByPosition(this.pos.posArriba());
 
             // 1 - Hay algo en esa casilla?
             if (item != null) {
@@ -165,7 +165,7 @@ public class Jugador extends Entidad {
             res = chequeo_items_y_progreso(item);
         } else {
 
-            item = mapa.getByPosition(this.pos.posAbajo());
+            item = mapa.getCosaByPosition(this.pos.posAbajo());
 
             // 1 - Hay algo en esa casilla?
             if (item != null) {
@@ -187,12 +187,12 @@ public class Jugador extends Entidad {
     // Metodos
 
     private boolean chequeo_items_y_progreso(Cosa item) {
-        if ((item = mapa.getByPosition(pos.getPos())) != null) {
+        if ((item = mapa.getCosaByPosition(pos.getPos())) != null) {
 
-            mapa.getByPosition(pos.getPos()).setRecogido();
+            mapa.getCosaByPosition(pos.getPos()).setRecogido();
             inventario.add(item);
 
-            if (item.queSoy == "item_pasar_de_nivel") {
+            if (item.clasificacion == "item_pasar_de_nivel") {
                 completoNivel = true;
             }
 

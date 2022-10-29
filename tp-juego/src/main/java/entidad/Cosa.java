@@ -10,14 +10,14 @@ public class Cosa extends Entidad {
     private final int TILE_SIZE = 32;
     private final boolean esRecogible;
     public boolean fueRecogido = false;
-    public String queSoy;
+    public String clasificacion;
 
     // Constructores
 
     public Cosa(double STEP_SIZE, Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable, String queSoy) {
         super(STEP_SIZE, pos, map);
         this.esRecogible = esRecogible;
-        this.queSoy = queSoy;
+        this.clasificacion = queSoy;
         this.setRender();
     }
 
@@ -26,7 +26,7 @@ public class Cosa extends Entidad {
     @Override
     public boolean moverDerecha() {
         if (mapa.puedoPasar((int) (pos.getX() + this.STEP_SIZE), (int) pos.getY())
-                && mapa.getByPosition(new Posicion(pos.getX() + this.STEP_SIZE, (int) pos.getY())) == null) {
+                && mapa.getCosaByPosition(new Posicion(pos.getX() + this.STEP_SIZE, (int) pos.getY())) == null) {
             pos.setX(pos.getX() + STEP_SIZE);
             return true;
         }
@@ -36,7 +36,7 @@ public class Cosa extends Entidad {
     @Override
     public boolean moverIzquierda() {
         if (mapa.puedoPasar((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())
-                && mapa.getByPosition(
+                && mapa.getCosaByPosition(
                         new Posicion((int) Math.round(pos.getX() - this.STEP_SIZE), (int) pos.getY())) == null) {
             pos.setX(pos.getX() - STEP_SIZE);
             return true;
@@ -47,7 +47,7 @@ public class Cosa extends Entidad {
     @Override
     public boolean moverArriba() {
         if (mapa.puedoPasar((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))
-                && mapa.getByPosition(
+                && mapa.getCosaByPosition(
                         new Posicion((int) (pos.getX()), (int) Math.round(pos.getY() - this.STEP_SIZE))) == null) {
             pos.setY(pos.getY() - STEP_SIZE);
             return true;
@@ -58,7 +58,7 @@ public class Cosa extends Entidad {
     @Override
     public boolean moverAbajo() {
         if (mapa.puedoPasar((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))
-                && mapa.getByPosition(new Posicion((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))) == null) {
+                && mapa.getCosaByPosition(new Posicion((int) (pos.getX()), (int) (pos.getY() + this.STEP_SIZE))) == null) {
             pos.setY(pos.getY() + STEP_SIZE);
             return true;
         }
@@ -74,7 +74,7 @@ public class Cosa extends Entidad {
     // Setters
 
     public void setRender() {
-        switch (queSoy) {
+        switch (clasificacion) {
             case "municion":
                 this.render = new ImageView(new Image("file:src/main/resources/sprites/items/carpincho_muerto.png"));
                 break;
