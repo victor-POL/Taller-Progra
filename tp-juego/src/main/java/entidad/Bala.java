@@ -92,7 +92,7 @@ public class Bala extends Entidad {
         }
 
         if (puedoMover) {
-            Cosa c = mapa.getByPosition(getPos());
+            Cosa c = mapa.getCosaByPosition(getPos());
             Enemigo e = mapa.getEnemyByPosition(getPos());
             Jugador p = mapa.getPlayer();
 

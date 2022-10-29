@@ -35,7 +35,7 @@ public class Mapa {
     private Cosa itemPasarDeNivel;
 
     private boolean pasarNivelHabilitado = false;
-    private boolean cambie = false;
+    private boolean sufrioModificacion = false;
     private int cantItemsCompletarNivel;
 
     private final int width = TILE_SIZE;
@@ -88,7 +88,7 @@ public class Mapa {
 
     // Getters by position
 
-    public Cosa getByPosition(Posicion p) {
+    public Cosa getCosaByPosition(Posicion p) {
         return cosas.get(p);
     }
 
@@ -128,7 +128,7 @@ public class Mapa {
         pisos[(int) posItemHabilitaPasarNivel.getY()][(int) posItemHabilitaPasarNivel.getX()] = new PisoHandler()
                 .getPisoByPosition(6.1);
         cosas.put(posItemHabilitaPasarNivel, new Cosa(0, this.posItemHabilitaPasarNivel, this, true, false, "llave"));
-        cambie = true;
+        sufrioModificacion = true;
 
     }
 
@@ -138,7 +138,7 @@ public class Mapa {
         itemPasarDeNivel = new Cosa(0, posPasarDeNivel, this, true, false, "item_pasar_de_nivel");
         cosas.put(posPasarDeNivel, itemPasarDeNivel);
         pasarNivelHabilitado = true;
-        cambie = true;
+        sufrioModificacion = true;
     }
 
     // Getters
@@ -210,9 +210,9 @@ public class Mapa {
     }
 
     public void update(double deltaTime) {
-        if (cambie) {
+        if (sufrioModificacion) {
             drawMap();
-            cambie = false;
+            sufrioModificacion = false;
         }
 
     }
