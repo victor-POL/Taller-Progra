@@ -4,7 +4,6 @@ import entidad.Jugador;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
-import javax.sound.sampled.spi.MixerProvider;
 
 
 
@@ -402,15 +401,347 @@ public class solutionThread extends Thread {
     public void solucionNivel5() throws InterruptedException {
         
         
+        //bloqueo al primer enemigo con la piedra
+        for (int i = 0; i < 4; i++)
+            izquierda();
         
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 4; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        //bloqueo la flecha que dispara al cofre
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 4; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+
+        //bloqueo al 2do enemigo con la piedra
+        for (int i = 0; i < 8; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 4; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        // for (int i = 0; i < 3; i++)
+        //     arriba();
+        
+        for (int i = 0; i < 4; i++)
+            derecha();
+        for (int i = 0; i < 5; i++)
+            arriba();
+        for (int i = 0; i < 5; i++)
+            abajo();
+        for (int i = 0; i < 8; i++)
+            izquierda();
+        for (int i = 0; i < 9; i++)
+            arriba();
+        for (int i = 0; i < 9; i++)
+            abajo();
+        for (int i = 0; i < 6; i++)
+            derecha();
+        for (int i = 0; i < 16; i++)
+            arriba();
+        //agarro el unico item
+        for (int i = 0; i < 8; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        
+        tiro();
+        
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        for (int i = 0; i < 20; i++)
+            abajo();
+        //agarro llave
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 20; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        //voy a la salida
+        for (int i = 0; i < 2; i++)
+            arriba();
     }
     
     public void solucionNivel6() throws InterruptedException {
-    
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        for (int i = 0; i < 6; i++)
+            abajo();
+        for (int i = 0; i < 6; i++)
+            derecha();
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        for (int i = 0; i < 4; i++)
+            arriba();
+        //empujo caja a posicion conveniente
+        for (int i = 0; i < 12; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        //agarro el 1er item
+        for (int i = 0; i < 6; i++)
+            derecha();
+        
+        abajo();
+        tiro();
+        arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        
+        for (int i = 0; i < 10; i++)
+            abajo();
+        // for (int i = 0; i < 2; i++)
+        //     izquierda();
+        // for (int i = 0; i < 2; i++)
+        //     abajo();
+        // for (int i = 0; i < 1; i++)
+        //     derecha();
+        for (int i = 0; i < 8; i++)
+            arriba();
+        for (int i = 0; i < 12; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        //empujo 2da piedra a donde me conviene
+        for (int i = 0; i < 8; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 14; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        //agarro el 2do item
+        for (int i = 0; i < 4; i++)
+            abajo();
+        derecha();
+        derecha();
+        izquierda();
+        izquierda();
+        
+        for (int i = 0; i < 6; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 10; i++)
+            arriba();
+        for (int i = 0; i < 12; i++)
+            izquierda();
+        for (int i = 0; i < 8; i++)
+            abajo();
+        //agarro el 3er item
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 8; i++)
+            abajo();
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        
+        //agarro el ultimo item
+        for (int i = 0; i < 4; i++)
+            abajo();
+        //agarro llave
+        for (int i = 0; i < 4; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        //voy a la salida
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        
     }
     
     public void solucionNivel7() throws InterruptedException {
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 4; i++)
+            arriba();
+        for (int i = 0; i < 8; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
         
+        //bloqueo 1er enemigo
+        for (int i = 0; i < 6; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            derecha();
+        for (int i = 0; i < 4; i++)
+            abajo();
+        for (int i = 0; i < 10; i++)
+            derecha();
+        
+        //
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        
+        //bloqueo 2do enemigo
+        for (int i = 0; i < 8; i++)
+            arriba();
+        for (int i = 0; i < 8; i++)
+            derecha();
+        for (int i = 0; i < 6; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        
+        for (int i = 0; i < 6; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 12; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        
+        //tapo anteultimo enemigo
+        for (int i = 0; i < 6; i++)
+            derecha();
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 6; i++)
+            derecha();
+        for (int i = 0; i < 4; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 4; i++)
+            arriba();
+        
+        for (int i = 0; i < 4; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 4; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 2; i++)
+            derecha();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        for (int i = 0; i < 2; i++)
+            izquierda();
+        for (int i = 0; i < 2; i++)
+            abajo();
+        
+        //bloqueo al ultimo enemigo
+        for (int i = 0; i < 2; i++)
+            derecha();
+        
+        for (int i = 0; i < 2; i++)
+            arriba();
+        for (int i = 0; i < 12; i++)
+            izquierda();
+        for (int i = 0; i < 14; i++)
+            abajo();
+        for (int i = 0; i < 14; i++)
+            derecha();
+        
+        //buscar item
+        for (int i = 0; i < 10; i++)
+            arriba();
+        for (int i = 0; i < 10; i++)
+            abajo();
+        for (int i = 0; i < 14; i++)
+            izquierda();
+        //llave
+        for (int i = 0; i < 16; i++)
+            arriba();
+        //salida
+        for (int i = 0; i < 22; i++)
+            abajo();
     }
     
     public void abajo() throws InterruptedException {

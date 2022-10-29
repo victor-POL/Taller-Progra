@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Scanner;
+
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
@@ -15,7 +16,9 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -24,6 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -43,6 +47,7 @@ public class Main extends Application {
     boolean setear = false;
     static boolean simu = false;
     AnimationTimer gameTimer;
+    static MediaPlayer mediaPlayer;
     solutionThread st;
 
     Jugador jugador;
@@ -50,12 +55,35 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_3";
+    String level = "nivel_1";
 
     Control control;
-    
+
     @Override
     public void start(Stage stage) {
+        if (level.equals("final")) {
+            mediaPlayer.stop();
+            mediaPlayer = new MediaPlayer(
+                    new Media(new File("src/main/resources/sonido/musica/musicaDeVictoria.mp3").toURI().toString()));
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setVolume(0.3);
+            mediaPlayer.play();
+            stage.close();
+            this.stage = new Stage();
+            root.getChildren().clear();
+            root = new Group();
+            currentScene = new Scene(root, 220, 75);
+            this.stage.setScene(currentScene);
+            Text text = new Text(0, 50, "GANASTE");
+            text.setFont(new Font(STYLESHEET_CASPIAN, 50));
+            ImageView fondoGanaste = new ImageView(new Image("file:src/main/resources/sprites/caminables/pasto.png"));
+            fondoGanaste.setFitHeight(75);
+            fondoGanaste.setFitWidth(220);
+            root.getChildren().add((Node)fondoGanaste);
+            root.getChildren().add(text);
+            this.stage.show();
+            return;
+        }
         this.stage = stage;
         root = new Group();
         currentScene = new Scene(root);
@@ -120,22 +148,22 @@ public class Main extends Application {
         stage.setTitle("Testigos de Java");
 
         stage.setScene(currentScene);
-        root.getChildren().add(new Text(416, 100, "Vidas\n-----\n"+ vidasAct));
-        root.getChildren().add(new Text(416, 200, "Nivel\n-----\n"+level.substring(level.length() -1)));
+        root.getChildren().add(new Text(416, 100, "Vidas\n-----\n" + vidasAct));
+        root.getChildren().add(new Text(416, 200, "Nivel\n-----\n" + level.substring(level.length() - 1)));
         stage.show();
         addInputEvents();
         onClose();
         // jugador.solucionNivel();
-        if(simu == true){
+        if (simu == true) {
             st = new solutionThread(jugador, level);
             st.start();
         }
     }
 
-    private void onClose(){
+    private void onClose() {
         stage.setOnCloseRequest(event -> {
-            //System.out.println("Stage is closing");
-            if(simu)
+            // System.out.println("Stage is closing");
+            if (simu)
                 st.stop();
         });
     }
@@ -239,7 +267,7 @@ public class Main extends Application {
     protected void update(double deltaTime) {
         if (jugador.estaMuerto()) {
             vidasAct--;
-            if(jugador.getVidas() == 0){
+            if (jugador.getVidas() == 0) {
                 level = "nivel_1";
                 vidasAct = 3;
             }
@@ -249,9 +277,12 @@ public class Main extends Application {
         }
         if (jugador.completoNivel) {
             root.getChildren().clear();
-            this.avanzar_nivel();
-            start(stage);
-            gameTimer.stop();
+            if(!level.equals("final")) {
+                this.avanzar_nivel();
+                start(stage);
+                gameTimer.stop();
+            }
+                
         }
 
         // update mapa, tiles que cambiaron, etc
@@ -268,7 +299,7 @@ public class Main extends Application {
         Iterator<Enemigo> it2 = mapa.getEnemigos().values().iterator();
         while (it2.hasNext()) {
             Enemigo e = it2.next();
-            if(!e.update(deltaTime, root))
+            if (!e.update(deltaTime, root))
                 it2.remove();
         }
 
@@ -276,7 +307,7 @@ public class Main extends Application {
         Iterator<Cosa> it3 = mapa.getCosas().values().iterator();
         while (it3.hasNext()) {
             Cosa c = it3.next();
-            if(!c.update(deltaTime, root))
+            if (!c.update(deltaTime, root))
                 it3.remove();
         }
     }
@@ -300,22 +331,24 @@ public class Main extends Application {
                 break;
             case "nivel_6":
                 level = "nivel_7";
+                break;
+            case "nivel_7":
+                level = "final";
+                break;
             default:
-                root.getChildren().add(new Text(100, 100, "Game Over"));
-                System.exit(0);
                 break;
         }
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String option ="";
-        
+        String option = "";
+
         System.out.println("Como quieres jugar? (T : Teclas, S : Simulado)");
         option = sc.next();
         option = option.toLowerCase();
 
-        while(!option.equals("s") && !option.equals("t")){
+        while (!option.equals("s") && !option.equals("t")) {
             System.out.println("Opcion invalida");
             System.out.println("Las opciones son ----> T : Teclas, S : Simulado");
             option = sc.next();
@@ -324,18 +357,17 @@ public class Main extends Application {
         }
 
         sc.close();
-        
-        if(option.equals("s"))
+
+        if (option.equals("s"))
             simu = true;
 
-        MediaPlayer mediaPlayer = new MediaPlayer(
+        mediaPlayer = new MediaPlayer(
                 new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setVolume(0.1);
         mediaPlayer.play();
 
         launch(args);
-
 
     }
 
