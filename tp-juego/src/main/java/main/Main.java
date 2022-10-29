@@ -55,13 +55,14 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_1";
+    String level = "nivel_7";
 
     Control control;
 
     @Override
     public void start(Stage stage) {
         if (level.equals("final")) {
+            root.getChildren().clear();
             mediaPlayer.stop();
             mediaPlayer = new MediaPlayer(
                     new Media(new File("src/main/resources/sonido/musica/musicaDeVictoria.mp3").toURI().toString()));
@@ -70,15 +71,15 @@ public class Main extends Application {
             mediaPlayer.play();
             stage.close();
             this.stage = new Stage();
-            root.getChildren().clear();
+            
             root = new Group();
-            currentScene = new Scene(root, 220, 75);
+            currentScene = new Scene(root, 480, 320);
             this.stage.setScene(currentScene);
-            Text text = new Text(0, 50, "GANASTE");
+            Text text = new Text(125, 160, "GANASTE");
             text.setFont(new Font(STYLESHEET_CASPIAN, 50));
-            ImageView fondoGanaste = new ImageView(new Image("file:src/main/resources/sprites/caminables/pasto.png"));
-            fondoGanaste.setFitHeight(75);
-            fondoGanaste.setFitWidth(220);
+            ImageView fondoGanaste = new ImageView(new Image("file:src/main/resources/fin.gif"));
+            fondoGanaste.setFitHeight(320);
+            fondoGanaste.setFitWidth(480);
             root.getChildren().add((Node)fondoGanaste);
             root.getChildren().add(text);
             this.stage.show();
@@ -146,6 +147,8 @@ public class Main extends Application {
 
         stage.setScene(currentScene);
         stage.setTitle("Testigos de Java");
+        stage.setAlwaysOnTop(true);
+        stage.setFullScreen(true);
         
         // mio
         
@@ -179,6 +182,7 @@ public class Main extends Application {
         
         
         stage.show();
+
         addInputEvents();
         onClose();
         // jugador.solucionNivel();
@@ -361,9 +365,11 @@ public class Main extends Application {
                 level = "nivel_7";
                 break;
             case "nivel_7":
+//                System.exit(0);
                 level = "final";
                 break;
             default:
+                System.exit(0);
                 break;
         }
     }
@@ -392,7 +398,7 @@ public class Main extends Application {
         mediaPlayer = new MediaPlayer(
                 new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setVolume(0.1);
+        mediaPlayer.setVolume(0.4);
         mediaPlayer.play();
 
         launch(args);

@@ -51,7 +51,7 @@ public class PisoHandler {
         // Obstaculos, personaje no puede pisar
         pisos.put(20.0, new Piso("file:src/main/resources/sprites/obstaculos_inamovibles/roca.png", true, nombres[3]));
         pisos.put(30.0, new Piso("file:src/main/resources/sprites/obstaculos_inamovibles/arbol.png", true, nombres[2]));
-        pisos.put(40.0, new Piso("file:src/main/resources/sprites/caminables/pasto_con_charco.png", true, nombres[0]));
+        pisos.put(40.0, new Piso("file:src/main/resources/sprites/obstaculos_inamovibles/agua.png", true, nombres[0]));
 
     }
 

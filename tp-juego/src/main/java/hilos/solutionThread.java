@@ -24,6 +24,7 @@ public class solutionThread extends Thread {
     }
 
     private void solucionNivel1() throws InterruptedException{
+        esperar(1000);
         derecha();
         derecha();
         
@@ -88,7 +89,8 @@ public class solutionThread extends Thread {
     }
 
     public void solucionNivel2() throws InterruptedException {
-        
+        esperar(1000);
+
         abajo();
         abajo();
 
@@ -165,7 +167,8 @@ public class solutionThread extends Thread {
     }
     
     public void solucionNivel3() throws InterruptedException {
-        
+        esperar(1000);
+
         for (int i = 0; i < 6; i++)
             arriba();
         
@@ -267,7 +270,8 @@ public class solutionThread extends Thread {
     }
 
     public void solucionNivel4() throws InterruptedException {
-        
+        esperar(1000);
+
         for (int i = 0; i < 2; i++)
             arriba();
         
@@ -399,7 +403,8 @@ public class solutionThread extends Thread {
     }
     
     public void solucionNivel5() throws InterruptedException {
-        
+        esperar(1000);
+
         
         //bloqueo al primer enemigo con la piedra
         for (int i = 0; i < 4; i++)
@@ -486,6 +491,8 @@ public class solutionThread extends Thread {
     }
     
     public void solucionNivel6() throws InterruptedException {
+        esperar(1000);
+
         for (int i = 0; i < 2; i++)
             abajo();
         for (int i = 0; i < 2; i++)
@@ -595,6 +602,8 @@ public class solutionThread extends Thread {
     }
     
     public void solucionNivel7() throws InterruptedException {
+        esperar(1000);
+
         for (int i = 0; i < 2; i++)
             derecha();
         for (int i = 0; i < 4; i++)
