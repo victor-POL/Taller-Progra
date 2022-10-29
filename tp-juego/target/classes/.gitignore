@@ -1,10 +1,7 @@
-/hilos/
-/niveles/
-/main/
-/animation/
 /entidad/
+/main/
+/niveles/
+/animation/
+/hilos/
 /mapa/
 /utiles/
-/jugadores/
-/piso/
-/META-INF/
