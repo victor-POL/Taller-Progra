@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Scanner;
+
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
@@ -16,6 +17,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -118,10 +120,38 @@ public class Main extends Application {
 
         stage.setScene(currentScene);
         stage.setTitle("Testigos de Java");
+        
+        // mio
+        
+        final ImageView selectedImage = new ImageView();   
+        Image image1 = new Image("file:src/main/resources/fondo.jpg");
+
+        selectedImage.setX(415);
+        selectedImage.setImage(image1);
+
+        root.getChildren().add(selectedImage);
+        
 
         stage.setScene(currentScene);
-        root.getChildren().add(new Text(416, 100, "Vidas\n-----\n"+ vidasAct));
-        root.getChildren().add(new Text(416, 200, "Nivel\n-----\n"+level.substring(level.length() -1)));
+        
+        // vidas
+        
+        for (int i = 0; i < vidasAct; i++) {
+            final ImageView selectedImage2 = new ImageView();   
+            Image image2 = new Image("file:src/main/resources/vida.png");
+            selectedImage2.setX(416);
+            selectedImage2.setY((i + 1) * 35);
+            selectedImage2.setImage(image2);
+
+            root.getChildren().add(selectedImage2);
+        }
+        
+        // Nivel
+        root.getChildren().add(new Text(427, 170, level.substring(level.length() -1)));
+
+        
+        
+        
         stage.show();
         addInputEvents();
         onClose();
