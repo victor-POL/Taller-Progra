@@ -50,7 +50,7 @@ public class Main extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_1";
+    String level = "nivel_3";
 
     Control control;
     
@@ -313,13 +313,13 @@ public class Main extends Application {
         
         System.out.println("Como quieres jugar? (T : Teclas, S : Simulado)");
         option = sc.next();
-        option.toLowerCase();
+        option = option.toLowerCase();
 
         while(!option.equals("s") && !option.equals("t")){
             System.out.println("Opcion invalida");
             System.out.println("Las opciones son ----> T : Teclas, S : Simulado");
             option = sc.next();
-            option.toLowerCase();
+            option = option.toLowerCase();
             System.out.println(option);
         }
 
