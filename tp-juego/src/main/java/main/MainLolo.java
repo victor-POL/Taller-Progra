@@ -33,9 +33,10 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import mapa.Mapa;
 import niveles.Nivel;
+import utiles.NomJuegos;
 import utiles.Posicion;
 
-public class Main extends Application {
+public class MainLolo extends Application {
     public static final int TILE = 32;
     private static final double NANOS_IN_SECOND_D = 1_000_000_000.0;
     private static final int TILE_WIDTH = 32;
@@ -89,7 +90,7 @@ public class Main extends Application {
         root = new Group();
         currentScene = new Scene(root);
         Nivel nivel;
-        nivel = new Nivel(level);
+        nivel = new Nivel(level, NomJuegos.BOBO);
         jugador = nivel.getPlayer();
         jugador.setVidas(vidasAct);
         mapa = nivel.getMapa();
@@ -192,6 +193,7 @@ public class Main extends Application {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void onClose() {
         stage.setOnCloseRequest(event -> {
             // System.out.println("Stage is closing");
@@ -395,11 +397,13 @@ public class Main extends Application {
         if (option.equals("s"))
             simu = true;
 
-        mediaPlayer = new MediaPlayer(
-                new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setVolume(0.4);
-        mediaPlayer.play();
+        // NOTA (Carballo): A mi no me funciona con musica, si comento estas lineas funciona.
+          
+//        mediaPlayer = new MediaPlayer(
+//                new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
+//        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+//        mediaPlayer.setVolume(0.4);
+//        mediaPlayer.play();
 
         launch(args);
 

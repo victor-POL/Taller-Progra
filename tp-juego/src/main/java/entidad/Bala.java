@@ -1,7 +1,7 @@
 package entidad;
 
 import javafx.scene.Group;
-import main.Main;
+import main.MainLolo;
 import mapa.Mapa;
 import utiles.Posicion;
 import utiles.Constantes;
@@ -31,8 +31,8 @@ public class Bala extends Entidad {
                 this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
                 break;
         }
-        render.setX(pos.getX() * Main.TILE);
-        render.setY(pos.getY() * Main.TILE);
+        render.setX(pos.getX() * MainLolo.TILE);
+        render.setY(pos.getY() * MainLolo.TILE);
     }
     public Bala(Posicion pos, int direccion, Mapa map, Group root) {
         super(0.5, pos, map);
@@ -52,8 +52,8 @@ public class Bala extends Entidad {
                 this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
                 break;
         }
-        render.setX(pos.getX() * Main.TILE);
-        render.setY(pos.getY() * Main.TILE);
+        render.setX(pos.getX() * MainLolo.TILE);
+        render.setY(pos.getY() * MainLolo.TILE);
         this.root = root;
     }
 
