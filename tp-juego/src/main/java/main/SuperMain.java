@@ -34,10 +34,10 @@ public class SuperMain extends Application implements NomJuegos {
         
         switch (res) {
             case NomJuegos.BOBO:
-                MainLolo.main(null);
+                MainLolo.main(args);
                 break;
             case NomJuegos.SPACE_INVADERS:
-                MainSpaceInvaders.main(null);
+                MainSpaceInvaders.main(args);
             default:
                 break;
         }

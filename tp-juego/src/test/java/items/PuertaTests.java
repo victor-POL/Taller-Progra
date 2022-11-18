@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import javafx.embed.swing.JFXPanel;
 import mapa.Mapa;
 import utiles.Posicion;
@@ -30,7 +30,7 @@ public class PuertaTests {
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.6, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.4 }, };
-    Jugador player;
+    JugadorLolo player;
 
     Cosa cosaRecogible, cosaItemLlave;
     Map<Posicion, Cosa> cosas;
@@ -50,7 +50,7 @@ public class PuertaTests {
         map = new Mapa(disenioMap, cosas, enemigos, posInicialJugador, 0);
         enemy = new Enemigo(1, posEnemy, map, utiles.Constantes.ABAJO);
 
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         enemigos.put(enemy.getPos(), enemy);
 
         map.setPlayer(player);
@@ -61,7 +61,7 @@ public class PuertaTests {
         Posicion posPlayer = new Posicion(6, 5.5);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -76,7 +76,7 @@ public class PuertaTests {
         Posicion posPlayer = new Posicion(6, 6.5);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -91,7 +91,7 @@ public class PuertaTests {
         Posicion posPlayer = new Posicion(6.5, 6);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -106,7 +106,7 @@ public class PuertaTests {
         Posicion posPlayer = new Posicion(5.5, 6);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -122,7 +122,7 @@ public class PuertaTests {
         disenioMap[0][6] = 2.3;
 
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -139,7 +139,7 @@ public class PuertaTests {
         disenioMap[12][6] = 2.1;
 
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -156,7 +156,7 @@ public class PuertaTests {
         disenioMap[6][12] = 2.0;
 
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 
@@ -173,7 +173,7 @@ public class PuertaTests {
         disenioMap[6][0] = 2.2;
 
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
 

@@ -8,14 +8,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import piso.Piso;
 import utiles.Posicion;
 
-public class MapaGenerico {
+public class MapaGenerico implements MapaInterfaz {
     // Atributos
     protected final int TILE_SIZE;
     protected Piso[][] pisos;
@@ -23,7 +23,7 @@ public class MapaGenerico {
     protected Map<Posicion, Cosa> cosas = new ConcurrentHashMap<Posicion, Cosa>();
     protected Map<Posicion, Enemigo> enemigos = new ConcurrentHashMap<Posicion, Enemigo>();
     protected List<Bala> balas = new CopyOnWriteArrayList<Bala>();
-    protected Jugador player;
+    protected JugadorLolo player;
     protected Posicion posJugador;
     protected Canvas canvas;
     
@@ -98,7 +98,7 @@ public class MapaGenerico {
         return canvas;
     }
 
-    public Jugador getPlayer() {
+    public JugadorLolo getPlayer() {
         return this.player;
     }
 
@@ -108,7 +108,7 @@ public class MapaGenerico {
         posJugador = p;
     }
 
-    public void setPlayer(Jugador j) {
+    public void setPlayer(JugadorLolo j) {
         player = j;
     }
     
@@ -122,6 +122,18 @@ public class MapaGenerico {
             }
         }
 
+    }
+
+    @Override
+    public boolean puedoPasar(int x, int y) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void update(double deltaTime) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

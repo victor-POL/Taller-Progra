@@ -13,16 +13,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import mapa.Mapa;
+import mapa.MapaGenerico;
 import utiles.Constantes;
 import utiles.Posicion;
 
-public class Jugador extends Entidad {
+public class JugadorLolo extends Entidad {
     private final int TILE_SIZE = 32;
     private int cantBalas = 0;
     private int orientacionActual = utiles.Constantes.DER;
     public boolean completoNivel = false;
     private List<Cosa> inventario = new ArrayList<Cosa>();
     private int vidas = 3;
+    Mapa mapa;
 
     private final int width = TILE_SIZE;
     private final int height = TILE_SIZE;
@@ -46,7 +48,7 @@ public class Jugador extends Entidad {
 
     // Constructores
 
-    public Jugador(Control c, Mapa map) {
+    public JugadorLolo(Control c, MapaGenerico map) {
         super(0.5, map.getPosInicialJugador(), map);
 
         this.control = c;
@@ -63,7 +65,7 @@ public class Jugador extends Entidad {
         waitAnimation.play();
     }
 
-    public Jugador(Mapa map) {
+    public JugadorLolo(Mapa map) {
         super(0.5, map.getPosInicialJugador(), map);
     }
 
@@ -318,8 +320,6 @@ public class Jugador extends Entidad {
         }
     }
 
-
-
     // Setters
 
     private void setX(double x) {
@@ -345,15 +345,15 @@ public class Jugador extends Entidad {
         this.cantBalas = cant;
     }
 
-    public void setVidas(int vidas){
+    public void setVidas(int vidas) {
         this.vidas = vidas;
     }
 
-    public void setCompletoNivel(boolean completo){
+    public void setCompletoNivel(boolean completo) {
         this.completoNivel = completo;
     }
 
-    public void setMapa(Mapa m){
+    public void setMapa(Mapa m) {
         this.mapa = m;
     }
 
@@ -363,34 +363,34 @@ public class Jugador extends Entidad {
         return inventario;
     }
 
-    public int getVidas(){
+    public int getVidas() {
         return vidas;
     }
 
     // Movimiento automatizado
 
-    public void tocarDerecha(){
+    public void tocarDerecha() {
         control.setDirection(Direction.RIGHT);
         this.step();
         control.releaseDirection(Direction.RIGHT);
     }
-    public void tocarAbajo(){
+
+    public void tocarAbajo() {
         control.setDirection(Direction.DOWN);
         this.step();
         control.releaseDirection(Direction.DOWN);
     }
 
-    public void tocarIzquierda(){
+    public void tocarIzquierda() {
         control.setDirection(Direction.LEFT);
         this.step();
         control.releaseDirection(Direction.LEFT);
     }
 
-    public void tocarArriba(){
+    public void tocarArriba() {
         control.setDirection(Direction.UP);
         this.step();
         control.releaseDirection(Direction.UP);
     }
-
 
 }

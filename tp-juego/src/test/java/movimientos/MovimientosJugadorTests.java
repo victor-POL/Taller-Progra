@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import javafx.embed.swing.JFXPanel;
 import mapa.Mapa;
 import utiles.Posicion;
@@ -29,7 +29,7 @@ public class MovimientosJugadorTests {
             { 1.7, 0, 0, 0, 0, 0, 6, 0, 0, 0, 40, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.6, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.4 }, };
-    Jugador player;
+    JugadorLolo player;
     Enemigo enemy;
     Cosa cosaEmpujable;
     Cosa cosaEmpujable2;
@@ -56,7 +56,7 @@ public class MovimientosJugadorTests {
         cosaRecogible = new Cosa(0, posCosaRecogible, map, true, false, "COMIDA");
         cosas.put(posCosaEmpujable, cosaEmpujable);
         cosas.put(posCosaRecogible, cosaRecogible);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         enemigos.put(posEnemy, enemy);
 
         map.setPlayer(player);
@@ -338,7 +338,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(6, 1);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         Assert.assertFalse(player.moverArriba());
@@ -349,7 +349,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(6, 11);
         disenioMap[12][6] = 2.1;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         Assert.assertFalse(player.moverAbajo());
@@ -360,7 +360,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(11, 6);
         disenioMap[6][12] = 2.0;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         Assert.assertFalse(player.moverDerecha());
@@ -371,7 +371,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(1, 6);
         disenioMap[6][0] = 2.2;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         Assert.assertFalse(player.moverIzquierda());
@@ -382,7 +382,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(6, 1);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.habilitarPasarNivel();
@@ -394,7 +394,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(6, 11);
         disenioMap[12][6] = 2.1;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.habilitarPasarNivel();
@@ -406,7 +406,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(11, 6);
         disenioMap[6][12] = 2.0;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.habilitarPasarNivel();
@@ -418,7 +418,7 @@ public class MovimientosJugadorTests {
         Posicion posPlayer = new Posicion(1, 6);
         disenioMap[6][0] = 2.2;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.habilitarPasarNivel();

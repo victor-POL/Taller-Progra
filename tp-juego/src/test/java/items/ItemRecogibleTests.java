@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import javafx.embed.swing.JFXPanel;
 import mapa.Mapa;
 import utiles.Posicion;
@@ -30,7 +30,7 @@ public class ItemRecogibleTests {
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.6, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.4 }, };
-    Jugador player;
+    JugadorLolo player;
 
     Cosa cosaRecogible;
     Map<Posicion, Cosa> cosas;
@@ -52,7 +52,7 @@ public class ItemRecogibleTests {
         enemy = new Enemigo(1, posEnemy, map, utiles.Constantes.ABAJO);
         cosaRecogible = new Cosa(0, posCosaRecogible, map, true, false, "ITEM");
         cosas.put(cosaRecogible.getPos(), cosaRecogible);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         enemigos.put(enemy.getPos(), enemy);
 
         map.setPlayer(player);

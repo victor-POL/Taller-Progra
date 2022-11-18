@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import javafx.embed.swing.JFXPanel;
 import mapa.Mapa;
 import utiles.Posicion;
@@ -30,7 +30,7 @@ public class MovimientosObstaculoEmpujableTests {
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.6, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.4 }, };
-    Jugador player;
+    JugadorLolo player;
     Enemigo enemy;
     Cosa cosaEmpujable;
     Cosa cosaEmpujable2;
@@ -57,7 +57,7 @@ public class MovimientosObstaculoEmpujableTests {
         cosaRecogible = new Cosa(0, posCosaRecogible, map, true, false, "COMIDA");
         cosas.put(posCosaEmpujable, cosaEmpujable);
         cosas.put(posCosaRecogible, cosaRecogible);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         enemigos.put(posEnemy, enemy);
 
         map.setPlayer(player);
@@ -503,7 +503,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(6, 2);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -519,7 +519,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(6, 10);
         disenioMap[12][6] = 2.1;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -535,7 +535,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(10, 6);
         disenioMap[6][12] = 2.0;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -551,7 +551,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(2, 6);
         disenioMap[6][0] = 2.2;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -567,7 +567,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(6, 2);
         disenioMap[0][6] = 2.3;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -584,7 +584,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(6, 10);
         disenioMap[12][6] = 2.1;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -601,7 +601,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(10, 6);
         disenioMap[6][12] = 2.0;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());
@@ -618,7 +618,7 @@ public class MovimientosObstaculoEmpujableTests {
         Posicion posPlayer = new Posicion(2, 6);
         disenioMap[6][0] = 2.2;
         map = new Mapa(disenioMap, cosas, enemigos, posPlayer, 0);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setPos(posPlayer);
         map.setPlayer(player);
         map.removeCosa(cosaEmpujable.getPos());

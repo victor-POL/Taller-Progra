@@ -4,14 +4,14 @@ import animation.Control;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import mapa.Mapa;
+import mapa.MapaGenerico;
 import utiles.Constantes;
 import utiles.Posicion;
 
 public class Entidad implements Constantes {
     protected final double STEP_SIZE;
     protected Posicion pos;
-    protected Mapa mapa;
+    protected MapaGenerico mapa;
     protected boolean estaMuerto = false;
 
     protected ImageView render;
@@ -19,7 +19,7 @@ public class Entidad implements Constantes {
 
     // Constructores
 
-    public Entidad(double paso, Posicion pos, Mapa mapa) {
+    public Entidad(double paso, Posicion pos, MapaGenerico mapa) {
         STEP_SIZE = paso;
         this.pos = pos;
         this.mapa = mapa;

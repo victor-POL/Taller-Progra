@@ -8,6 +8,7 @@ import java.util.Scanner;
 import entidad.Cosa;
 import entidad.Enemigo;
 import mapa.Mapa;
+import mapa.MapaSpace;
 
 public class Archivo implements NomJuegos {
 	private String nombre;
@@ -17,93 +18,76 @@ public class Archivo implements NomJuegos {
 	}
 
 	public Mapa cargar_mapa_lolo() {
-	       Scanner scanner = null;
-	        Mapa map = null;
+		Scanner scanner = null;
+		Mapa map = null;
 
-	        try {
-	            File file = new File("src/main/resources/niveles/" + this.nombre + ".in");
-	            scanner = new Scanner(file);
-	            int x = scanner.nextInt();
-	            int y = scanner.nextInt();
+		try {
+			File file = new File("src/main/resources/niveles/" + this.nombre + ".in");
+			scanner = new Scanner(file);
+			int x = scanner.nextInt();
+			int y = scanner.nextInt();
 
-	            Posicion pos_inicial_jugador = new Posicion(x, y);
+			Posicion pos_inicial_jugador = new Posicion(x, y);
 
-	            int itemsObjetivo = scanner.nextInt();
-	            double[][] disenio = new double[13][13];
-	            Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
-	            Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
+			int itemsObjetivo = scanner.nextInt();
+			double[][] disenio = new double[13][13];
+			Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
+			Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
 
-	            for (int i = 0; i < 13; i++) {
-	                for (int j = 0; j < 13; j++) {
-	                    disenio[i][j] = Double.valueOf(scanner.next());
-	                }
-	            }
-	            
-	            map = new Mapa(disenio, cosas, enemigos, pos_inicial_jugador, itemsObjetivo);
+			for (int i = 0; i < 13; i++) {
+				for (int j = 0; j < 13; j++) {
+					disenio[i][j] = Double.valueOf(scanner.next());
+				}
+			}
 
-	            int cantCorazones = scanner.nextInt();
+			map = new Mapa(disenio, cosas, enemigos, pos_inicial_jugador, itemsObjetivo);
 
-	            for (int i = 0; i < cantCorazones; i++) {
-	                x = scanner.nextInt();
-	                y = scanner.nextInt();
+			int cantCorazones = scanner.nextInt();
 
-	                Cosa itemAgarrable = new Cosa(0, new Posicion(x, y), map, true, false, "municion");
+			for (int i = 0; i < cantCorazones; i++) {
+				x = scanner.nextInt();
+				y = scanner.nextInt();
 
-	                cosas.put(itemAgarrable.getPos(), itemAgarrable);
-	            }
+				Cosa itemAgarrable = new Cosa(0, new Posicion(x, y), map, true, false, "municion");
 
-	            int cantCajas = scanner.nextInt();
+				cosas.put(itemAgarrable.getPos(), itemAgarrable);
+			}
 
-	            for (int i = 0; i < cantCajas; i++) {
-	                x = scanner.nextInt();
-	                y = scanner.nextInt();
+			int cantCajas = scanner.nextInt();
 
-	                Cosa obstaculoEmpujable = new Cosa(1, new Posicion(x, y), map, false, true, "obstaculo empujable");
+			for (int i = 0; i < cantCajas; i++) {
+				x = scanner.nextInt();
+				y = scanner.nextInt();
 
-	                cosas.put(obstaculoEmpujable.getPos(), obstaculoEmpujable);
-	            }
+				Cosa obstaculoEmpujable = new Cosa(1, new Posicion(x, y), map, false, true, "obstaculo empujable");
 
-	            int cantEnemigos = scanner.nextInt();
+				cosas.put(obstaculoEmpujable.getPos(), obstaculoEmpujable);
+			}
 
-	            for (int i = 0; i < cantEnemigos; i++) {
-	                x = scanner.nextInt();
-	                y = scanner.nextInt();
-	                int orientacion = scanner.nextInt();
-	                
+			int cantEnemigos = scanner.nextInt();
 
-	                Enemigo enemigo = new Enemigo(0, new Posicion(x, y), map, orientacion);
+			for (int i = 0; i < cantEnemigos; i++) {
+				x = scanner.nextInt();
+				y = scanner.nextInt();
+				int orientacion = scanner.nextInt();
 
-	                enemigos.put(enemigo.getPos(), enemigo);
-	            }
+				Enemigo enemigo = new Enemigo(0, new Posicion(x, y), map, orientacion);
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        } finally {
-	            scanner.close();
-	        }
+				enemigos.put(enemigo.getPos(), enemigo);
+			}
 
-	        return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			scanner.close();
+		}
+
+		return map;
 	}
- 	
+
 	// TODO
-	public Mapa cargar_mapa_space_invaders() {
-	    return null;
-	}
-	
-	public Mapa cargarMapa(int nom_juego) {
-	    Mapa mapa = null;
-		switch (nom_juego) {
-            case NomJuegos.BOBO:
-                mapa = this.cargar_mapa_lolo();
-                break;
-            case NomJuegos.SPACE_INVADERS:
-                mapa = this.cargar_mapa_space_invaders();
-                break;
-            default:
-                break;
-        }
-		
-		return mapa;
+	public MapaSpace cargar_mapa_space_invaders() {
+		return null;
 	}
 
 }

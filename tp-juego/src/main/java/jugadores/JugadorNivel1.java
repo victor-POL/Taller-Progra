@@ -1,12 +1,12 @@
 package jugadores;
 
-import entidad.Jugador;
+import entidad.JugadorLolo;
 
 public class JugadorNivel1 implements Instrucciones {
     public JugadorNivel1() {
     }
 
-    public void ejecutarInstrucciones(Jugador player) {
+    public void ejecutarInstrucciones(JugadorLolo player) {
         player.moverDerecha();
         player.moverDerecha();
 

@@ -1,6 +1,6 @@
 package hilos;
 
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
@@ -14,9 +14,9 @@ import java.awt.event.KeyEvent;
  */
 public class solutionThread extends Thread {
 
-    Jugador jugador;
+    JugadorLolo jugador;
     String level;
-    public solutionThread(Jugador jugador, String level){
+    public solutionThread(JugadorLolo jugador, String level){
         super();
         this.jugador = jugador;
         this.setName("solutionThread");

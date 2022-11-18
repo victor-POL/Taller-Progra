@@ -1,7 +1,7 @@
 package jugadores;
 
-import entidad.Jugador;
+import entidad.JugadorLolo;
 
 public interface Instrucciones {
-    public abstract void ejecutarInstrucciones(Jugador player);
+    public abstract void ejecutarInstrucciones(JugadorLolo player);
 }

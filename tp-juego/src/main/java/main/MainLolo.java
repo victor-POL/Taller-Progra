@@ -9,7 +9,7 @@ import animation.Direction;
 import entidad.Bala;
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import hilos.solutionThread;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -51,7 +51,7 @@ public class MainLolo extends Application {
     static MediaPlayer mediaPlayer;
     solutionThread st;
 
-    Jugador jugador;
+    JugadorLolo jugador;
     Mapa mapa;
     Scene currentScene;
     Stage stage;
@@ -193,7 +193,7 @@ public class MainLolo extends Application {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings( "removal" )
     private void onClose() {
         stage.setOnCloseRequest(event -> {
             // System.out.println("Stage is closing");
@@ -399,11 +399,11 @@ public class MainLolo extends Application {
 
         // NOTA (Carballo): A mi no me funciona con musica, si comento estas lineas funciona.
           
-//        mediaPlayer = new MediaPlayer(
-//                new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
-//        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-//        mediaPlayer.setVolume(0.4);
-//        mediaPlayer.play();
+        mediaPlayer = new MediaPlayer(
+                new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setVolume(0.4);
+        mediaPlayer.play();
 
         launch(args);
 

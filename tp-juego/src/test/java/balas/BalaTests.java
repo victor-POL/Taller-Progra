@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import entidad.Cosa;
 import entidad.Enemigo;
-import entidad.Jugador;
+import entidad.JugadorLolo;
 import javafx.embed.swing.JFXPanel;
 import mapa.Mapa;
 import utiles.Posicion;
@@ -29,7 +29,7 @@ public class BalaTests {
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.3 },
             { 1.6, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.4 }, };
-    Jugador player;
+    JugadorLolo player;
     Enemigo enemy;
     Cosa cosaNoRecogible;
     Cosa cosaRecogible;
@@ -53,7 +53,7 @@ public class BalaTests {
         cosaRecogible = new Cosa(0, posCosaRecogible, map, true, false, "COMIDA");
         cosas.put(cosaNoRecogible.getPos(), cosaNoRecogible);
         cosas.put(cosaRecogible.getPos(), cosaRecogible);
-        player = new Jugador(map);
+        player = new JugadorLolo(map);
         player.setCantBalas(1);
         enemigos.put(enemy.getPos(), enemy);
 
