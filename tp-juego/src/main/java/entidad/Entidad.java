@@ -29,7 +29,8 @@ public class Entidad implements Constantes {
 
     public boolean moverDerecha() {
         if (mapa.puedoPasar((int) (pos.getX() + 1), (int) Math.ceil(pos.getY())) &&
-                mapa.puedoPasar((int) (pos.getX() + 1), (int) Math.floor(pos.getY()))) {
+                mapa.puedoPasar((int) (pos.getX() + 1), (int) Math.floor(pos.getY()))) 
+        {
             pos.setX(pos.getX() + STEP_SIZE);
 
             return true;
@@ -39,11 +40,11 @@ public class Entidad implements Constantes {
     }
 
     public boolean moverIzquierda() {
-
+        
         if (mapa.puedoPasar((int) Math.round(pos.getX() - 1), (int) Math.ceil(pos.getY())) &&
-                mapa.puedoPasar((int) Math.round(pos.getX() - 1), (int) Math.floor(pos.getY()))) {
+                mapa.puedoPasar((int) Math.round(pos.getX() - 1), (int) Math.floor(pos.getY()))) 
+        {
             pos.setX(pos.getX() - STEP_SIZE);
-
             return true;
         }
 

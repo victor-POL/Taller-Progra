@@ -34,9 +34,11 @@ public class JugadorSpace extends Entidad {
 
     public JugadorSpace(Control c, MapaSpace map) {
         super(0.5, map.getPosicionInicial(), map);
+        
+        this.mapa = map;
 
         this.control = c;
-        Image spriteImage = new Image("file:src/main/resources/sprites/obstaculos_inamovibles/roca.png");
+        Image spriteImage = new Image("file:src/main/resources/Space_Invaders/nave-espacial.png");
         render = new ImageView(spriteImage);
 
         render.setX(map.getPosInicialJugador().getX());
@@ -61,7 +63,7 @@ public class JugadorSpace extends Entidad {
         boolean res = false;
 
         res = super.moverDerecha();
-        //mapa.setPos(pos);
+        mapa.setPos(pos);
         return res;
     }
 
@@ -71,14 +73,14 @@ public class JugadorSpace extends Entidad {
         boolean res = false;
 
         res = super.moverIzquierda();
-        //mapa.setPos(pos);
+        mapa.setPos(pos);
+        
         return res;
     }
 
     public Bala disparar() {
-
         Bala bala = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), ORIENTACION, mapa);
-        mapa.addBala(bala);
+        this.mapa.addBala(bala);
 
         return bala;
     }
@@ -151,10 +153,16 @@ public class JugadorSpace extends Entidad {
         pos.setY(y);
         render.setY(y * height);
     }
-
-    public void update() {
-        // TODO Auto-generated method stub
-
+    
+    public void setDead(boolean estaMuerto) {
+        this.estaMuerto = estaMuerto;
+        vidas--;
     }
+    
+    // TODO
+//    public void update() {
+//        // TODO Auto-generated method stub
+//
+//    }
 
 }

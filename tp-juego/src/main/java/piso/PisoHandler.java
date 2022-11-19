@@ -65,8 +65,8 @@ public class PisoHandler {
         pisos.put(40.0, new Piso("file:src/main/resources/sprites/obstaculos_inamovibles/agua.png", true, nombres[0]));
 
         // Space Invaders
-
         pisos.put(69.0, new Piso("file:src/main/resources/Space_Invaders/fondo.png", false, nombres[0]));
+        
     }
 
     // Metodos

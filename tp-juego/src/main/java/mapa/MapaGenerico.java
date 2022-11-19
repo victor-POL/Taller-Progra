@@ -117,14 +117,11 @@ public class MapaGenerico implements MapaInterfaz {
 
     @Override
     public boolean puedoPasar(int x, int y) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public void update(double deltaTime) {
-        // TODO Auto-generated method stub
-
     }
 
 }

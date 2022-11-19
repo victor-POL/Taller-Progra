@@ -20,7 +20,6 @@ public class Bala extends Entidad {
         super(0.5, pos, mapaSpace);
         this.mapaSpace = mapaSpace;
         this.direccion = direccion;
-        this.mapaSpace = mapaSpace;
 
         switch (direccion) {
             case Constantes.ARRIBA:
@@ -118,50 +117,73 @@ public class Bala extends Entidad {
         boolean puedoMover = false;
         switch (direccion) {
             case Constantes.ARRIBA:
-                if (this.pos.getY() - 0.5 != 0 && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
-                    this.pos.setPos(this.pos.getX(), this.pos.getY() - 0.5);
+                if (this.pos.getY() - this.STEP_SIZE != 0 && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
+                    this.pos.setPos(this.pos.getX(), this.pos.getY() - this.STEP_SIZE);
                     puedoMover = true;
                 }
                 break;
             case Constantes.ABAJO:
-                if (this.pos.getY() + 0.5 != mapa.getLimite() - 0.5
+                if (this.pos.getY() + this.STEP_SIZE != mapa.getLimite() - this.STEP_SIZE
                         && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
-                    this.pos.setPos(this.pos.getX(), this.pos.getY() + 0.5);
+                    this.pos.setPos(this.pos.getX(), this.pos.getY() + this.STEP_SIZE);
                     puedoMover = true;
                 }
                 break;
             case Constantes.IZQ:
-                if (this.pos.getX() - 0.5 != 0
-                        && puedeAtravesar(new Posicion(Math.ceil(pos.getX() - 0.5), pos.getY()))) {
-                    this.pos.setPos(this.pos.getX() - 0.5, this.pos.getY());
+                if (this.pos.getX() - this.STEP_SIZE != 0
+                        && puedeAtravesar(new Posicion(Math.ceil(pos.getX() - this.STEP_SIZE), pos.getY()))) {
+                    this.pos.setPos(this.pos.getX() - this.STEP_SIZE, this.pos.getY());
                     puedoMover = true;
                 }
                 break;
             case Constantes.DER:
-                if (this.pos.getX() + 0.5 != mapa.getLimite() - 0.5
+                if (this.pos.getX() + this.STEP_SIZE != mapa.getLimite() - this.STEP_SIZE
                         && puedeAtravesar(new Posicion(Math.ceil(pos.getX()), pos.getY()))) {
-                    this.pos.setPos(this.pos.getX() + 0.5, this.pos.getY());
+                    this.pos.setPos(this.pos.getX() + this.STEP_SIZE, this.pos.getY());
                     puedoMover = true;
                 }
                 break;
         }
 
-        if (puedoMover) {
-            Cosa c = mapa.getCosaByPosition(getPos());
-            Enemigo e = mapa.getEnemyByPosition(getPos());
-            JugadorLolo p = mapa.getPlayer();
+        if (mapa != null) {
+            // Es el lolo
+            if (puedoMover) {
+                Cosa c = mapa.getCosaByPosition(getPos());
+                Enemigo e = mapa.getEnemyByPosition(getPos());
+                JugadorLolo p = mapa.getPlayer();
 
-            if (p.getPos().equals(this.pos)) {
-                p.setDead(true);
-                return false;
+                if (p.getPos().equals(this.pos)) {
+                    p.setDead(true);
+                    return false;
+                }
+
+                if (c != null && !c.esRecogible())
+                    return false;
+
+                if (e != null) {
+                    e.setEstaMuerto();
+                    return false;
+                }
             }
+        } else {
+            // Es el Space
+            if (puedoMover) {
+                Cosa c = mapaSpace.getCosaByPosition(getPos());
+                Enemigo e = mapaSpace.getEnemyByPosition(getPos());
+                JugadorSpace p = mapaSpace.getPlayer();
 
-            if (c != null && !c.esRecogible())
-                return false;
+                if (p.getPos().equals(this.pos)) {
+                    p.setDead(true);
+                    return false;
+                }
 
-            if (e != null) {
-                e.setEstaMuerto();
-                return false;
+                if (c != null && !c.esRecogible())
+                    return false;
+
+                if (e != null) {
+                    e.setEstaMuerto();
+                    return false;
+                }
             }
         }
 
@@ -171,30 +193,61 @@ public class Bala extends Entidad {
     // Metodos
 
     protected boolean puedeAtravesar(Posicion p) {
-        String quePisoEs = mapa.getPisoByPosition((int) p.getY(), (int) p.getX()).getTipoDePiso();
 
-        switch (quePisoEs) {
-            case "camino":
-                return true;
-            default:
-                return false;
+        if (mapa != null) {
+            // Es el lolo
+            String quePisoEs = mapa.getPisoByPosition((int) p.getY(), (int) p.getX()).getTipoDePiso();
+
+            switch (quePisoEs) {
+                case "camino":
+                    return true;
+                default:
+                    return false;
+            }
+        } else {
+            // Es el space
+            String quePisoEs = mapaSpace.getPisoByPosition((int) p.getY(), (int) p.getX()).getTipoDePiso();
+
+            switch (quePisoEs) {
+                case "camino":
+                    return true;
+                default:
+                    return false;
+            }
         }
+
     }
 
     // JavaFX
 
     public void update(double deltaTime, Group root) {
-        if (counter >= 0.04) {
-            this.render.setX(pos.getX() * 32);
-            this.render.setY(pos.getY() * 32);
-            counter = 0;
-            if (!this.mover()) {
-                mapa.getBalas().remove(this);
-                root.getChildren().remove(getRender());
-            }
-        } else
-            counter += deltaTime;
-
+        
+        if (mapa != null) {
+            // Es el lolo
+            if (counter >= 0.04) {
+                this.render.setX(pos.getX() * mapa.getTileSize());
+                this.render.setY(pos.getY() * mapa.getTileSize());
+                counter = 0;
+                if (!this.mover()) {
+                    mapa.getBalas().remove(this);
+                    root.getChildren().remove(getRender());
+                }
+            } else
+                counter += deltaTime;
+        } else {
+            // Es space
+            if (counter >= 0.04) {
+                this.render.setX(pos.getX() * mapaSpace.getTileSize());
+                this.render.setY(pos.getY() * mapaSpace.getTileSize());
+                counter = 0;
+                if (!this.mover()) {
+                    mapaSpace.getBalas().remove(this);
+                    root.getChildren().remove(getRender());
+                }
+            } else
+                counter += deltaTime;  
+        }
+        
     }
 
     public void show() {

@@ -1,9 +1,12 @@
 package main;
 
+import java.util.Iterator;
+
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
 import entidad.Cosa;
+import entidad.Enemigo;
 import entidad.JugadorSpace;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -56,6 +59,7 @@ public class MainSpaceInvaders extends Application {
         nivel = new Nivel("nivel1", NomJuegos.SPACE_INVADERS);
         jugador = nivel.getPlayerSpace();
         mapa = nivel.getMapaSpace();
+        mapa.setPlayer(jugador);
         control = nivel.getControl();
 
         root.getChildren().add(mapa.getRender());
@@ -64,9 +68,17 @@ public class MainSpaceInvaders extends Application {
 
         playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
         playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
-//        public Cosa(double STEP_SIZE, Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable, String queSoy) {
         
         root.getChildren().add(jugador.getRender());
+        
+        
+        for (Posicion p : mapa.getEnemigos().keySet()) {
+            Enemigo c = mapa.getEnemigos().get(p);
+            ImageView iv = (ImageView) c.getRender();
+            iv.setX(p.getX() * TILE);
+            iv.setY(p.getY() * TILE);
+            root.getChildren().add(c.getRender());
+        }
 
         addUpdateEachFrameTimer();
 
@@ -180,7 +192,24 @@ public class MainSpaceInvaders extends Application {
     }
 
     public void update(double deltaTime) {
-        jugador.update();
+//        jugador.update();
+        mapa.update(deltaTime);
+        
+        // update balas
+        Iterator<Bala> it = mapa.getBalas().iterator();
+        while (it.hasNext()) {
+            Bala b = it.next();
+            b.update(deltaTime, root);
+        }
+        
+        // update enemigos
+        Iterator<Enemigo> it2 = mapa.getEnemigos().values().iterator();
+        while (it2.hasNext()) {
+            Enemigo e = it2.next();
+            if (!e.update(deltaTime, root))
+                it2.remove();
+        }
+        
     }
 
     public static void main(String[] args) {

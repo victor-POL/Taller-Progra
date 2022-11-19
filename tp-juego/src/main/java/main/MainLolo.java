@@ -56,7 +56,7 @@ public class MainLolo extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-    String level = "nivel_7";
+    String level = "nivel_1";
 
     Control control;
 

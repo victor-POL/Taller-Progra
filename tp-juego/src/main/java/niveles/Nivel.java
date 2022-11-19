@@ -1,6 +1,11 @@
 package niveles;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import animation.Control;
+import entidad.Cosa;
+import entidad.Enemigo;
 import entidad.JugadorLolo;
 import entidad.JugadorSpace;
 import jugadores.Instrucciones;
@@ -26,7 +31,21 @@ public class Nivel implements InterfazNivel {
         Archivo disenioNivel = new Archivo(nombreNivel);
         if (nom_juego == NomJuegos.SPACE_INVADERS) {
             //mapaSpace = disenioNivel.cargar_mapa_space_invaders();
-            mapaSpace = new MapaSpace(null, null, new Posicion(20, 20));
+            Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
+            Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
+            
+                        
+            mapaSpace = new MapaSpace(cosas, enemigos, new Posicion(20, 40));
+            
+            
+            for (int i = 0; i < 9; i++) {
+                for (int j = 1; j < 5; j++) {
+                    Enemigo enemigo = new Enemigo(0, new Posicion((i*5)+1, j*5), mapaSpace, utiles.Constantes.ABAJO);
+                    
+                    enemigos.put(enemigo.getPos(), enemigo);
+                }
+            }
+            
             control = new Control();
             playerSpace = new JugadorSpace(control, mapaSpace);
         } else {
@@ -41,7 +60,11 @@ public class Nivel implements InterfazNivel {
         Archivo disenioNivel = new Archivo(nombreNivel);
         if (nom_juego == NomJuegos.SPACE_INVADERS) {
             //mapaSpace = disenioNivel.cargar_mapa_space_invaders();
-            mapaSpace = new MapaSpace(null, null, new Posicion(20, 20));
+            Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
+            
+            mapaSpace = new MapaSpace(null, enemigos, new Posicion(20, 20));
+            Enemigo enemigo = new Enemigo(0, new Posicion(2, 5), mapaSpace, utiles.Constantes.ABAJO);
+            enemigos.put(enemigo.getPos(), enemigo);
             control = new Control();
             this.playerLolo = player;
         } else {
