@@ -10,6 +10,8 @@ import entidad.Enemigo;
 import mapa.Mapa;
 import mapa.MapaSpace;
 
+
+
 public class Archivo implements NomJuegos {
 	private String nombre;
 

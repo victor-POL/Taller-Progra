@@ -23,17 +23,16 @@ public class MapaGenerico implements MapaInterfaz {
     protected Map<Posicion, Cosa> cosas = new ConcurrentHashMap<Posicion, Cosa>();
     protected Map<Posicion, Enemigo> enemigos = new ConcurrentHashMap<Posicion, Enemigo>();
     protected List<Bala> balas = new CopyOnWriteArrayList<Bala>();
-    protected JugadorLolo player;
     protected Posicion posJugador;
     protected Canvas canvas;
-    
+
     // Constructores
     public MapaGenerico(int tile_size, int tam_matriz) {
         this.TILE_SIZE = tile_size;
         this.pisos = new Piso[tam_matriz][tam_matriz];
         this.limite = this.pisos.length;
     }
-    
+
     // Metodos
     public Cosa getCosaByPosition(Posicion p) {
         return cosas.get(p);
@@ -98,20 +97,12 @@ public class MapaGenerico implements MapaInterfaz {
         return canvas;
     }
 
-    public JugadorLolo getPlayer() {
-        return this.player;
-    }
-
     // Setters
 
     public void setPos(Posicion p) {
         posJugador = p;
     }
 
-    public void setPlayer(JugadorLolo j) {
-        player = j;
-    }
-    
     // JavaFX
     protected void drawMap() {
         GraphicsContext context = canvas.getGraphicsContext2D();
@@ -133,7 +124,7 @@ public class MapaGenerico implements MapaInterfaz {
     @Override
     public void update(double deltaTime) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

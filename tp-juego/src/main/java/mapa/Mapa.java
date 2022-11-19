@@ -4,6 +4,7 @@ import java.util.Map;
 
 import entidad.Cosa;
 import entidad.Enemigo;
+import entidad.JugadorLolo;
 import javafx.scene.canvas.Canvas;
 import piso.PisoHandler;
 import utiles.Posicion;
@@ -18,6 +19,8 @@ public class Mapa extends MapaGenerico implements MapaInterfaz {
     private boolean sufrioModificacion = false;
     private int cantItemsCompletarNivel;
 
+    private JugadorLolo player;
+
     private final int width;
     private final int height;
 
@@ -29,10 +32,10 @@ public class Mapa extends MapaGenerico implements MapaInterfaz {
             int itemsObjetivo) {
 
         super(32, 13);
-        
+
         this.width = this.TILE_SIZE;
         this.height = this.TILE_SIZE;
-        
+
         PisoHandler pisoHandler = new PisoHandler();
         canvas = new Canvas(limite * width, limite * height);
 
@@ -103,6 +106,13 @@ public class Mapa extends MapaGenerico implements MapaInterfaz {
         return this.pasarNivelHabilitado;
     }
 
+    public JugadorLolo getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(JugadorLolo player) {
+        this.player = player;
+    }
 
     @Override
     public void update(double deltaTime) {

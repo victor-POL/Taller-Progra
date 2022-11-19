@@ -3,7 +3,8 @@ package main;
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
-import entidad.JugadorLolo;
+import entidad.Cosa;
+import entidad.JugadorSpace;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +24,7 @@ import mapa.Mapa;
 import mapa.MapaSpace;
 import niveles.Nivel;
 import utiles.NomJuegos;
+import utiles.Posicion;
 
 public class MainSpaceInvaders extends Application {
 
@@ -37,7 +39,7 @@ public class MainSpaceInvaders extends Application {
     AnimationTimer gameTimer;
     static MediaPlayer mediaPlayer;
 
-    JugadorLolo jugador;
+    JugadorSpace jugador;
     MapaSpace mapa;
     Scene currentScene;
     Stage stage;
@@ -52,7 +54,7 @@ public class MainSpaceInvaders extends Application {
         currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
         Nivel nivel;
         nivel = new Nivel("nivel1", NomJuegos.SPACE_INVADERS);
-        jugador = nivel.getPlayer();
+        jugador = nivel.getPlayerSpace();
         mapa = nivel.getMapaSpace();
         control = nivel.getControl();
 
@@ -62,7 +64,8 @@ public class MainSpaceInvaders extends Application {
 
         playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
         playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
-
+//        public Cosa(double STEP_SIZE, Posicion pos, Mapa map, boolean esRecogible, boolean esEmpujable, String queSoy) {
+        
         root.getChildren().add(jugador.getRender());
 
         addUpdateEachFrameTimer();
@@ -177,7 +180,7 @@ public class MainSpaceInvaders extends Application {
     }
 
     public void update(double deltaTime) {
-
+        jugador.update();
     }
 
     public static void main(String[] args) {

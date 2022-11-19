@@ -48,9 +48,9 @@ public class JugadorLolo extends Entidad {
 
     // Constructores
 
-    public JugadorLolo(Control c, MapaGenerico map) {
+    public JugadorLolo(Control c, Mapa map) {
         super(0.5, map.getPosInicialJugador(), map);
-
+        this.mapa = (Mapa) map;
         this.control = c;
         Image spriteImages = new Image("file:src/main/resources/sprites/jugadores/carpincho.png");
         render = new ImageView(spriteImages);
@@ -67,6 +67,7 @@ public class JugadorLolo extends Entidad {
 
     public JugadorLolo(Mapa map) {
         super(0.5, map.getPosInicialJugador(), map);
+        this.mapa = map;
     }
 
     // Movimientos

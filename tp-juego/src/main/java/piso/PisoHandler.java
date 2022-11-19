@@ -16,6 +16,7 @@ public class PisoHandler {
 
     public PisoHandler() {
         pisos = new HashMap<>();
+        
 
         // Caminos, personaje puede pisar
         pisos.put(0.0, new Piso("file:src/main/resources/sprites/caminables/pasto.png", false, nombres[0]));

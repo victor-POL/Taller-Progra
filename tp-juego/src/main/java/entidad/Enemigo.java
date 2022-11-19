@@ -10,11 +10,13 @@ import utiles.Posicion;
 public class Enemigo extends Entidad {
     private double count = 0;
     private int orientacion = 0;
+    Mapa mapa;
 
     // Constructores
 
     public Enemigo(double paso, Posicion pos, Mapa map, int orientacion) {
         super(paso, pos, map);
+        this.mapa = map;
         this.render = new ImageView(new Image("file:src/main/resources/sprites/enemigos/enemigo.png"));
         this.orientacion = orientacion;
     }
@@ -38,7 +40,7 @@ public class Enemigo extends Entidad {
     // JavaFX
 
     public boolean update(double deltaTime, Group root) {
-        if(estaMuerto){
+        if (estaMuerto) {
             root.getChildren().remove(getRender());
             return false;
         }

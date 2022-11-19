@@ -72,7 +72,7 @@ public class MainLolo extends Application {
             mediaPlayer.play();
             stage.close();
             this.stage = new Stage();
-            
+
             root = new Group();
             currentScene = new Scene(root, 480, 320);
             this.stage.setScene(currentScene);
@@ -81,7 +81,7 @@ public class MainLolo extends Application {
             ImageView fondoGanaste = new ImageView(new Image("file:src/main/resources/fin.gif"));
             fondoGanaste.setFitHeight(320);
             fondoGanaste.setFitWidth(480);
-            root.getChildren().add((Node)fondoGanaste);
+            root.getChildren().add((Node) fondoGanaste);
             root.getChildren().add(text);
             this.stage.show();
             return;
@@ -94,6 +94,7 @@ public class MainLolo extends Application {
         jugador = nivel.getPlayer();
         jugador.setVidas(vidasAct);
         mapa = nivel.getMapa();
+        mapa.setPlayer(jugador);
         control = nivel.getControl();
         root.getChildren().add(mapa.getRender());
 
@@ -150,24 +151,23 @@ public class MainLolo extends Application {
         stage.setTitle("Testigos de Java");
         stage.setAlwaysOnTop(true);
         stage.setFullScreen(true);
-        
+
         // mio
-        
-        final ImageView selectedImage = new ImageView();   
+
+        final ImageView selectedImage = new ImageView();
         Image image1 = new Image("file:src/main/resources/fondo.jpg");
 
         selectedImage.setX(415);
         selectedImage.setImage(image1);
 
         root.getChildren().add(selectedImage);
-        
 
         stage.setScene(currentScene);
-        
+
         // vidas
-        
+
         for (int i = 0; i < vidasAct; i++) {
-            final ImageView selectedImage2 = new ImageView();   
+            final ImageView selectedImage2 = new ImageView();
             Image image2 = new Image("file:src/main/resources/vida.png");
             selectedImage2.setX(416);
             selectedImage2.setY((i + 1) * 35);
@@ -175,13 +175,10 @@ public class MainLolo extends Application {
 
             root.getChildren().add(selectedImage2);
         }
-        
-        // Nivel
-        root.getChildren().add(new Text(427, 170, level.substring(level.length() -1)));
 
-        
-        
-        
+        // Nivel
+        root.getChildren().add(new Text(427, 170, level.substring(level.length() - 1)));
+
         stage.show();
 
         addInputEvents();
@@ -193,7 +190,7 @@ public class MainLolo extends Application {
         }
     }
 
-    @SuppressWarnings( "removal" )
+    @SuppressWarnings("removal")
     private void onClose() {
         stage.setOnCloseRequest(event -> {
             // System.out.println("Stage is closing");
@@ -311,12 +308,12 @@ public class MainLolo extends Application {
         }
         if (jugador.completoNivel) {
             root.getChildren().clear();
-            if(!level.equals("final")) {
+            if (!level.equals("final")) {
                 this.avanzar_nivel();
                 start(stage);
                 gameTimer.stop();
             }
-                
+
         }
 
         // update mapa, tiles que cambiaron, etc
@@ -367,7 +364,7 @@ public class MainLolo extends Application {
                 level = "nivel_7";
                 break;
             case "nivel_7":
-//                System.exit(0);
+                // System.exit(0);
                 level = "final";
                 break;
             default:
@@ -397,8 +394,9 @@ public class MainLolo extends Application {
         if (option.equals("s"))
             simu = true;
 
-        // NOTA (Carballo): A mi no me funciona con musica, si comento estas lineas funciona.
-          
+        // NOTA (Carballo): A mi no me funciona con musica, si comento estas lineas
+        // funciona.
+
         mediaPlayer = new MediaPlayer(
                 new Media(new File("src/main/resources/sonido/musica/musicaDeFondo.mp3").toURI().toString()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);

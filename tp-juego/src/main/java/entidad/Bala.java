@@ -2,19 +2,72 @@ package entidad;
 
 import javafx.scene.Group;
 import main.MainLolo;
+import main.MainSpaceInvaders;
 import mapa.Mapa;
-import utiles.Posicion;
+import mapa.MapaSpace;
 import utiles.Constantes;
+import utiles.Posicion;
 
 public class Bala extends Entidad {
     private int direccion;
     private double counter = 0;
     private Group root;
-
+    Mapa mapa;
+    MapaSpace mapaSpace;
     // Constructores
+
+    public Bala(Posicion pos, int direccion, MapaSpace mapaSpace) {
+        super(0.5, pos, mapaSpace);
+        this.mapaSpace = mapaSpace;
+        this.direccion = direccion;
+        this.mapaSpace = mapaSpace;
+
+        switch (direccion) {
+            case Constantes.ARRIBA:
+                this.setImage("file:src/main/resources/sprites/balas/bala_arriba.png");
+                break;
+            case Constantes.ABAJO:
+                this.setImage("file:src/main/resources/sprites/balas/bala_abajo.png");
+                break;
+            case Constantes.DER:
+                this.setImage("file:src/main/resources/sprites/balas/bala_derecha.png");
+                break;
+            case Constantes.IZQ:
+                this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
+                break;
+        }
+        render.setX(pos.getX() * MainSpaceInvaders.TILE);
+        render.setY(pos.getY() * MainSpaceInvaders.TILE);
+
+    }
+
+    public Bala(Posicion pos, int direccion, MapaSpace map, Group root) {
+        super(0.5, pos, map);
+        this.mapaSpace = map;
+        this.direccion = direccion;
+
+        switch (direccion) {
+            case Constantes.ARRIBA:
+                this.setImage("file:src/main/resources/sprites/balas/bala_arriba.png");
+                break;
+            case Constantes.ABAJO:
+                this.setImage("file:src/main/resources/sprites/balas/bala_abajo.png");
+                break;
+            case Constantes.DER:
+                this.setImage("file:src/main/resources/sprites/balas/bala_derecha.png");
+                break;
+            case Constantes.IZQ:
+                this.setImage("file:src/main/resources/sprites/balas/bala_izquierda.png");
+                break;
+        }
+        render.setX(pos.getX() * MainLolo.TILE);
+        render.setY(pos.getY() * MainLolo.TILE);
+        this.root = root;
+    }
 
     public Bala(Posicion pos, int direccion, Mapa map) {
         super(0.5, pos, map);
+        this.mapa = map;
         this.direccion = direccion;
 
         switch (direccion) {
@@ -34,8 +87,10 @@ public class Bala extends Entidad {
         render.setX(pos.getX() * MainLolo.TILE);
         render.setY(pos.getY() * MainLolo.TILE);
     }
+
     public Bala(Posicion pos, int direccion, Mapa map, Group root) {
         super(0.5, pos, map);
+        this.mapa = map;
         this.direccion = direccion;
 
         switch (direccion) {
@@ -133,7 +188,7 @@ public class Bala extends Entidad {
             this.render.setX(pos.getX() * 32);
             this.render.setY(pos.getY() * 32);
             counter = 0;
-            if(!this.mover()){
+            if (!this.mover()) {
                 mapa.getBalas().remove(this);
                 root.getChildren().remove(getRender());
             }
@@ -142,8 +197,7 @@ public class Bala extends Entidad {
 
     }
 
-
-    public void show(){
+    public void show() {
         root.getChildren().add(getRender());
     }
 
