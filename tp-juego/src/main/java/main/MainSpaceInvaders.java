@@ -5,7 +5,6 @@ import java.util.Iterator;
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
-import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.JugadorSpace;
 import javafx.animation.AnimationTimer;
@@ -23,7 +22,6 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import mapa.Mapa;
 import mapa.MapaSpace;
 import niveles.Nivel;
 import utiles.NomJuegos;
@@ -51,7 +49,7 @@ public class MainSpaceInvaders extends Application {
     Control control;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.stage = primaryStage;
         root = new Group();
         currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
@@ -68,10 +66,9 @@ public class MainSpaceInvaders extends Application {
 
         playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
         playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
-        
+
         root.getChildren().add(jugador.getRender());
-        
-        
+
         for (Posicion p : mapa.getEnemigos().keySet()) {
             Enemigo c = mapa.getEnemigos().get(p);
             ImageView iv = (ImageView) c.getRender();
@@ -193,23 +190,43 @@ public class MainSpaceInvaders extends Application {
 
     public void update(double deltaTime) {
 //        jugador.update();
+        if (jugador.estaMuerto()) {
+            vidasAct--;
+            root.getChildren().clear();
+            start(stage);
+            gameTimer.stop();
+        }
+
         mapa.update(deltaTime);
-        
+
         // update balas
         Iterator<Bala> it = mapa.getBalas().iterator();
         while (it.hasNext()) {
             Bala b = it.next();
+            Iterator<Bala> it2 = mapa.getBalas().iterator();
+            while (it2.hasNext()) {
+                Bala b2 = it2.next();
+                if (!b.equals(b2) && b.getPos().equals(b2.getPos())) {
+                    if (b.equals(jugador.getBala()) || b2.equals(jugador.getBala()))
+                        jugador.eliminarBala();
+
+                    mapa.getBalas().remove(b);
+                    mapa.getBalas().remove(b2);
+                    root.getChildren().remove(b.getRender());
+                    root.getChildren().remove(b2.getRender());
+                }
+            }
             b.update(deltaTime, root);
         }
-        
+
         // update enemigos
-        Iterator<Enemigo> it2 = mapa.getEnemigos().values().iterator();
-        while (it2.hasNext()) {
-            Enemigo e = it2.next();
+        Iterator<Enemigo> it3 = mapa.getEnemigos().values().iterator();
+        while (it3.hasNext()) {
+            Enemigo e = it3.next();
             if (!e.update(deltaTime, root))
-                it2.remove();
+                it3.remove();
         }
-        
+
     }
 
     public static void main(String[] args) {

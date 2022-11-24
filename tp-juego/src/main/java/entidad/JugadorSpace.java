@@ -17,6 +17,7 @@ public class JugadorSpace extends Entidad {
     private final int ORIENTACION = utiles.Constantes.ARRIBA;
     public boolean completoNivel = false;
     private int vidas = 3;
+    private Bala bala = null;
     MapaSpace mapa;
 
     private final int width = TILE_SIZE;
@@ -34,7 +35,7 @@ public class JugadorSpace extends Entidad {
 
     public JugadorSpace(Control c, MapaSpace map) {
         super(0.5, map.getPosicionInicial(), map);
-        
+
         this.mapa = map;
 
         this.control = c;
@@ -74,15 +75,19 @@ public class JugadorSpace extends Entidad {
 
         res = super.moverIzquierda();
         mapa.setPos(pos);
-        
+
         return res;
     }
 
     public Bala disparar() {
-        Bala bala = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), ORIENTACION, mapa);
-        this.mapa.addBala(bala);
+        if (bala == null) {
+            bala = new Bala(new Posicion(this.pos.getX(), this.pos.getY()), ORIENTACION, mapa);
+            this.mapa.addBala(bala);
 
-        return bala;
+            return bala;
+        }
+
+        return null;
     }
 
     // JavaFX
@@ -153,12 +158,22 @@ public class JugadorSpace extends Entidad {
         pos.setY(y);
         render.setY(y * height);
     }
-    
+
     public void setDead(boolean estaMuerto) {
         this.estaMuerto = estaMuerto;
         vidas--;
     }
-    
+
+    public void eliminarBala() {
+        bala = null;
+    }
+
+    // Getters
+
+    public Bala getBala() {
+        return bala;
+    }
+
     // TODO
 //    public void update() {
 //        // TODO Auto-generated method stub

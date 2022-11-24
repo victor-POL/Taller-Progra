@@ -117,17 +117,27 @@ public class Bala extends Entidad {
         boolean puedoMover = false;
         switch (direccion) {
             case Constantes.ARRIBA:
-                if (this.pos.getY() - this.STEP_SIZE != 0 && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
+                if (this.pos.getY() - this.STEP_SIZE != 0
+                        && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
                     this.pos.setPos(this.pos.getX(), this.pos.getY() - this.STEP_SIZE);
                     puedoMover = true;
                 }
                 break;
             case Constantes.ABAJO:
-                if (this.pos.getY() + this.STEP_SIZE != mapa.getLimite() - this.STEP_SIZE
-                        && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
-                    this.pos.setPos(this.pos.getX(), this.pos.getY() + this.STEP_SIZE);
-                    puedoMover = true;
+                if (mapa != null) {
+                    if (this.pos.getY() + this.STEP_SIZE != mapa.getLimite() - this.STEP_SIZE
+                            && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
+                        this.pos.setPos(this.pos.getX(), this.pos.getY() + this.STEP_SIZE);
+                        puedoMover = true;
+                    }
+                } else {
+                    if (this.pos.getY() + this.STEP_SIZE != mapaSpace.getLimite() - this.STEP_SIZE
+                            && puedeAtravesar(new Posicion(pos.getX(), Math.ceil(pos.getY())))) {
+                        this.pos.setPos(this.pos.getX(), this.pos.getY() + this.STEP_SIZE);
+                        puedoMover = true;
+                    }
                 }
+
                 break;
             case Constantes.IZQ:
                 if (this.pos.getX() - this.STEP_SIZE != 0
@@ -221,7 +231,7 @@ public class Bala extends Entidad {
     // JavaFX
 
     public void update(double deltaTime, Group root) {
-        
+
         if (mapa != null) {
             // Es el lolo
             if (counter >= 0.04) {
@@ -241,13 +251,16 @@ public class Bala extends Entidad {
                 this.render.setY(pos.getY() * mapaSpace.getTileSize());
                 counter = 0;
                 if (!this.mover()) {
+                    if (this.equals(mapaSpace.getPlayer().getBala()))
+                        mapaSpace.getPlayer().eliminarBala();
+
                     mapaSpace.getBalas().remove(this);
                     root.getChildren().remove(getRender());
                 }
             } else
-                counter += deltaTime;  
+                counter += deltaTime;
         }
-        
+
     }
 
     public void show() {

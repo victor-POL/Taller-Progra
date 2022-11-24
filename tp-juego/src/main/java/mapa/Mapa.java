@@ -117,7 +117,7 @@ public class Mapa extends MapaGenerico implements MapaInterfaz {
     public int getTileSize() {
         return this.TILE_SIZE;
     }
-    
+
     @Override
     public void update(double deltaTime) {
         if (sufrioModificacion) {
