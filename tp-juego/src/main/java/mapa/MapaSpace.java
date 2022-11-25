@@ -25,25 +25,24 @@ public class MapaSpace extends MapaGenerico {
 
         PisoHandler pisoHandler = new PisoHandler();
         canvas = new Canvas(limite * width, limite * height);
-        
+
         for (int i = 0; i < limite; i++) {
             for (int j = 0; j < limite; j++) {
                 pisos[i][j] = pisoHandler.getPisoByPosition(69);
             }
         }
-        
-        
+
         this.cosas = cosas;
         this.enemigos = enemies;
         this.posJugador = posInicialJugador;
-        
+
         this.drawMap();
 
     }
 
     @Override
     public boolean puedoPasar(int x, int y) {
-        if (x < pisos.length && x >= 0 && y >= 0 && y < pisos[0].length) {
+        if (x < pisos.length && x >= 0 && y >= 0 && y < pisos[0].length && cosas.get(new Posicion(x, y)) == null) {
             return true;
         }
         return false;
@@ -61,11 +60,11 @@ public class MapaSpace extends MapaGenerico {
     public void setPlayer(JugadorSpace player) {
         this.player = player;
     }
-    
+
     public JugadorSpace getPlayer() {
         return this.player;
     }
-    
+
     public int getTileSize() {
         return this.TILE_SIZE;
     }
