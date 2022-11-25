@@ -1,13 +1,22 @@
 package main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utiles.NomJuegos;
 
@@ -19,68 +28,107 @@ public class SuperMain extends Application implements NomJuegos {
     Scene currentScene;
 
     public static void main(String[] args) {
-
-        // Para que salga la interfaz hay que comentar todo esto
-        // Dejando nada mas el launch(args);
-
-        System.out.println("A que juego queres jugar?");
-        System.out.println(NomJuegos.BOBO + " => lolo");
-        System.out.println(NomJuegos.SPACE_INVADERS + " => Space");
-
-        Scanner scanner = new Scanner(System.in);
-
-        int res = scanner.nextInt();
-
-        switch (res) {
-            case NomJuegos.BOBO:
-                MainLolo.main(args);
-                break;
-            case NomJuegos.SPACE_INVADERS:
-                MainSpaceInvaders.main(args);
-            default:
-                break;
-        }
-
-        scanner.close();
-
-//        launch(args);
+        launch(args);
     }
 
     @Override
-    public void start(Stage stage) {
-
-        stage.setTitle("Testigos de Java");
+    public void start(Stage stage) throws FileNotFoundException {
+        this.stage = new Stage();
         Button button_bobo = new Button("BOBO");
         Button button_space = new Button("SPACE");
 
-        button_bobo.setLayoutX(120);
-        button_bobo.setLayoutY(50);
+        button_bobo.setLayoutX(400);
+        button_bobo.setLayoutY(350);
 
-        button_space.setLayoutX(120);
-        button_space.setLayoutY(150);
+        button_space.setLayoutX(400);
+        button_space.setLayoutY(400);
 
-        button_bobo.setOnAction(new EventHandler<ActionEvent>() {
+        button_bobo.setOnAction(e -> {
+            MainLolo ma = new MainLolo();
+            this.stage.close();
+            this.stage = new Stage();
+            ma.start(this.stage);
 
-            @Override
-            public void handle(ActionEvent event) {
-                MainLolo.main(null);
-            }
         });
 
-        button_space.setOnAction(new EventHandler<ActionEvent>() {
+        button_space.setOnAction(e -> {
+            MainSpaceInvaders ma = new MainSpaceInvaders();
+            this.stage.close();
+            this.stage = new Stage();
+            ma.start(this.stage);
 
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Falta implementar...");
-//                MainSpaceInvaders.main(null);
-            }
+        });
+
+        // ImageView fondoMenu = new ImageView(new
+        // Image("file:src/main/resources/Space_Invaders/FondoMenu.jpg"));
+        // fondoMenu.setFitHeight(700);
+        // fondoMenu.setFitWidth(700);
+        //
+        // fondoMenu.setOnMouseClicked(e -> {
+        // MainLolo ma = new MainLolo();
+        // this.stage.close();
+        // this.stage = new Stage();
+        // ma.start(this.stage);
+        //
+        // });
+
+        ImageView fondoBobo = new ImageView(new Image("file:src/main/resources/Space_Invaders/FondoBoboBlur.jpg"));
+        fondoBobo.setX(0);
+        fondoBobo.setY(0);
+
+        ImageView fondoSpace = new ImageView(new Image("file:src/main/resources/Space_Invaders/FondoSpaceBlur.jpg"));
+        fondoSpace.setX(0);
+        fondoSpace.setY(350);
+
+        fondoBobo.setOnMouseClicked(e -> {
+            MainLolo ma = new MainLolo();
+            this.stage.close();
+            this.stage = new Stage();
+            ma.start(this.stage);
+
+        });
+
+        fondoBobo.setOnMouseEntered(e -> {
+            Image imagen = new Image("file:src/main/resources/Space_Invaders/FondoBobo.jpg");
+            fondoBobo.setImage(imagen);
+
+        });
+
+        fondoBobo.setOnMouseExited(e -> {
+            Image imagen = new Image("file:src/main/resources/Space_Invaders/FondoBoboBlur.jpg");
+            fondoBobo.setImage(imagen);
+
+        });
+
+        fondoSpace.setOnMouseClicked(e -> {
+            MainSpaceInvaders ma = new MainSpaceInvaders();
+            this.stage.close();
+            this.stage = new Stage();
+            ma.start(this.stage);
+
+        });
+
+        fondoSpace.setOnMouseEntered(e -> {
+            Image imagen = new Image("file:src/main/resources/Space_Invaders/FondoSpace.jpg");
+            fondoSpace.setImage(imagen);
+
+        });
+
+        fondoSpace.setOnMouseExited(e -> {
+            Image imagen = new Image("file:src/main/resources/Space_Invaders/FondoSpaceBlur.jpg");
+            fondoSpace.setImage(imagen);
+
         });
 
         root = new Group();
-        root.getChildren().add(button_bobo);
-        root.getChildren().add(button_space);
-        stage.setScene(new Scene(root, 300, 250));
-        stage.show();
+        root.getChildren().add((Node) fondoBobo);
+        root.getChildren().add((Node) fondoSpace);
+
+        // root.getChildren().add(button_bobo);
+        // root.getChildren().add(button_space);
+
+        this.stage.setScene(new Scene(root, 700, 700));
+        this.stage.show();
 
     }
 

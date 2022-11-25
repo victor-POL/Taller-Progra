@@ -38,13 +38,13 @@ public class Nivel implements InterfazNivel {
 
             Cosa cosa1 = new Cosa(5, new Posicion(1, 33), mapaSpace, false, false, "asteroide");
             Cosa cosa2 = new Cosa(5, new Posicion(6, 35), mapaSpace, false, false, "asteroide");
-            Cosa cosa3 = new Cosa(5, new Posicion(11, 33), mapaSpace, false, false, "asteroide");
+            //Cosa cosa3 = new Cosa(5, new Posicion(11, 33), mapaSpace, false, false, "asteroide");
             Cosa cosa4 = new Cosa(5, new Posicion(16, 35), mapaSpace, false, false, "asteroide");
             Cosa cosa5 = new Cosa(5, new Posicion(21, 33), mapaSpace, false, false, "asteroide");
 
             cosas.put(cosa1.getPos(), cosa1);
             cosas.put(cosa2.getPos(), cosa2);
-            cosas.put(cosa3.getPos(), cosa3);
+            //cosas.put(cosa3.getPos(), cosa3);
             cosas.put(cosa4.getPos(), cosa4);
             cosas.put(cosa5.getPos(), cosa5);
 

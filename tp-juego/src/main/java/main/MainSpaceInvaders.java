@@ -40,6 +40,7 @@ public class MainSpaceInvaders extends Application {
     private static final int TILE_HEIGHT = 16;
     private static final int X_TILES = 45;
     private static final int Y_TILES = 45;
+    private static final int DURATION = 180;
     int vidasAct = 3;
     long previousNanoFrame;
     AnimationTimer gameTimer;
@@ -53,7 +54,7 @@ public class MainSpaceInvaders extends Application {
     Label label;
     Control control;
     Label timeLabel;
-    double time = 5 * 60; // 5 minutos
+    double time = DURATION; // 5 minutos
 
     @Override
     public void start(Stage primaryStage) {
@@ -228,7 +229,7 @@ public class MainSpaceInvaders extends Application {
             if (vidasAct == 0) {
                 System.exit(0);
             }
-            time = 5 * 60;
+            time = DURATION;
             root.getChildren().clear();
             start(stage);
             gameTimer.stop();
@@ -284,7 +285,7 @@ public class MainSpaceInvaders extends Application {
     public void updateTime(double deltaTime) {
         time -= deltaTime;
         if (time <= 0) {
-            time = 5 * 60;
+            time = DURATION;
             gameTimer.stop();
             vidasAct--;
             root.getChildren().clear();
