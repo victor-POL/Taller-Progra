@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Paint;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import mapa.MapaSpace;
@@ -48,6 +49,8 @@ public class MainSpaceInvaders extends Application {
     Group root;
     Label label;
     Control control;
+    Label timeLabel;
+    double time = 5 * 60; // 5 minutos
 
     @Override
     public void start(Stage primaryStage) {
@@ -56,7 +59,14 @@ public class MainSpaceInvaders extends Application {
         label.setLayoutX(0);
         label.setLayoutY(0);
         label.setPrefSize(100, 20);
-        label.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff;");
+        label.setStyle("-fx-background-color: #000000; -fx-text-fill: #f54242;");
+
+        timeLabel = new Label();
+        timeLabel.setText("Tiempo: " + millisToMinSeg(time));
+        timeLabel.setLayoutX(300);
+        timeLabel.setLayoutY(0);
+        timeLabel.setPrefSize(150, 20);
+        timeLabel.setStyle("-fx-background-color: #000000; -fx-text-fill: #07fa18;");
 
         this.stage = primaryStage;
         root = new Group();
@@ -70,6 +80,9 @@ public class MainSpaceInvaders extends Application {
 
         root.getChildren().add(mapa.getRender());
         root.getChildren().add(label);
+        root.getChildren().add(timeLabel);
+
+        // root.getChildren().add(uiGT);
 
         ImageView playerRender = (ImageView) jugador.getRender();
 
@@ -201,10 +214,16 @@ public class MainSpaceInvaders extends Application {
         // jugador.update();
         if (jugador.estaMuerto()) {
             vidasAct--;
+            if (vidasAct == 0) {
+                System.exit(0);
+            }
+            time = 5 * 60;
             root.getChildren().clear();
             start(stage);
             gameTimer.stop();
         }
+
+        updateTime(deltaTime);
 
         mapa.update(deltaTime);
 
@@ -236,6 +255,31 @@ public class MainSpaceInvaders extends Application {
                 it3.remove();
         }
 
+    }
+
+    public void updateTime(double deltaTime) {
+        time -= deltaTime;
+        if (time <= 0) {
+            time = 5 * 60;
+            gameTimer.stop();
+            vidasAct--;
+            root.getChildren().clear();
+            start(stage);
+        } else {
+            root.getChildren().remove(timeLabel);
+            timeLabel.setText(millisToMinSeg(time));
+            if (time < 60) {
+                timeLabel.setStyle("-fx-background-color: #000000; -fx-text-fill: #ed001c;");
+            }
+            root.getChildren().add(timeLabel);
+        }
+
+    }
+
+    public String millisToMinSeg(double millis) {
+        int min = (int) (millis / 60);
+        int seg = (int) (millis % 60);
+        return String.format("Tiempo restante : %02d:%02d", min, seg);
     }
 
     public static void main(String[] args) {
