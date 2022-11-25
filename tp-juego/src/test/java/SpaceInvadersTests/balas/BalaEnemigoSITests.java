@@ -64,4 +64,33 @@ public class BalaEnemigoSITests {
 
         Assert.assertTrue(player.estaMuerto()); // Ahora esta muerto
     }
+
+    @Test
+    public void balaEnemigoEsBloqueadoPorObstaculo() {
+        posEnemy.setPos(new Posicion(3, 5));
+        Posicion posCosa = new Posicion(posEnemy.getX(), posEnemy.getY() + 1.5);
+        Cosa cosa1 = new Cosa(5, posCosa, map, false, false, "asteroide");
+        cosas.put(cosa1.getPos(), cosa1);
+
+        BalaEnemigo bala = enemy.disparar(utiles.Constantes.ABAJO);
+
+        Assert.assertTrue(bala.mover()); // Se puede mover sin obstaculo
+        Assert.assertFalse(bala.mover()); // Es bloqueado por obstaculo
+    }
+    
+    @Test
+    public void balaEnemigoNoMataPlayerDetrasDeObstaculo() {
+        posEnemy.setPos(new Posicion(3, 5));
+        Posicion posCosa = new Posicion(posEnemy.getX(), posEnemy.getY() + 1);
+        Cosa cosa1 = new Cosa(5, posCosa, map, false, false, "asteroide");
+        cosas.put(cosa1.getPos(), cosa1);
+        
+        posPlayer.setPos(posEnemy.getX(), 7); // Player en la misma linea de tiro del enemigo
+        
+        BalaEnemigo bala = enemy.disparar(utiles.Constantes.ABAJO);
+        
+        Assert.assertFalse(player.estaMuerto());
+        bala.mover();
+        Assert.assertFalse(player.estaMuerto());
+    }
 }

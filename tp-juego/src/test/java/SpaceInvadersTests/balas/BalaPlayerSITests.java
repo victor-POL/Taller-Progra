@@ -50,7 +50,7 @@ public class BalaPlayerSITests {
     }
 
     @Test
-    public void balaSeMueveArriba() {
+    public void balaSeMueveArribaSinObstaculos() {
         player.disparar();
         player.getBala().mover();
 
@@ -58,7 +58,7 @@ public class BalaPlayerSITests {
     }
 
     @Test
-    public void playerEliminaAEnemigo() {
+    public void balaPlayerEliminaAEnemigo() {
 
         Assert.assertEquals(false, enemigos.get(posEnemy).estaMuerto());
 
@@ -80,5 +80,38 @@ public class BalaPlayerSITests {
 
         // Elimina y luego, puedo seguir moviendo la bala? => False
         Assert.assertFalse(player.getBala().mover());
+    }
+
+    @Test
+    public void balaPlayerNoPasaObstaculos() {
+        // Cosa en la misma linea de tiro del player
+        posPlayer.setPos(new Posicion(posPlayer.getX(), 8));
+        Posicion posCosa = new Posicion(posPlayer.getX(), posPlayer.getY() - 1);
+        Cosa cosa1 = new Cosa(5, posCosa, map, false, false, "asteroide");
+        cosas.put(cosa1.getPos(), cosa1);
+
+        player.disparar();
+
+        Assert.assertTrue(player.getBala().mover()); // Puede moverse la bala en espacio sin obstaculo
+        Assert.assertFalse(player.getBala().mover()); // Choca con un obstaculo => false
+    }
+
+    @Test
+    public void balaPlayerNoMataEnemigoDetrasDeObstaculo() {
+        posPlayer.setPos(new Posicion(posPlayer.getX(), 8));
+        posEnemy.setPos(posPlayer.getX(), posPlayer.getY() - 2);
+        // Cosa y enemigo en la misma linea de tiro del player
+        Posicion posCosa = new Posicion(posPlayer.getX(), posPlayer.getY() - 1);
+        Cosa cosa1 = new Cosa(5, posCosa, map, false, false, "asteroide");
+        cosas.put(cosa1.getPos(), cosa1);
+
+        player.disparar();
+
+        // Enemigo sigue vivo sin que lo ancance la bala
+        Assert.assertFalse(enemy.estaMuerto());
+        player.getBala().mover();
+        Assert.assertFalse(player.getBala().mover());
+        // Sigue vivo, aun cuando no puede moverse la bala
+        Assert.assertFalse(enemy.estaMuerto());
     }
 }
