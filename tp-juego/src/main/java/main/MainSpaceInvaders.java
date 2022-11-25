@@ -1,10 +1,13 @@
 package main;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import animation.Control;
 import animation.Direction;
 import entidad.Bala;
+import entidad.Cosa;
 import entidad.Enemigo;
 import entidad.JugadorSpace;
 import javafx.animation.AnimationTimer;
@@ -78,12 +81,20 @@ public class MainSpaceInvaders extends Application {
 
         root.getChildren().add(jugador.getRender());
 
-        for (Posicion p : mapa.getEnemigos().keySet()) {
-            Enemigo c = mapa.getEnemigos().get(p);
+        for (Posicion p : mapa.getCosas().keySet()) {
+            Cosa c = mapa.getCosas().get(p);
             ImageView iv = (ImageView) c.getRender();
             iv.setX(p.getX() * TILE);
             iv.setY(p.getY() * TILE);
             root.getChildren().add(c.getRender());
+        }
+
+        for (Posicion p : mapa.getEnemigos().keySet()) {
+            Enemigo e = mapa.getEnemigos().get(p);
+            ImageView iv = (ImageView) e.getRender();
+            iv.setX(p.getX() * TILE);
+            iv.setY(p.getY() * TILE);
+            root.getChildren().add(e.getRender());
         }
 
         addUpdateEachFrameTimer();
@@ -236,6 +247,19 @@ public class MainSpaceInvaders extends Application {
                 it3.remove();
         }
 
+        // update cosas
+        Map<Posicion, Cosa> cosasAux = new ConcurrentHashMap<Posicion, Cosa>();
+        Iterator<Cosa> it4 = mapa.getCosas().values().iterator();
+        while (it4.hasNext()) {
+            Cosa c = it4.next();
+            if (c.update(deltaTime, root)) {
+                it4.remove();
+                cosasAux.put(c.getPos(), c);
+            }
+        }
+
+        if (!cosasAux.isEmpty())
+            mapa.getCosas().putAll(cosasAux);
     }
 
     public static void main(String[] args) {

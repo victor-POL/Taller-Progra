@@ -179,6 +179,9 @@ public class Bala extends Entidad {
             // Es el Space
             if (puedoMover) {
                 Posicion pos = getPos();
+                Cosa c = mapaSpace.getCosaByPosition(pos);
+                Cosa c2 = mapaSpace.getCosaByPosition(new Posicion(Math.ceil(pos.getX()), pos.getY()));
+                Cosa c3 = mapaSpace.getCosaByPosition(new Posicion(Math.floor(pos.getX()), pos.getY()));
                 Enemigo e = mapaSpace.getEnemyByPosition(pos);
                 Enemigo e2 = mapaSpace.getEnemyByPosition(new Posicion(Math.ceil(pos.getX()), pos.getY()));
                 Enemigo e3 = mapaSpace.getEnemyByPosition(new Posicion(Math.floor(pos.getX()), pos.getY()));
@@ -194,6 +197,15 @@ public class Bala extends Entidad {
                     p.setDead(true);
                     return false;
                 }
+
+                if (c != null)
+                    return false;
+
+                if (c2 != null)
+                    return false;
+
+                if (c3 != null)
+                    return false;
 
                 if (e != null) {
                     e.setEstaMuerto();
