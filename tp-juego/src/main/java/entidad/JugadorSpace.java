@@ -23,7 +23,7 @@ public class JugadorSpace extends Entidad {
     private final int width = TILE_SIZE;
     private final int height = TILE_SIZE;
 
-    private final Duration animationSpeed = Duration.millis(1);
+    private final Duration animationSpeed = Duration.millis(0.5);
     private int imageSpacing = 0;
     private boolean estaMoviendose = false;
 
@@ -34,7 +34,7 @@ public class JugadorSpace extends Entidad {
     private EventHandler<ActionEvent> stepEvent;
 
     public JugadorSpace(Control c, MapaSpace map) {
-        super(0.5, map.getPosicionInicial(), map);
+        super(0.25, map.getPosicionInicial(), map);
 
         this.mapa = map;
 
@@ -175,9 +175,9 @@ public class JugadorSpace extends Entidad {
     }
 
     // TODO
-//    public void update() {
-//        // TODO Auto-generated method stub
-//
-//    }
+    // public void update() {
+    // // TODO Auto-generated method stub
+    //
+    // }
 
 }

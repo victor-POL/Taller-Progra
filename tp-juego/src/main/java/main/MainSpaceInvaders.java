@@ -13,6 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -45,11 +46,18 @@ public class MainSpaceInvaders extends Application {
     Scene currentScene;
     Stage stage;
     Group root;
-
+    Label label;
     Control control;
 
     @Override
     public void start(Stage primaryStage) {
+        label = new Label();
+        label.setText("Vidas: " + vidasAct);
+        label.setLayoutX(0);
+        label.setLayoutY(0);
+        label.setPrefSize(100, 20);
+        label.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff;");
+
         this.stage = primaryStage;
         root = new Group();
         currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
@@ -61,6 +69,7 @@ public class MainSpaceInvaders extends Application {
         control = nivel.getControl();
 
         root.getChildren().add(mapa.getRender());
+        root.getChildren().add(label);
 
         ImageView playerRender = (ImageView) jugador.getRender();
 
@@ -189,7 +198,7 @@ public class MainSpaceInvaders extends Application {
     }
 
     public void update(double deltaTime) {
-//        jugador.update();
+        // jugador.update();
         if (jugador.estaMuerto()) {
             vidasAct--;
             root.getChildren().clear();

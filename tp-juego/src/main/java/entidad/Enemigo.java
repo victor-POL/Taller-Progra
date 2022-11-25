@@ -91,7 +91,7 @@ public class Enemigo extends Entidad {
                     puedeDisparar = false;
             }
 
-            if (puedeDisparar && count > Math.random() * 45) {
+            if (puedeDisparar && count > Math.random() * 60) {
                 BalaEnemigo b = disparar(orientacion);
                 mapaSpace.addBala(b);
 

@@ -34,7 +34,7 @@ public class Nivel implements InterfazNivel {
             Map<Posicion, Cosa> cosas = new HashMap<Posicion, Cosa>();
             Map<Posicion, Enemigo> enemigos = new HashMap<Posicion, Enemigo>();
 
-            mapaSpace = new MapaSpace(cosas, enemigos, new Posicion(20, 40));
+            mapaSpace = new MapaSpace(cosas, enemigos, new Posicion(22, 40));
 
             for (int i = 0; i < 9; i++) {
                 for (int j = 1; j < 5; j++) {

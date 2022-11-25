@@ -178,20 +178,35 @@ public class Bala extends Entidad {
         } else {
             // Es el Space
             if (puedoMover) {
-                Cosa c = mapaSpace.getCosaByPosition(getPos());
-                Enemigo e = mapaSpace.getEnemyByPosition(getPos());
+                Posicion pos = getPos();
+                Enemigo e = mapaSpace.getEnemyByPosition(pos);
+                Enemigo e2 = mapaSpace.getEnemyByPosition(new Posicion(Math.ceil(pos.getX()), pos.getY()));
+                Enemigo e3 = mapaSpace.getEnemyByPosition(new Posicion(Math.floor(pos.getX()), pos.getY()));
                 JugadorSpace p = mapaSpace.getPlayer();
 
-                if (p.getPos().equals(this.pos)) {
+                Posicion playerPos = p.getPos();
+                playerPos = new Posicion((int) playerPos.getX(), playerPos.getY());
+                if (pos.equals(playerPos)
+                        || pos.equals(new Posicion(playerPos.getX() + 0.25, playerPos.getY()))
+                        || pos.equals(new Posicion(playerPos.getX() + 0.5, playerPos.getY()))
+                        || pos.equals(new Posicion(playerPos.getX() + 0.75, playerPos.getY()))
+                        || pos.equals(new Posicion(playerPos.getX() + 1, playerPos.getY()))) {
                     p.setDead(true);
                     return false;
                 }
 
-                if (c != null && !c.esRecogible())
-                    return false;
-
                 if (e != null) {
                     e.setEstaMuerto();
+                    return false;
+                }
+
+                if (e2 != null) {
+                    e2.setEstaMuerto();
+                    return false;
+                }
+
+                if (e3 != null) {
+                    e3.setEstaMuerto();
                     return false;
                 }
             }
@@ -246,7 +261,7 @@ public class Bala extends Entidad {
                 counter += deltaTime;
         } else {
             // Es space
-            if (counter >= 0.04) {
+            if (counter >= 0.003) {
                 this.render.setX(pos.getX() * mapaSpace.getTileSize());
                 this.render.setY(pos.getY() * mapaSpace.getTileSize());
                 counter = 0;
