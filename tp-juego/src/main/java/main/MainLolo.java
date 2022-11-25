@@ -46,9 +46,10 @@ public class MainLolo extends Application {
     int vidasAct = 3;
     long previousNanoFrame;
     boolean setear = false;
-    static boolean simu = false;
+    boolean simu = false;
     AnimationTimer gameTimer;
-    static MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
+    boolean firstTime = true;
     solutionThread st;
 
     JugadorLolo jugador;
@@ -85,6 +86,10 @@ public class MainLolo extends Application {
             root.getChildren().add(text);
             this.stage.show();
             return;
+        }
+        if (firstTime) {
+            setUp();
+            firstTime = false;
         }
         this.stage = stage;
         root = new Group();
@@ -373,7 +378,7 @@ public class MainLolo extends Application {
         }
     }
 
-    public static void main(String[] args) {
+    public void setUp() {
         Scanner sc = new Scanner(System.in);
         String option = "";
 
@@ -402,6 +407,9 @@ public class MainLolo extends Application {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setVolume(0.4);
         mediaPlayer.play();
+    }
+
+    public static void main(String[] args) {
 
         launch(args);
 
