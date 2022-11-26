@@ -72,18 +72,20 @@ public class MainLolo extends Application {
             mediaPlayer.setVolume(0.3);
             mediaPlayer.play();
             stage.close();
+
             this.stage = new Stage();
 
-            root = new Group();
-            currentScene = new Scene(root, 480, 320);
+            Group root2 = new Group();
+            currentScene = new Scene(root2, 480, 320);
             this.stage.setScene(currentScene);
             Text text = new Text(125, 160, "GANASTE");
             text.setFont(new Font(STYLESHEET_CASPIAN, 50));
             ImageView fondoGanaste = new ImageView(new Image("file:src/main/resources/fin.gif"));
             fondoGanaste.setFitHeight(320);
             fondoGanaste.setFitWidth(480);
-            root.getChildren().add((Node) fondoGanaste);
-            root.getChildren().add(text);
+            root2.getChildren().add((Node) fondoGanaste);
+            root2.getChildren().add(text);
+            this.stage.setTitle("Ganaste");
             this.stage.show();
             return;
         }

@@ -15,6 +15,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -152,15 +153,22 @@ public class MainSpaceInvaders extends Application {
 
             addInputEvents();
         } else {
+            stage.close();
+            root.getChildren().removeAll();
+            Group root2 = new Group();
             label = new Label();
             label.setText("Ganaste");
             label.setLayoutX(0);
             label.setLayoutY(0);
-            label.setPrefSize(100, 20);
+            label.setPrefSize(300, 300);
+            label.setAlignment(Pos.CENTER);
+            label.setScaleX(3);
+            label.setScaleY(3);
             label.setStyle("-fx-background-color: #000000; -fx-text-fill: #f54242;");
-            root.getChildren().add(label);
+            root2.getChildren().add(label);
             stage = new Stage();
-            currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
+            currentScene = new Scene(root2, 300, 300);
+            currentScene.setRoot(root2);
             stage.setScene(currentScene);
             stage.setTitle("YOU WIN!");
             stage.show();
@@ -254,7 +262,6 @@ public class MainSpaceInvaders extends Application {
         // jugador.update();
         if (jugador.estaMuerto()) {
             vidasAct--;
-            gane = true;
             if (vidasAct == 0) {
                 System.exit(0);
             }
@@ -299,8 +306,8 @@ public class MainSpaceInvaders extends Application {
         if (mapa.getEnemigos().isEmpty()) {
             root.getChildren().clear();
 
-            start(stage);
             gane = true;
+            start(stage);
             gameTimer.stop();
         }
 
