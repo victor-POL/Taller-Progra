@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,6 +24,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.transform.Scale;
@@ -44,7 +46,9 @@ public class MainSpaceInvaders extends Application {
     int vidasAct = 3;
     long previousNanoFrame;
     AnimationTimer gameTimer;
-    static MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
+    boolean firstTime = true;
+    boolean gane = false;
 
     JugadorSpace jugador;
     MapaSpace mapa;
@@ -58,85 +62,109 @@ public class MainSpaceInvaders extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        label = new Label();
-        label.setText("Vidas: " + vidasAct);
-        label.setLayoutX(0);
-        label.setLayoutY(0);
-        label.setPrefSize(100, 20);
-        label.setStyle("-fx-background-color: #000000; -fx-text-fill: #f54242;");
+        if (!gane) {
+            label = new Label();
+            label.setText("Vidas: " + vidasAct);
+            label.setLayoutX(0);
+            label.setLayoutY(0);
+            label.setPrefSize(100, 20);
+            label.setStyle("-fx-background-color: #000000; -fx-text-fill: #f54242;");
 
-        timeLabel = new Label();
-        timeLabel.setText("Tiempo: " + millisToMinSeg(time));
-        timeLabel.setLayoutX(300);
-        timeLabel.setLayoutY(0);
-        timeLabel.setPrefSize(150, 20);
-        timeLabel.setStyle("-fx-background-color: #000000; -fx-text-fill: #07fa18;");
+            timeLabel = new Label();
+            timeLabel.setText("Tiempo: " + millisToMinSeg(time));
+            timeLabel.setLayoutX(300);
+            timeLabel.setLayoutY(0);
+            timeLabel.setPrefSize(150, 20);
+            timeLabel.setStyle("-fx-background-color: #000000; -fx-text-fill: #07fa18;");
 
-        this.stage = primaryStage;
-        root = new Group();
-        currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
-        Nivel nivel;
-        nivel = new Nivel("nivel1", NomJuegos.SPACE_INVADERS);
-        jugador = nivel.getPlayerSpace();
-        mapa = nivel.getMapaSpace();
-        mapa.setPlayer(jugador);
-        control = nivel.getControl();
+            if (firstTime) {
+                mediaPlayer = new MediaPlayer(
+                        new Media(new File("src/main/resources/Space_Invaders/Space_Music.mp3").toURI().toString()));
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setVolume(0.4);
+                mediaPlayer.play();
+                firstTime = false;
+            }
 
-        root.getChildren().add(mapa.getRender());
-        root.getChildren().add(label);
-        root.getChildren().add(timeLabel);
+            this.stage = primaryStage;
+            root = new Group();
+            currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
+            Nivel nivel;
+            nivel = new Nivel("nivel1", NomJuegos.SPACE_INVADERS);
+            jugador = nivel.getPlayerSpace();
+            mapa = nivel.getMapaSpace();
+            mapa.setPlayer(jugador);
+            control = nivel.getControl();
 
-        // root.getChildren().add(uiGT);
+            root.getChildren().add(mapa.getRender());
+            root.getChildren().add(label);
+            root.getChildren().add(timeLabel);
 
-        ImageView playerRender = (ImageView) jugador.getRender();
+            // root.getChildren().add(uiGT);
 
-        playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
-        playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
+            ImageView playerRender = (ImageView) jugador.getRender();
 
-        root.getChildren().add(jugador.getRender());
+            playerRender.setX(jugador.getPos().getX() * TILE_WIDTH);
+            playerRender.setY(jugador.getPos().getY() * TILE_HEIGHT);
 
-        for (Posicion p : mapa.getCosas().keySet()) {
-            Cosa c = mapa.getCosas().get(p);
-            ImageView iv = (ImageView) c.getRender();
-            iv.setX(p.getX() * TILE);
-            iv.setY(p.getY() * TILE);
-            root.getChildren().add(c.getRender());
+            root.getChildren().add(jugador.getRender());
+
+            for (Posicion p : mapa.getCosas().keySet()) {
+                Cosa c = mapa.getCosas().get(p);
+                ImageView iv = (ImageView) c.getRender();
+                iv.setX(p.getX() * TILE);
+                iv.setY(p.getY() * TILE);
+                root.getChildren().add(c.getRender());
+            }
+
+            for (Posicion p : mapa.getEnemigos().keySet()) {
+                Enemigo e = mapa.getEnemigos().get(p);
+                ImageView iv = (ImageView) e.getRender();
+                iv.setX(p.getX() * TILE);
+                iv.setY(p.getY() * TILE);
+                root.getChildren().add(e.getRender());
+            }
+
+            addUpdateEachFrameTimer();
+
+            Scale scale = new Scale(1, 1);
+            scale.setPivotX(0);
+            scale.setPivotY(0);
+            root.getTransforms().setAll(scale);
+
+            ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
+                double scaleX = currentScene.getWidth() / (X_TILES * TILE_WIDTH);
+                double scaleY = currentScene.getHeight() / (Y_TILES * TILE_HEIGHT);
+
+                scale.setX(scaleX);
+                scale.setY(scaleY);
+            };
+
+            currentScene.widthProperty().addListener(stageSizeListener);
+            currentScene.heightProperty().addListener(stageSizeListener);
+            stage.setMinWidth(X_TILES * TILE_WIDTH);
+            stage.setMinHeight(Y_TILES * TILE_HEIGHT);
+            stage.setResizable(true);
+
+            stage.setScene(currentScene);
+            stage.setTitle("Space Invaders");
+            stage.show();
+
+            addInputEvents();
+        } else {
+            label = new Label();
+            label.setText("Ganaste");
+            label.setLayoutX(0);
+            label.setLayoutY(0);
+            label.setPrefSize(100, 20);
+            label.setStyle("-fx-background-color: #000000; -fx-text-fill: #f54242;");
+            root.getChildren().add(label);
+            stage = new Stage();
+            currentScene = new Scene(root, X_TILES * TILE_WIDTH, Y_TILES * TILE_HEIGHT);
+            stage.setScene(currentScene);
+            stage.setTitle("YOU WIN!");
+            stage.show();
         }
-
-        for (Posicion p : mapa.getEnemigos().keySet()) {
-            Enemigo e = mapa.getEnemigos().get(p);
-            ImageView iv = (ImageView) e.getRender();
-            iv.setX(p.getX() * TILE);
-            iv.setY(p.getY() * TILE);
-            root.getChildren().add(e.getRender());
-        }
-
-        addUpdateEachFrameTimer();
-
-        Scale scale = new Scale(1, 1);
-        scale.setPivotX(0);
-        scale.setPivotY(0);
-        root.getTransforms().setAll(scale);
-
-        ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
-            double scaleX = currentScene.getWidth() / (X_TILES * TILE_WIDTH);
-            double scaleY = currentScene.getHeight() / (Y_TILES * TILE_HEIGHT);
-
-            scale.setX(scaleX);
-            scale.setY(scaleY);
-        };
-
-        currentScene.widthProperty().addListener(stageSizeListener);
-        currentScene.heightProperty().addListener(stageSizeListener);
-        stage.setMinWidth(X_TILES * TILE_WIDTH);
-        stage.setMinHeight(Y_TILES * TILE_HEIGHT);
-        stage.setResizable(true);
-
-        stage.setScene(currentScene);
-        stage.setTitle("Space Invaders");
-        stage.show();
-
-        addInputEvents();
 
     }
 
@@ -226,6 +254,7 @@ public class MainSpaceInvaders extends Application {
         // jugador.update();
         if (jugador.estaMuerto()) {
             vidasAct--;
+            gane = true;
             if (vidasAct == 0) {
                 System.exit(0);
             }
@@ -267,6 +296,14 @@ public class MainSpaceInvaders extends Application {
                 it3.remove();
         }
 
+        if (mapa.getEnemigos().isEmpty()) {
+            root.getChildren().clear();
+
+            start(stage);
+            gane = true;
+            gameTimer.stop();
+        }
+
         // update cosas
         Map<Posicion, Cosa> cosasAux = new ConcurrentHashMap<Posicion, Cosa>();
         Iterator<Cosa> it4 = mapa.getCosas().values().iterator();
@@ -285,11 +322,11 @@ public class MainSpaceInvaders extends Application {
     public void updateTime(double deltaTime) {
         time -= deltaTime;
         if (time <= 0) {
-            time = DURATION;
-            gameTimer.stop();
             vidasAct--;
+            time = DURATION;
             root.getChildren().clear();
             start(stage);
+            gameTimer.stop();
         } else {
             root.getChildren().remove(timeLabel);
             timeLabel.setText(millisToMinSeg(time));

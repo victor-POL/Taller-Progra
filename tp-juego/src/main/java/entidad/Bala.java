@@ -23,10 +23,10 @@ public class Bala extends Entidad {
 
         switch (direccion) {
             case Constantes.ARRIBA:
-                this.setImage("file:src/main/resources/sprites/balas/bala_arriba.png");
+                this.setImage("file:src/main/resources/Space_Invaders/balaArriba.png");
                 break;
             case Constantes.ABAJO:
-                this.setImage("file:src/main/resources/sprites/balas/bala_abajo.png");
+                this.setImage("file:src/main/resources/Space_Invaders/balaAbajo.png");
                 break;
             case Constantes.DER:
                 this.setImage("file:src/main/resources/sprites/balas/bala_derecha.png");
@@ -47,10 +47,10 @@ public class Bala extends Entidad {
 
         switch (direccion) {
             case Constantes.ARRIBA:
-                this.setImage("file:src/main/resources/sprites/balas/bala_arriba.png");
+                this.setImage("file:src/main/resources/Space_Invaders/balaArriba.png");
                 break;
             case Constantes.ABAJO:
-                this.setImage("file:src/main/resources/sprites/balas/bala_abajo.png");
+                this.setImage("file:src/main/resources/Space_Invaders/balaAbajo.png");
                 break;
             case Constantes.DER:
                 this.setImage("file:src/main/resources/sprites/balas/bala_derecha.png");
